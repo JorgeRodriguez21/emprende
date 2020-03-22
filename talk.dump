@@ -1,0 +1,45 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 11.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: talk; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.talk (id, name, speakers) FROM stdin;
+123	Keynote:Stories Every Developer Should Know	Neal Ford
+232	Quasar: Un enfoque basado en datos para potenciar las decisiones comerciales de Walmart Chile	Sebastián Torres y Felipe Ramirez
+265	Accesibilidad: Productos tecnológicos para todas las personas	Daniela Mora y Benjamin Soto
+865	Data driven or data destroyed? - Una mirada a cómo crear productos centrados en humanos usando datos	Gabriela Cobo, Mariela Barzallo  y Rebecca Karasik
+1234	Micro-frontends by Example, una guía práctica de implementación para micro-frontends	Cristina Rivera y Luis Herrera
+345	Apostando por una plataforma de APIs - Latam Airlines Experience	Karina Mora y Mercedes Pantoja
+963	Stairway to the Cloud - Aprendizaje de la construcción de una Plataforma Digital sobre GCP	Ricardo Gonzalez y Maria José Ormaza
+843	Bias donde Bias: Formas y consecuencias de los sesgos en la Inteligencia Artificial	Alexandra Granda y Andrés Salazar
+\.
+
+
+--
+-- Name: talk_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.talk_id_seq', 1, false);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
