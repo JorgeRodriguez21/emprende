@@ -1,5 +1,6 @@
-from flask import Blueprint, request, session, flash, render_template
+from flask import Blueprint, request, session, flash, render_template, redirect
 
+from app.controllers.product_controller import register_product
 from app.services.user_service import UserService
 
 login_blueprint = Blueprint('/login', __name__)
@@ -11,7 +12,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return "Hello Boss!"
+        return redirect("/register_product")
 
 
 @login_blueprint.route('/login', methods=['POST'])

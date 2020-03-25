@@ -17,6 +17,7 @@ class DefaultConfig:
     MAIL_USE_TLS = False
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@db:5432/mybase'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    MAIL_SUPPRESS_SEND = False
 
 
 class DevelopmentConfig(DefaultConfig):

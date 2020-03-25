@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #f4f7f8;
+    color: rgb(56, 64, 71);
+    font-family: Nunito, sans-serif;
+}
+
+form {
+    background: rgb(232, 238, 239);
+    margin: 15px auto auto;
+    padding: 30px;
+    width: 40%;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+fieldset {
+    border: none;
+    margin-bottom: 60px;
+}
+
+legend {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.number {
+    background-color: #5fcf80;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1rem;
+    padding: 5px 10px;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    background: rgba(0, 0, 0, 0.031);
+    border: none;
+    border-radius: 2px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 100%;
+    font-size: medium;
+}
+
+select {
+    font-size: 1em;
+    padding: 5px;
+}
+
+.light {
+    display: inline-block;
+}
+
+.centered-and-cropped { object-fit: contain }
+
+button {
+    background-color: #4bc970;
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 1.2em;
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}

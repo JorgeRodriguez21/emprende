@@ -1,24 +1,28 @@
-<link rel="stylesheet" href="/static/style.css" type="text/css">
+<link rel="stylesheet" href="../static/styles/login.css" type="text/css">
 
 <form action="/login" method="POST">
     <div class="login">
         <div class="login-screen">
             <div class="app-title">
-                <h1>Login</h1>
+                <h1>Inicio de Sesión</h1>
             </div>
             <div class="login-form">
                 <div class="control-group">
                     <label>
-                        <input type="text" class="login-field" value="" placeholder="email" name="email">
+                        <input type="email" class="login-field" value="" placeholder="email" name="email">
                     </label>
                     <label class="login-field-icon fui-user" for="login-name"></label></div>
                 <div class="control-group">
                     <label>
-                        <input type="password" class="login-field" value="" placeholder="password" name="password">
+                        <input type="password" class="login-field" value="" placeholder="contraseña" name="password">
                     </label>
                     <label class="login-field-icon fui-lock" for="login-pass"></label></div>
                 <input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
+                <br/>
                 <a href="/sign_up">No estás registrada/o?</a>
+                <br/>
+                <br/>
+                <a href="/recover">Olvidaste tu contraseña?</a>
             </div>
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
