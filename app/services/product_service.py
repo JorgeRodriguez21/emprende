@@ -24,3 +24,8 @@ class ProductService:
     def find_products_by_name(cls, name):
         product_repository = ProductRepository()
         return product_repository.find_by_name(name)
+
+    @classmethod
+    def find_all_products(cls):
+        product_repository = ProductRepository()
+        return product_repository.find_all()

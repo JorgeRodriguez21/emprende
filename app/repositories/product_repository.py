@@ -25,3 +25,7 @@ class ProductRepository:
     @classmethod
     def find_by_name(cls, name):
         return Product.query.filter(Product.name.ilike(f'%{name}%'))
+
+    @classmethod
+    def find_all(cls):
+        return Product.query.all()
