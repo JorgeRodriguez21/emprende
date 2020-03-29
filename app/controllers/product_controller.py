@@ -1,4 +1,4 @@
-from flask import Blueprint, request, flash, render_template
+from flask import Blueprint, request, flash, render_template, redirect
 from marshmallow import ValidationError
 
 from app.services.product_service import ProductService
@@ -51,15 +51,13 @@ def product_by_id(product_id):
         sale_price = request.form['product_sale_price']
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, None)
+            product_service.register_product(name, description, available_units, unit_price, sale_price, None, product_id)
             flash('Producto almacenado correctamente')
-            return render_product_list()
+            return redirect("/find_products")
         except ValidationError as error:
             flash(error.data)
             from run import app
             app.logger.error(error)
-            return render_template('create_product.html')
-
     else:
         product_service = ProductService()
         product = product_service.find_product_by_id(product_id)

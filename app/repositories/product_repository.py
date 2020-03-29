@@ -50,4 +50,4 @@ class ProductRepository:
 
     @classmethod
     def find_all(cls):
-        return Product.query.all()
+        return Product.query.order_by(Product.name).all()
