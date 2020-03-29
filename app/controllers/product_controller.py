@@ -5,6 +5,7 @@ from app.services.product_service import ProductService
 
 register_product_blueprint = Blueprint('/register_product', __name__)
 find_product_blueprint = Blueprint('/find_products', __name__)
+find_product_by_id_blueprint = Blueprint('/product/<product_id>', __name__)
 
 
 @register_product_blueprint.route('/register_product', methods=["GET", "POST"])
@@ -29,20 +30,37 @@ def register_product():
         return render_template('create_product.html')
 
 
-@find_product_blueprint.route('/find_products', methods=["GET", "POST"])
+@find_product_blueprint.route('/find_products', methods=["GET"])
 def register_product():
+    return render_product_list()
+
+
+def render_product_list():
+    product_service = ProductService()
+    products = product_service.find_all_products()
+    return render_template('find_product.html', products=products)
+
+
+@find_product_by_id_blueprint.route('/product/<product_id>', methods=["GET", "POST"])
+def product_by_id(product_id):
     if request.method == 'POST':
         name = request.form['product_name']
+        description = request.form['product_description']
+        available_units = request.form['product_available']
+        unit_price = request.form['product_unit_price']
+        sale_price = request.form['product_sale_price']
         product_service = ProductService()
         try:
-            product_service.find_products_by_name(name)
-            return render_template('create_product.html')
+            product_service.register_product(name, description, available_units, unit_price, sale_price, None)
+            flash('Producto almacenado correctamente')
+            return render_product_list()
         except ValidationError as error:
             flash(error.data)
             from run import app
             app.logger.error(error)
             return render_template('create_product.html')
+
     else:
         product_service = ProductService()
-        products = product_service.find_all_products()
-        return render_template('find_product.html', products=products)
+        product = product_service.find_product_by_id(product_id)
+        return render_template('edit_product.html', product=product)

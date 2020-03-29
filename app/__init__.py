@@ -51,7 +51,8 @@ def config_app():
     from app.controllers.login_controller import login_blueprint, home_blueprint
     from app.controllers.user_controller import create_user_blueprint, register_user_blueprint, \
         recover_user_blueprint
-    from app.controllers.product_controller import register_product_blueprint, find_product_blueprint
+    from app.controllers.product_controller import register_product_blueprint, find_product_blueprint, \
+        find_product_by_id_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(create_user_blueprint)
@@ -59,5 +60,6 @@ def config_app():
     app.register_blueprint(recover_user_blueprint)
     app.register_blueprint(register_product_blueprint)
     app.register_blueprint(find_product_blueprint)
+    app.register_blueprint(find_product_by_id_blueprint)
 
     return app
