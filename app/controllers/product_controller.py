@@ -6,6 +6,7 @@ from app.services.product_service import ProductService
 register_product_blueprint = Blueprint('/register_product', __name__)
 find_product_blueprint = Blueprint('/find_products', __name__)
 find_product_by_id_blueprint = Blueprint('/product/<product_id>', __name__)
+products_blueprint = Blueprint('/products', __name__)
 
 
 @register_product_blueprint.route('/register_product', methods=["GET", "POST"])
@@ -51,7 +52,8 @@ def product_by_id(product_id):
         sale_price = request.form['product_sale_price']
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, None, product_id)
+            product_service.register_product(name, description, available_units, unit_price, sale_price, None,
+                                             product_id)
             flash('Producto almacenado correctamente')
             return redirect("/find_products")
         except ValidationError as error:
@@ -62,3 +64,10 @@ def product_by_id(product_id):
         product_service = ProductService()
         product = product_service.find_product_by_id(product_id)
         return render_template('edit_product.html', product=product)
+
+
+@products_blueprint.route('/products/', methods=["GET"])
+def get_all_products():
+    product_service = ProductService()
+    products = product_service.find_all_products()
+    return render_template('/client_product_list.html', products=products)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="../static/styles/client_product_list.css" type="text/css">
+<script src="../static/styles/jquery-3.4.1.min.js"></script>
+<script src="../static/styles/client_product_list.js"></script>
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="product_grid">
+    <ul class="product_list list">
+        {% for product in products %}
+            <li class="product_item">
+                <div class="product_sale">
+                    <p>On Sale</p>
+                </div>
+                <div class="product_image">
+                    <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
+                    <div class="product_buttons">
+                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="product_values">
+                    <div class="product_title">
+                        <h5>{{ product.name }}</h5>
+                    </div>
+                    <br>
+                    <div class="product_price">
+                        <a> <span class="price_new">$</span> <span
+                                class="price_new">{{ product.unit_price }}</span></a>
+                    </div>
+                    <div class="product_price">
+                        <a> <span class="price_new">$</span> <span
+                                class="price_new">{{ product.sale_price }}</span> <span
+                                class="price_new"> por docena </span> </a>
+                    </div>
+                    <div class="product_price">
+                        <a> <span class="price_new">{{ product.available_units }}</span> <span class="price_new">Unidades disponibles</span>
+                        </a>
+                    </div>
+                    <div class="product_desc">
+                        <p class="text">{{ product.description }}</p>
+                    </div>
+                    <div class="product_buttons">
+                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</html>
