@@ -6,11 +6,13 @@
 
 body, html {
     height: 100%;
-    margin: 0;
+    margin-left: 0.8%;
+    margin-right: 0.4%;
     padding: 0;
     font-size: 100%;
     background: #F5F5F5;
     font-family: 'Titillium Web', sans-serif;
+    position: center;
 }
 
 .navigation a {
@@ -196,7 +198,9 @@ ul.product_list {
 
     .product_item {
         width: 100%;
-        margin: 0;
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+        margin-left: 0.5%;
         overflow: hidden;
     }
 
@@ -273,8 +277,10 @@ ul.product_list {
     }
 
     .product_item {
-        width: 49%;
-        margin: 0;
+        width: 95.6%;
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+        margin-left: 0.5%;
     }
 
     .product_image {
@@ -326,7 +332,7 @@ ul.product_list {
 
 @media only screen and (min-width: 678px) {
     .product_item {
-        width: 32.5%;
+        width: 47.8%;
     }
 }
 
@@ -338,14 +344,14 @@ ul.product_list {
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
     .product_item {
-        width: 24.25%;
+        width: 31.9%;
     }
 }
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
     .product_item {
-        width: 19.5%;
+        width: 23.5%;
     }
 }
 
