@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="../static/styles/client_product_list.css" type="text/css">
+<body>
+<link rel="stylesheet" href="../static/styles/test.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
-<script src="../static/styles/client_product_list.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <script type="application/javascript">
     //Go Back
@@ -88,53 +88,6 @@
         }, 3500);
     }
 </script>
-<body>
-<div class="product_grid">
-    <ul class="product_list list">
-        {% for product in products %}
-            <li class="product_item">
-                <div class="product_sale">
-                    <p>On Sale</p>
-                </div>
-                <div class="product_image">
-                    <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
-                    <div class="product_buttons">
-                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="product_values">
-                    <div class="product_title">
-                        <h5>{{ product.name }}</h5>
-                    </div>
-                    <br>
-                    <div class="product_price">
-                        <a> <span class="price_new">$</span> <span
-                                class="price_new">{{ product.unit_price }}</span></a>
-                    </div>
-                    <div class="product_price">
-                        <a> <span class="price_new">$</span> <span
-                                class="price_new">{{ product.sale_price }}</span> <span
-                                class="price_new"> por docena </span> </a>
-                    </div>
-                    <div class="product_price">
-                        <a> <span class="price_new">{{ product.available_units }}</span> <span class="price_new">Unidades disponibles</span>
-                        </a>
-                    </div>
-                    <div class="product_desc">
-                        <p class="text">{{ product.description }}</p>
-                    </div>
-                    <div class="product_buttons">
-                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
 <div class="lightbox-blanket">
     <div class="pop-up-container">
         <div class="pop-up-container-vertical">
@@ -166,6 +119,16 @@
                         <div class="product-available">
                             In stock. <span class="product-extended"><a href="#">Buy Extended Warranty</a></span>
                         </div>
+                        <div class="product-rating">
+                            <i class="fa fa-star rating" star-data="1"></i>
+                            <i class="fa fa-star rating" star-data="2"></i>
+                            <i class="fa fa-star rating" star-data="3"></i>
+                            <i class="fa fa-star" star-data="4"></i>
+                            <i class="fa fa-star" star-data="5"></i>
+                            <div class="product-rating-details">(3.1 - <span class="rating-count">1203</span> reviews)
+                            </div>
+
+                        </div>
                         <div class="product-quantity">
                             <label for="product-quantity-input" class="product-quantity-label">Quantity</label>
                             <div class="product-quantity-subtract">
@@ -193,6 +156,30 @@
                             <a class="add-to-cart" href="#" onclick="AddToCart(event);">Add to Cart</a>
 
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="random-background">
+    <div class="itemlist">
+        <div class="itemlist-item-wrapper" onclick="OpenProduct(1);">
+            <div class="product-details">
+                <div class="">
+                    <div class="product-info">
+
+                        <div class="product-title" item-data="1">
+                            LOUNGE CHAIR
+                        </div>
+                        <div class="product-price" price-data="120.12" item-data="1">$120
+                            <span
+                                    class="product-price-cents">12
+                            </span>
+                        </div>
+                    </div>
+                    <div class="product-image" item-data="1">
+                        <img src="http://3.design-milk.com/images/2013/07/Karim-Rashid-1-ChateauDAx_nook_chair.jpg"/>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,8 @@ from app.repositories.product_repository import ProductRepository
 class ProductService:
 
     @classmethod
-    def register_product(cls, name, description, available_units, unit_price, sale_price, image_name, product_id=None):
+    def register_product(cls, name, description, available_units, unit_price, sale_price, image_name, code, colors,
+                         sizes, product_id=None):
         try:
             converted_available_units = int(available_units)
             converted_unit_price = float(unit_price)
@@ -18,11 +19,11 @@ class ProductService:
         product_repository = ProductRepository()
         if product_id is not None:
             product_repository.update(name, description, available_units, unit_price, sale_price, image_name,
-                                      product_id)
+                                      product_id, code, colors, sizes)
         else:
             product_repository.save(name, description, converted_available_units, converted_unit_price,
                                     converted_sale_price,
-                                    image_name)
+                                    image_name, code, colors, sizes)
 
     @classmethod
     def find_products_by_name(cls, name):

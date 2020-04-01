@@ -9,9 +9,12 @@ class Product(db.Model):
     unit_price = db.Column(db.Numeric)
     sale_price = db.Column(db.Numeric)
     image_name = db.Column(db.String(128))
+    colors = db.Column(db.String(128))
+    code = db.Column(db.String(128))
+    sizes = db.Column(db.String(128))
 
     def __init__(self, name, description, available_units, unit_price, sale_price,
-                 image_name):
+                 image_name, colors, code, sizes):
         super().__init__()
         self.name = name
         self.description = description
@@ -19,3 +22,6 @@ class Product(db.Model):
         self.unit_price = unit_price
         self.sale_price = sale_price,
         self.image_name = image_name
+        self.colors = colors
+        self.code = code
+        self.sizes = sizes

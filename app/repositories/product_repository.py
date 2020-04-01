@@ -10,10 +10,10 @@ class ProductRepository:
 
     @classmethod
     def save(cls, name, description, available_units, unit_price, sale_price,
-             image_name):
+             image_name, code, colors, sizes):
         try:
             product = Product(name, description, available_units, unit_price, sale_price,
-                              image_name)
+                              image_name, code, colors, sizes)
             db.session.add(product)
             db.session.commit()
         except SQLAlchemyError as error:
@@ -24,7 +24,7 @@ class ProductRepository:
 
     @classmethod
     def update(cls, name, description, available_units, unit_price, sale_price,
-               image_name, product_id):
+               image_name, product_id, code, colors, sizes):
         try:
             product = cls.find_by_id(product_id)
             product.name = name
@@ -33,6 +33,9 @@ class ProductRepository:
             product.unit_price = unit_price
             product.sale_price = sale_price
             product.image_name = image_name
+            product.code = code
+            product.colors = colors
+            product.sizes = sizes
             db.session.commit()
         except SQLAlchemyError as error:
             from run import app

@@ -17,9 +17,13 @@ def register_product():
         available_units = request.form['product_available']
         unit_price = request.form['product_unit_price']
         sale_price = request.form['product_sale_price']
+        code = request.form['product_code']
+        colors = request.form['product_colors']
+        sizes = request.form['product_sizes']
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, None)
+            product_service.register_product(name, description, available_units, unit_price, sale_price, None, code,
+                                             colors, sizes)
             flash('Producto almacenado correctamente')
             return render_template('create_product.html')
         except ValidationError as error:
@@ -50,10 +54,13 @@ def product_by_id(product_id):
         available_units = request.form['product_available']
         unit_price = request.form['product_unit_price']
         sale_price = request.form['product_sale_price']
+        code = request.form['product_code']
+        colors = request.form['product_colors']
+        sizes = request.form['product_sizes']
         product_service = ProductService()
         try:
             product_service.register_product(name, description, available_units, unit_price, sale_price, None,
-                                             product_id)
+                                             code, colors, sizes, product_id)
             flash('Producto almacenado correctamente')
             return redirect("/find_products")
         except ValidationError as error:
