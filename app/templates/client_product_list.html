@@ -5,30 +5,58 @@
 <script src="../static/styles/client_product_list.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <script type="application/javascript">
-    //Go Back
-    function OpenProduct(i) {
-        let image = $('.product-image[item-data="' + i + '"] img');
-        let price = $('.product-price[item-data="' + i + '"]');
-        let cents = $('.product-price[item-data="' + i + '"] span').text();
-        let dollars = $('.product-price[item-data="' + i + '"]').text().replace(cents, '').substring(1);
-        console.log(price);
-        console.log(cents);
-        console.log(dollars);
+    let maxValue = undefined;
 
-        $('.product-price[item-data="dl"]').innerText = dollars;
-        $('.product-price[item-data="dl"] span').innerHTML = cents;
+    function OpenProduct(id, colors, sizes) {
+        //Load image
+        let image = $('.product_image[item-data="' + id + '"] img');
         let lbi = $('.lightbox-blanket .product-image img');
-        console.log($(i).attr("src"));
         $(lbi).attr("src", $(image).attr("src"));
+        //Load unit price
+        let unit_price = $('.product_unit_price[item-data="' + id + '"] span').text().substring(1).split('.');
+        let dollars = unit_price[0].match(/\d+/)[0];
+        let cents = unit_price[1] ? unit_price[1].match(/\d+/)[0] : undefined;
+        if (cents === undefined) {
+            cents = '00'
+        } else if (cents.length === 0) {
+            cents = '00'
+        } else if (cents.length === 1) {
+            cents = cents + '0'
+        }
         let dialogPrice = $('.lightbox-blanket .product-info .product-price');
         $(dialogPrice).html("$" + dollars + "<span class='product-price-cents'>" + cents + "</span>");
-        // if(lbprice){
-        //   price = price.split["."];
-        //   $(lbprice).html("$" + price[0] + "<span class='product-price-cents'>"+price[1] +"</span>");
-        //}
+        //Load sale price
+        let sale_price = $('.product_sale_price[item-data="' + id + '"] span').text().substring(1).split('.');
+        let sale_dollars = sale_price[0].match(/\d+/)[0];
+        let sale_cents = sale_price[1] ? sale_price[1].match(/\d+/)[0] : undefined;
+        if (sale_cents === undefined) {
+            sale_cents = '00'
+        } else if (sale_cents.length === 0) {
+            sale_cents = '00'
+        } else if (sale_cents.length === 1) {
+            sale_cents = sale_cents + '0'
+        }
+        let dialogSalePrice = $('.lightbox-blanket .product-info .product-price-sale');
+        $(dialogSalePrice).html("$" + sale_dollars + "<span class='product-price-cents'>" + sale_cents + "</span>"
+            + "<span class='product-price' style='font-size:0.7em'>&nbsp; por docena</span>");
+        //Load title
+        let title = $('.product_title[item-data="' + id + '"] h5').text();
+        let dialogTitle = $('.lightbox-blanket .product-title');
+        $(dialogTitle).html(title);
+        //Load description
+        let description = $('.product_desc[item-data="' + id + '"]').text();
+        let dialogDescription = $('.lightbox-blanket .product-description');
+        $(dialogDescription).html(description);
+        //Load available units
+        let available_units = $('.product_available_price[item-data="' + id + '"] span[item-data="' + id + '"]').text();
+        maxValue = parseInt(available_units);
+        let dialogAvailableUnits = $('.lightbox-blanket .product-available');
+        $(dialogAvailableUnits).html(available_units + ' Unidades disponibles');
 
         $(".lightbox-blanket").toggle();
 
+        createSizesSelector(sizes);
+        createColorSelector(colors);
 
         $("#product-quantity-input").val("0");
         CalcPrice(0);
@@ -37,6 +65,10 @@
 
     function GoBack() {
         $(".lightbox-blanket").toggle();
+    }
+
+    function GetMax() {
+        return maxValue;
     }
 
     //Calculate new total when the quantity changes.
@@ -48,37 +80,54 @@
 
     //Reduce quantity by 1 if clicked
     $(document).on("click", ".product-quantity-subtract", function (e) {
-        var value = $("#product-quantity-input").val();
-        //console.log(value);
-        var newValue = parseInt(value) - 1;
+        let value = $("#product-quantity-input").val();
+        let newValue = parseInt(value) - 1;
         if (newValue < 0) newValue = 0;
+        if (newValue > GetMax()) newValue = GetMax();
         $("#product-quantity-input").val(newValue);
         CalcPrice(newValue);
     });
 
     //Increase quantity by 1 if clicked
     $(document).on("click", ".product-quantity-add", function (e) {
-        var value = $("#product-quantity-input").val();
-        //console.log(value);
-        var newValue = parseInt(value) + 1;
+        let value = $("#product-quantity-input").val();
+        let newValue = parseInt(value) + 1;
+        if (newValue > GetMax()) newValue = GetMax();
         $("#product-quantity-input").val(newValue);
         CalcPrice(newValue);
     });
 
     $(document).on("blur", "#product-quantity-input", function (e) {
         var value = $("#product-quantity-input").val();
-        //console.log(value);
         CalcPrice(value);
     });
 
+    function createColorSelector(values) {
+        let valueArray = values.split(",");
+        let colorSelector = $("#colorSelector");
+        colorSelector.html("");
+        //populate the new options
+        valueArray.forEach(value =>
+            colorSelector.append("<option>" + value + "</option>")
+        )
+    }
+
+    function createSizesSelector(values) {
+        let valueArray = values.split(",");
+        let sizeSelector = $("#sizeSelector");
+        sizeSelector.html("");
+        valueArray.forEach(value =>
+            sizeSelector.append("<option>" + value + "</option>")
+        )
+    }
 
     function AddToCart(e) {
         e.preventDefault();
-        var qty = $("#product-quantity-input").val();
+        let qty = $("#product-quantity-input").val();
         if (qty === '0') {
             return;
         }
-        var toast = '<div class="toast toast-success">Added ' + qty + ' to cart.</div>';
+        let toast = '<div class="toast toast-success">Added ' + qty + ' to cart.</div>';
         $("body").append(toast);
         setTimeout(function () {
             $(".toast").addClass("toast-transition");
@@ -96,33 +145,41 @@
                 <div class="product_sale">
                     <p>On Sale</p>
                 </div>
-                <div class="product_image">
+                <div class="product_image" item-data={{ product.id }}>
                     <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
                     <div class="product_buttons">
-                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                        <button class="add_to_cart"
+                                onclick="OpenProduct('{{ product.id }}','{{ product.colors }}', '{{ product.sizes }}');">
+                            <i
+                                    class="fa fa-shopping-cart"></i></button>
                         <br>
                         <br>
                     </div>
                 </div>
                 <div class="product_values">
-                    <div class="product_title">
+                    <div class="product_title" item-data={{ product.id }}>
                         <h5>{{ product.name }}</h5>
                     </div>
                     <br>
-                    <div class="product_price">
-                        <a> <span class="price_new">$</span> <span
-                                class="price_new">{{ product.unit_price }}</span></a>
-                    </div>
-                    <div class="product_price">
-                        <a> <span class="price_new">$</span> <span
-                                class="price_new">{{ product.sale_price }}</span> <span
-                                class="price_new"> por docena </span> </a>
-                    </div>
-                    <div class="product_price">
-                        <a> <span class="price_new">{{ product.available_units }}</span> <span class="price_new">Unidades disponibles</span>
+                    <div class="product_unit_price" item-data={{ product.id }}>
+                        <a>
+                            <span class="unit_price">${{ product.unit_price }}</span>
                         </a>
                     </div>
-                    <div class="product_desc">
+                    <div class="product_sale_price" item-data={{ product.id }}>
+                        <a>
+                            <span class="sale_price">${{ product.sale_price }}</span>
+                            <span>por docena</span>
+                        </a>
+                    </div>
+                    <div class="product_available_price" item-data={{ product.id }}>
+                        <a>
+                            <span class="available_units"
+                                  item-data={{ product.id }}>{{ product.available_units }}</span>
+                            <span class="available_units">Unidades disponibles</span>
+                        </a>
+                    </div>
+                    <div class="product_desc" item-data={{ product.id }}>
                         <p class="text">{{ product.description }}</p>
                     </div>
                     <div class="product_buttons">
@@ -144,13 +201,17 @@
                 <div class="product-details">
                     <div class="product-left">
                         <div class="product-info">
-                            <div class="product-manufacturer">NOOK
-                            </div>
+                            <div class="product-manufacturer">EMPRENDE</div>
                             <div class="product-title">
                                 LOUNGE CHAIR
                             </div>
-                            <div class="product-price" price-data="120.12" item-data="dl"><span
-                                    class="product-price-cents"></span>
+                            <br>
+                            <div class="product-price" price-data="120.12">
+                                <span class="product-price-cents"></span>
+                            </div>
+                            <br>
+                            <div class="product-price-sale" price-data="120.12">
+                                <span class="product-price-cents"></span>
                             </div>
                         </div>
                         <div class="product-image">
@@ -164,18 +225,40 @@
                             work with Italian manufacturer Chateau d’Ax.
                         </div>
                         <div class="product-available">
-                            In stock. <span class="product-extended"><a href="#">Buy Extended Warranty</a></span>
+
                         </div>
                         <div class="product-quantity">
-                            <label for="product-quantity-input" class="product-quantity-label">Quantity</label>
+                            <label for="product-quantity-input" class="product-quantity-label">Cantidad</label>
                             <div class="product-quantity-subtract">
                                 <i class="fa fa-chevron-left"></i>
                             </div>
                             <div>
-                                <input type="text" id="product-quantity-input" placeholder="0" value="0"/>
+                                <input style="text-align: center" type="number" id="product-quantity-input"
+                                       placeholder="0" value="0" min="0"
+                                       max="GetMax();"/>
                             </div>
                             <div class="product-quantity-add">
                                 <i class="fa fa-chevron-right"></i>
+                            </div>
+                            <br>
+                            <div class="colors">
+                                <select id="colorSelector" class="form-control">
+                                    <option>Make</option>
+                                    <option>Chevrolet</option>
+                                    <option>Ford</option>
+                                    <option>GMC</option>
+                                    <option>Toyota</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="sizes">
+                                <select id="sizeSelector" class="form-control">
+                                    <option>Make</option>
+                                    <option>Chevrolet</option>
+                                    <option>Ford</option>
+                                    <option>GMC</option>
+                                    <option>Toyota</option>
+                                </select>
                             </div>
                         </div>
                     </div>
