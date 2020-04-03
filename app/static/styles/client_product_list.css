@@ -699,6 +699,12 @@ ul.product_list {
     font-size: 9pt;
 }
 
+.toast-error {
+    background-color: red;
+    color: white;
+    font-size: 9pt;
+}
+
 .toast-transition {
     top: calc(50px);
     transition: top 1s;
@@ -712,4 +718,9 @@ ul.product_list {
     color: #222;
     font-size: 24px;
     letter-spacing: 1px;
+}
+
+.colors {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

@@ -1,6 +1,5 @@
 from flask import Blueprint, request, session, flash, render_template, redirect
 
-from app.controllers.product_controller import register_product
 from app.services.user_service import UserService
 
 login_blueprint = Blueprint('/login', __name__)
@@ -20,6 +19,7 @@ def login():
     user_service = UserService()
     if user_service.login_user(request.form['email'], request.form['password']):
         session['logged_in'] = True
+        session['user'] = request.form['email']
     else:
         flash('Email o contraseña inválidos')
     return home()

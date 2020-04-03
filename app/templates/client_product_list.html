@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="../static/styles/client_product_list.css" type="text/css">
+<link rel="stylesheet" href="../static/styles/selector.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <script src="../static/styles/client_product_list.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <script type="application/javascript">
     let maxValue = undefined;
+    let idValue = undefined;
 
     function OpenProduct(id, colors, sizes) {
+        idValue = id;
         //Load image
         let image = $('.product_image[item-data="' + id + '"] img');
         let lbi = $('.lightbox-blanket .product-image img');
@@ -60,7 +63,6 @@
 
         $("#product-quantity-input").val("0");
         CalcPrice(0);
-
     }
 
     function GoBack() {
@@ -72,9 +74,10 @@
     }
 
     //Calculate new total when the quantity changes.
-    function CalcPrice(qty) {
-        var price = $(".product-price").attr("price-data");
-        var total = parseFloat((price * qty)).toFixed(2);
+    function CalcPrice(units) {
+        let unit_price = $('.product_unit_price[item-data="' + idValue + '"] span').attr('price-data');
+        let sale_price = $('.product_sale_price[item-data="' + idValue + '"] span').attr('price-data');
+        let total = units >= 12 ? parseFloat((sale_price * units)).toFixed(2) : parseFloat((unit_price * units)).toFixed(2);
         $(".product-checkout-total-amount").text(total);
     }
 
@@ -106,9 +109,12 @@
         let valueArray = values.split(",");
         let colorSelector = $("#colorSelector");
         colorSelector.html("");
-        //populate the new options
+        if (valueArray.length > 0) {
+            colorSelector.append("<option selected disabled hidden>Seleccione un color ...</option>");
+        }
+
         valueArray.forEach(value =>
-            colorSelector.append("<option>" + value + "</option>")
+            colorSelector.append("<option value=\"" + value + "\">" + value + "</option>")
         )
     }
 
@@ -116,25 +122,84 @@
         let valueArray = values.split(",");
         let sizeSelector = $("#sizeSelector");
         sizeSelector.html("");
+        if (valueArray.length > 0) {
+            sizeSelector.append("<option selected disabled hidden>Seleccione la talla ...</option>");
+        }
         valueArray.forEach(value =>
-            sizeSelector.append("<option>" + value + "</option>")
+            sizeSelector.append("<option value=\"" + value + "\">" + value + "</option>")
         )
     }
 
-    function AddToCart(e) {
-        e.preventDefault();
-        let qty = $("#product-quantity-input").val();
-        if (qty === '0') {
+    function getSelectedColor() {
+        let colorSelector = $("#colorSelector");
+        return colorSelector.val();
+    }
+
+    function getSelectedSize() {
+        let sizeSelector = $("#sizeSelector");
+        return sizeSelector.val();
+    }
+
+    function AddToCart() {
+
+        let units = $("#product-quantity-input").val();
+        if (units === '0') {
             return;
         }
-        let toast = '<div class="toast toast-success">Added ' + qty + ' to cart.</div>';
-        $("body").append(toast);
-        setTimeout(function () {
-            $(".toast").addClass("toast-transition");
-        }, 100);
-        setTimeout(function () {
-            $(".toast").remove();
-        }, 3500);
+
+        function showSuccessMessage(response) {
+            let toast = '<div class="toast toast-success">Se agregaron ' + units + ' al carrito de compras</div>';
+            $("body").append(toast);
+            setTimeout(function () {
+                $(".toast").addClass("toast-transition");
+            }, 100);
+            setTimeout(function () {
+                $(".toast").remove();
+            }, 3500);
+            console.log(response);
+            $(".lightbox-blanket").toggle();
+        }
+
+        function showErrorMessage(message) {
+            let toast;
+            if (message) {
+                toast = "<div class=\"toast toast-error\">" + message + "</div>";
+            } else {
+                toast = '<div class="toast toast-error">Hubo un error al almacenar los productos</div>';
+            }
+            $("body").append(toast);
+            setTimeout(function () {
+                $(".toast").addClass("toast-transition");
+            }, 100);
+            setTimeout(function () {
+                $(".toast").remove();
+            }, 3500);
+            console.log(message);
+        }
+
+        if (getSelectedColor() == null || getSelectedSize() == null) {
+            showErrorMessage("Debe seleccionar una talla y un color para el producto")
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/add_to_cart",
+            // set content type header to use Flask response.get_json()
+            contentType: "application/json",
+            // convert data/object to JSON to send
+            data: JSON.stringify({id: idValue, color: getSelectedColor(), size: getSelectedSize(), units: units}),
+            // expect JSON data in return (e.g. Flask jsonify)
+            dataType: "json",
+            // handle response
+            success: function (response) {
+                showSuccessMessage(response);
+            },
+            error: function (err) {
+                showErrorMessage();
+                console.log(err);
+            }
+        });
     }
 </script>
 <body>
@@ -142,9 +207,9 @@
     <ul class="product_list list">
         {% for product in products %}
             <li class="product_item">
-                <div class="product_sale">
-                    <p>On Sale</p>
-                </div>
+                {#                <div class="product_sale">#}
+                {#                    <p>On Sale</p>#}
+                {#                </div>#}
                 <div class="product_image" item-data={{ product.id }}>
                     <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
                     <div class="product_buttons">
@@ -163,12 +228,14 @@
                     <br>
                     <div class="product_unit_price" item-data={{ product.id }}>
                         <a>
-                            <span class="unit_price">${{ product.unit_price }}</span>
+                            <span class="unit_price"
+                                  price-data={{ product.unit_price }}>${{ product.unit_price }}</span>
                         </a>
                     </div>
                     <div class="product_sale_price" item-data={{ product.id }}>
                         <a>
-                            <span class="sale_price">${{ product.sale_price }}</span>
+                            <span class="sale_price"
+                                  price-data={{ product.sale_price }}>${{ product.sale_price }}</span>
                             <span>por docena</span>
                         </a>
                     </div>
@@ -206,11 +273,11 @@
                                 LOUNGE CHAIR
                             </div>
                             <br>
-                            <div class="product-price" price-data="120.12">
+                            <div class="product-price">
                                 <span class="product-price-cents"></span>
                             </div>
                             <br>
-                            <div class="product-price-sale" price-data="120.12">
+                            <div class="product-price-sale">
                                 <span class="product-price-cents"></span>
                             </div>
                         </div>
@@ -242,22 +309,11 @@
                             </div>
                             <br>
                             <div class="colors">
-                                <select id="colorSelector" class="form-control">
-                                    <option>Make</option>
-                                    <option>Chevrolet</option>
-                                    <option>Ford</option>
-                                    <option>GMC</option>
-                                    <option>Toyota</option>
+                                <select id="colorSelector" class="theme-green" style="width:230px;">
                                 </select>
                             </div>
-                            <br>
                             <div class="sizes">
-                                <select id="sizeSelector" class="form-control">
-                                    <option>Make</option>
-                                    <option>Chevrolet</option>
-                                    <option>Ford</option>
-                                    <option>GMC</option>
-                                    <option>Toyota</option>
+                                <select id="sizeSelector" class="theme-green" style="width:230px;">
                                 </select>
                             </div>
                         </div>
@@ -273,7 +329,7 @@
                             </div>
                         </div>
                         <div class="product-checkout-actions">
-                            <a class="add-to-cart" href="#" onclick="AddToCart(event);">Add to Cart</a>
+                            <a class="add-to-cart" href="#" onclick="AddToCart();">Add to Cart</a>
 
                         </div>
                     </div>
