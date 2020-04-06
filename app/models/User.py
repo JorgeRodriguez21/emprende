@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from validate_email import validate_email
 
 from app.database.database import db
+from app.models.purchase import Purchase
 
 
 def random_string(length=10):
@@ -18,6 +19,9 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
     password_hash = db.Column(db.String(128))
+    products = db.relationship("Product",
+                               secondary="purchase",
+                               backref=db.backref("user"))
 
     @property
     def password(self):

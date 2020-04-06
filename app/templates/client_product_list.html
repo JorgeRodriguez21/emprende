@@ -8,6 +8,7 @@
 <script type="application/javascript">
     let maxValue = undefined;
     let idValue = undefined;
+    let totalPrice = undefined;
 
     function OpenProduct(id, colors, sizes) {
         idValue = id;
@@ -77,8 +78,8 @@
     function CalcPrice(units) {
         let unit_price = $('.product_unit_price[item-data="' + idValue + '"] span').attr('price-data');
         let sale_price = $('.product_sale_price[item-data="' + idValue + '"] span').attr('price-data');
-        let total = units >= 12 ? parseFloat((sale_price * units)).toFixed(2) : parseFloat((unit_price * units)).toFixed(2);
-        $(".product-checkout-total-amount").text(total);
+        totalPrice = units >= 12 ? parseFloat((sale_price * units)).toFixed(2) : parseFloat((unit_price * units)).toFixed(2);
+        $(".product-checkout-total-amount").text(totalPrice);
     }
 
     //Reduce quantity by 1 if clicked
@@ -141,7 +142,6 @@
     }
 
     function AddToCart() {
-
         let units = $("#product-quantity-input").val();
         if (units === '0') {
             return;
@@ -156,7 +156,7 @@
             setTimeout(function () {
                 $(".toast").remove();
             }, 3500);
-            console.log(response);
+            console.log(response.responseText);
             $(".lightbox-blanket").toggle();
         }
 
@@ -178,7 +178,7 @@
         }
 
         if (getSelectedColor() == null || getSelectedSize() == null) {
-            showErrorMessage("Debe seleccionar una talla y un color para el producto")
+            showErrorMessage("Debe seleccionar una talla y un color para el producto");
             return;
         }
 
@@ -188,7 +188,13 @@
             // set content type header to use Flask response.get_json()
             contentType: "application/json",
             // convert data/object to JSON to send
-            data: JSON.stringify({id: idValue, color: getSelectedColor(), size: getSelectedSize(), units: units}),
+            data: JSON.stringify({
+                id: idValue,
+                color: getSelectedColor(),
+                size: getSelectedSize(),
+                units: units,
+                totalPrice
+            }),
             // expect JSON data in return (e.g. Flask jsonify)
             dataType: "json",
             // handle response

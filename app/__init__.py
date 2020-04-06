@@ -22,18 +22,19 @@ def config_app():
             app.logger.debug('development')
             CORS(app)
             app.debug = app.config['DEBUG']
-            app.logger.debug("before delete database")
-            if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-                app.logger.debug('Deleting database.')
-                drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
-            if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-                app.logger.debug('Creating database.')
-                create_database(app.config['SQLALCHEMY_DATABASE_URI'])
+            # app.logger.debug("before delete database")
+            # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+            #     app.logger.debug('Deleting database.')
+            #     drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
+            # if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+            #     app.logger.debug('Creating database.')
+            #     create_database(app.config['SQLALCHEMY_DATABASE_URI'])
             app.logger.debug('Creating tables.')
             app.logger.debug("before create")
             try:
                 from app.models.Product import Product
                 from app.models.User import User
+                from app.models.purchase import Purchase
                 db.create_all()
             except BaseException as e:
                 app.logger.debug(e)
@@ -53,7 +54,7 @@ def config_app():
         recover_user_blueprint
     from app.controllers.product_controller import register_product_blueprint, find_product_blueprint, \
         find_product_by_id_blueprint, products_blueprint
-    from app.controllers.cart_controller import cart_controller_blueprint
+    from app.controllers.purchase_controller import purchase_controller_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(create_user_blueprint)
@@ -63,6 +64,6 @@ def config_app():
     app.register_blueprint(find_product_blueprint)
     app.register_blueprint(find_product_by_id_blueprint)
     app.register_blueprint(products_blueprint)
-    app.register_blueprint(cart_controller_blueprint)
+    app.register_blueprint(purchase_controller_blueprint)
 
     return app

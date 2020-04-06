@@ -17,9 +17,10 @@ def home():
 @login_blueprint.route('/login', methods=['POST'])
 def login():
     user_service = UserService()
-    if user_service.login_user(request.form['email'], request.form['password']):
+    response = user_service.login_user(request.form['email'], request.form['password'])
+    if response[0]:
         session['logged_in'] = True
-        session['user'] = request.form['email']
+        session['user_id'] = response[1]
     else:
         flash('Email o contraseña inválidos')
     return home()

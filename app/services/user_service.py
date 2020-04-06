@@ -16,7 +16,7 @@ class UserService:
         if user is None:
             return False
         else:
-            return user.verify_password(param_password)
+            return user.verify_password(param_password), user.id
 
     @classmethod
     def recover_user(cls, param_email):
