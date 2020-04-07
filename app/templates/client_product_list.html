@@ -9,6 +9,7 @@
     let maxValue = undefined;
     let idValue = undefined;
     let totalPrice = undefined;
+    let title = undefined;
 
     function OpenProduct(id, colors, sizes) {
         idValue = id;
@@ -44,7 +45,7 @@
         $(dialogSalePrice).html("$" + sale_dollars + "<span class='product-price-cents'>" + sale_cents + "</span>"
             + "<span class='product-price' style='font-size:0.7em'>&nbsp; por docena</span>");
         //Load title
-        let title = $('.product_title[item-data="' + id + '"] h5').text();
+        title = $('.product_title[item-data="' + id + '"] h5').text();
         let dialogTitle = $('.lightbox-blanket .product-title');
         $(dialogTitle).html(title);
         //Load description
@@ -147,7 +148,7 @@
             return;
         }
 
-        function showSuccessMessage(response) {
+        function showSuccessMessage() {
             let toast = '<div class="toast toast-success">Se agregaron ' + units + ' al carrito de compras</div>';
             $("body").append(toast);
             setTimeout(function () {
@@ -156,7 +157,6 @@
             setTimeout(function () {
                 $(".toast").remove();
             }, 3500);
-            console.log(response.responseText);
             $(".lightbox-blanket").toggle();
         }
 
@@ -193,13 +193,14 @@
                 color: getSelectedColor(),
                 size: getSelectedSize(),
                 units: units,
-                totalPrice
+                totalPrice,
+                title
             }),
             // expect JSON data in return (e.g. Flask jsonify)
             dataType: "json",
             // handle response
             success: function (response) {
-                showSuccessMessage(response);
+                showSuccessMessage();
             },
             error: function (err) {
                 showErrorMessage();
@@ -213,9 +214,6 @@
     <ul class="product_list list">
         {% for product in products %}
             <li class="product_item">
-                {#                <div class="product_sale">#}
-                {#                    <p>On Sale</p>#}
-                {#                </div>#}
                 <div class="product_image" item-data={{ product.id }}>
                     <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
                     <div class="product_buttons">
