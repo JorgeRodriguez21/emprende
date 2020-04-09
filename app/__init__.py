@@ -26,9 +26,9 @@ def config_app():
             # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
             #     app.logger.debug('Deleting database.')
             #     drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
-            # if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-            #     app.logger.debug('Creating database.')
-            #     create_database(app.config['SQLALCHEMY_DATABASE_URI'])
+            if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+                app.logger.debug('Creating database.')
+                create_database(app.config['SQLALCHEMY_DATABASE_URI'])
             app.logger.debug('Creating tables.')
             app.logger.debug("before create")
             try:

@@ -132,6 +132,12 @@ header .count {
   width: 100%;
 }
 
+.row.removing {
+  -webkit-animation: fadeOut 500ms;
+  -moz-animation: fadeOut 500ms;
+  animation: fadeOut 500ms;
+}
+
 .col,
 .quantity,
 .remove {

@@ -1,4 +1,6 @@
 # https://codepen.io/robinhuy/pen/qjLxRq
+import json
+
 from flask import Blueprint, request, session, render_template
 from marshmallow import ValidationError
 
@@ -33,8 +35,12 @@ def get_active_purchases():
         purchase_service = PurchaseService()
         purchases = purchase_service.get_active_purchases_for_active_user(session['user_id'])
         dtos = map(map_to_purchase_dto, purchases)
-        app.logger.debug(dtos)
-        return render_template('shopping_cart.html', purchases=set(dtos))
+        dto_list = list(dtos)
+        response = []
+        for dto in dto_list:
+            response.append(dto.__dict__)
+            app.logger.debug(dto.__dict__)
+        return render_template('shopping_cart.html', purchases=response)
     except Exception as error:
         from run import app
         app.logger.debug(error)

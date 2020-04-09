@@ -1,8 +1,22 @@
 <link rel="stylesheet" href="../static/styles/shopping_cart.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <script src="../static/styles/shopping_cart.js" type="text/javascript"></script>
-<div id="app">
+<script type="text/javascript">
+    function OpenProduct() {
+        let someJavaScriptVar = {{ purchases|sum(attribute='price') }};
+    }
 
+    window.onload = function exampleFunction() {
+        document.getElementById("subtotal").textContent = "${{ purchases|sum(attribute='price') }}";
+    };
+
+    function removeElement(id) {
+        $("#" + id).fadeOut("slow", function () {
+            $(this).remove();
+        });
+    }
+</script>
+<div id="app">
     <!-- Header -->
     <header class="container">
         <h1>Shopping Cart</h1>
@@ -13,14 +27,13 @@
         <span class="count">{{ purchases | count }} items in the bag</span>
     </header>
     <!-- End Header -->
-
     <!-- Product List -->
-    <section class="container">
+    <section id="section" class="container">
         {% if purchases | count > 0 %}
             <div>
                 <ul class="products">
                     {% for purchase in purchases %}
-                        <li class="row">
+                        <li id="{{ purchase.id }}" class="row">
                             <div class="col left">
                                 <div class="thumbnail">
                                     <img src="https://via.placeholder.com/200x150" alt="product.name"/>
@@ -37,7 +50,7 @@
                                 </div>
 
                                 <div class="remove">
-                                    <svg @click="removeItem(index)" version="1.1" class="close"
+                                    <svg onclick="removeElement('{{ purchase.id }}')" version="1.1" class="close"
                                          xmlns="//www.w3.org/2000/svg"
                                          xmlns:xlink="//www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60"
                                          enable-background="new 0 0 60 60" xml:space="preserve"><polygon points="38.936,23.561 36.814,21.439 30.562,27.691 24.311,21.439 22.189,23.561 28.441,29.812 22.189,36.064 24.311,38.186 30.562,31.934 36.814,38.186 38.936,36.064 32.684,29.812"></polygon></svg>
@@ -62,7 +75,7 @@
 
             <div class="summary">
                 <ul>
-                    <li>Subtotal <span>10</span></li>
+                    <li>Subtotal <span id="subtotal">10</span></li>
                     <li>Env&iacute;o <span>10</span></li>
                     <li class="total">Total <span>10</span></li>
                 </ul>
