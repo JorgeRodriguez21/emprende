@@ -33,11 +33,7 @@ def config_app():
             app.logger.debug('Creating tables.')
             app.logger.debug("before create")
             try:
-                from application.models.User import User
-                from application.models.Product import Product
-                from application.models.order import Order
-                from application.models.purchase import Purchase
-                db.create_all()
+                create_tables()
             except BaseException as e:
                 app.logger.debug(e)
             app.logger.debug('Shiny!')
@@ -49,31 +45,42 @@ def config_app():
             db.init_app(app)
             mail.init_app(app)
             app.logger.warning('Creating tables. heroku')
-            db.create_all()
+            create_tables()
             app.logger.warning('Shiny! heroku')
-
-            from application.controllers.login_controller import login_blueprint
-            app.register_blueprint(login_blueprint)
-            from application.controllers.login_controller import home_blueprint
-            app.register_blueprint(home_blueprint)
-            from application.controllers.user_controller import create_user_blueprint
-            app.register_blueprint(create_user_blueprint)
-            from application.controllers.user_controller import register_user_blueprint
-            app.register_blueprint(register_user_blueprint)
-            from application.controllers.user_controller import recover_user_blueprint
-            app.register_blueprint(recover_user_blueprint)
-            from application.controllers.product_controller import register_product_blueprint
-            app.register_blueprint(register_product_blueprint)
-            from application.controllers.product_controller import find_product_blueprint
-            app.register_blueprint(find_product_blueprint)
-            from application.controllers.product_controller import find_product_by_id_blueprint
-            app.register_blueprint(find_product_by_id_blueprint)
-            from application.controllers.product_controller import products_blueprint
-            app.register_blueprint(products_blueprint)
-            from application.controllers.purchase_controller import purchase_blueprint
-            app.register_blueprint(purchase_blueprint)
-            from application.controllers.purchase_controller import purchase_list_blueprint
-            app.register_blueprint(purchase_list_blueprint)
-            app.register_blueprint(purchase_delete_blueprint)
-            app.register_blueprint(purchase_confirm_blueprint)
+    register_blueprints(app)
     return app
+
+
+def register_blueprints(app):
+    from application.controllers.login_controller import login_blueprint
+    from application.controllers.login_controller import home_blueprint
+    from application.controllers.user_controller import create_user_blueprint
+    from application.controllers.user_controller import register_user_blueprint
+    from application.controllers.user_controller import recover_user_blueprint
+    from application.controllers.product_controller import register_product_blueprint
+    from application.controllers.product_controller import find_product_blueprint
+    from application.controllers.product_controller import find_product_by_id_blueprint
+    from application.controllers.product_controller import products_blueprint
+    from application.controllers.purchase_controller import purchase_blueprint
+    from application.controllers.purchase_controller import purchase_list_blueprint
+    app.register_blueprint(login_blueprint)
+    app.register_blueprint(home_blueprint)
+    app.register_blueprint(create_user_blueprint)
+    app.register_blueprint(register_user_blueprint)
+    app.register_blueprint(recover_user_blueprint)
+    app.register_blueprint(register_product_blueprint)
+    app.register_blueprint(find_product_blueprint)
+    app.register_blueprint(find_product_by_id_blueprint)
+    app.register_blueprint(products_blueprint)
+    app.register_blueprint(purchase_blueprint)
+    app.register_blueprint(purchase_list_blueprint)
+    app.register_blueprint(purchase_delete_blueprint)
+    app.register_blueprint(purchase_confirm_blueprint)
+
+
+def create_tables():
+    from application.models.User import User
+    from application.models.Product import Product
+    from application.models.order import Order
+    from application.models.purchase import Purchase
+    db.create_all()
