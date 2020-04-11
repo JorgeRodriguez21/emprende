@@ -3,10 +3,10 @@
 from flask import Blueprint, request, session, render_template
 from marshmallow import ValidationError
 
-from app.controllers.dtos.purchase_dto import PurchaseDto
-from app.models.purchase import Purchase
-from app.services.order_service import OrderService
-from app.services.purchase_service import PurchaseService
+from application.controllers.dtos.purchase_dto import PurchaseDto
+from application.models.purchase import Purchase
+from application.services.order_service import OrderService
+from application.services.purchase_service import PurchaseService
 
 purchase_blueprint = Blueprint('/add_to_cart', __name__)
 purchase_list_blueprint = Blueprint('/my_cart', __name__)

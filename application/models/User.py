@@ -4,8 +4,7 @@ import string
 from flask_login import UserMixin
 from validate_email import validate_email
 
-from app.database.database import db
-from app.models.purchase import Purchase
+from application.database.database import db
 
 
 def random_string(length=10):

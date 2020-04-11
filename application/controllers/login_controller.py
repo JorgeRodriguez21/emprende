@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session, flash, render_template, redirect
 
-from app.services.user_service import UserService
+from application.services.user_service import UserService
 
 login_blueprint = Blueprint('/login', __name__)
 home_blueprint = Blueprint('/', __name__)

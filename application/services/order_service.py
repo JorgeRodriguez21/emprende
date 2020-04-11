@@ -1,4 +1,4 @@
-from app.repositories.order_repository import OrderRepository
+from application.repositories.order_repository import OrderRepository
 
 
 class OrderService:

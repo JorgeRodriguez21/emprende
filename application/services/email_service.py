@@ -1,6 +1,6 @@
 from flask_mail import Message
 
-from app.services.email import mail
+from application.services.email import mail
 
 
 class EmailService:

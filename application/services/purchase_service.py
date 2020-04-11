@@ -1,4 +1,4 @@
-from app.repositories.purchase_repository import PurchaseRepository
+from application.repositories.purchase_repository import PurchaseRepository
 
 
 class PurchaseService:

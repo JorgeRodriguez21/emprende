@@ -1,9 +1,8 @@
 from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.database.database import db
-from app.models.Product import Product
-from app.models.User import User, random_string
+from application.database.database import db
+from application.models.Product import Product
 
 
 class ProductRepository:

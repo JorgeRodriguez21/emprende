@@ -1,5 +1,5 @@
-from app.database.database import db
-from app.enums.order_status import OrderStatus
+from application.database.database import db
+from application.enums.order_status import OrderStatus
 
 
 class Order(db.Model):

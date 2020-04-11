@@ -1,5 +1,4 @@
-from app.database.database import db
-from app.models.purchase import Purchase
+from application.database.database import db
 
 
 class Product(db.Model):

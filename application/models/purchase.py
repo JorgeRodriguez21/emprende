@@ -1,7 +1,7 @@
 from sqlalchemy.dialects.postgresql import JSONB
 
-from app import db
-from app.enums.purchase_status import PurchaseStatus
+from application.database.database import db
+from application.enums.purchase_status import PurchaseStatus
 
 
 class Purchase(db.Model):

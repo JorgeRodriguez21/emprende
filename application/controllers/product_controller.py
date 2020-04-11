@@ -1,7 +1,7 @@
 from flask import Blueprint, request, flash, render_template, redirect
 from marshmallow import ValidationError
 
-from app.services.product_service import ProductService
+from application.services.product_service import ProductService
 
 register_product_blueprint = Blueprint('/register_product', __name__)
 find_product_blueprint = Blueprint('/find_products', __name__)

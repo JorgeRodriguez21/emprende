@@ -15,7 +15,7 @@ class DefaultConfig:
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@db:5432/mybase'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@localhost:5432/mybase'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_SUPPRESS_SEND = False
 

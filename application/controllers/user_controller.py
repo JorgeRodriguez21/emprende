@@ -1,9 +1,9 @@
 from flask import Blueprint, request, flash, render_template
 from marshmallow import ValidationError
 
-from app.controllers.login_controller import home
-from app.services.email_service import EmailService
-from app.services.user_service import UserService
+from application.controllers.login_controller import home
+from application.services.email_service import EmailService
+from application.services.user_service import UserService
 
 create_user_blueprint = Blueprint('/sign_up', __name__)
 register_user_blueprint = Blueprint('/register', __name__)

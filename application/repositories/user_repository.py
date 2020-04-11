@@ -1,7 +1,7 @@
 from marshmallow import ValidationError
 
-from app.database.database import db
-from app.models.User import User, random_string
+from application.database.database import db
+from application.models.User import User, random_string
 
 
 class UserRepository:

@@ -1,8 +1,8 @@
 from datetime import datetime, timezone, timedelta
 
-from app import db
-from app.enums.purchase_status import PurchaseStatus
-from app.models.purchase import Purchase
+from application.database.database import db
+from application.enums.purchase_status import PurchaseStatus
+from application.models.purchase import Purchase
 
 
 class PurchaseRepository:

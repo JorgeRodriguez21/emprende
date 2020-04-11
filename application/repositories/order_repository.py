@@ -1,7 +1,7 @@
-from app import db
-from app.enums.codes import Codes
-from app.enums.order_status import OrderStatus
-from app.models.order import Order
+from application.database.database import db
+from application.enums.codes import Codes
+from application.enums.order_status import OrderStatus
+from application.models.order import Order
 
 
 class OrderRepository:

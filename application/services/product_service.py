@@ -1,8 +1,6 @@
-from numbers import Number
-
 from marshmallow import ValidationError
 
-from app.repositories.product_repository import ProductRepository
+from application.repositories.product_repository import ProductRepository
 
 
 class ProductService:
