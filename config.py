@@ -15,7 +15,6 @@ class DefaultConfig:
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@localhost:5432/mybase'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_SUPPRESS_SEND = False
 
@@ -27,9 +26,19 @@ class DevelopmentConfig(DefaultConfig):
 
     DEBUG = True
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@localhost:5432/mybase'
+
+
+class ProductionConfig(DefaultConfig):
+    @classmethod
+    def init_app(cls, app):
+        pass
+
+    DEBUG = True
+    TESTING = True
 
 
 config = {
     'development': DevelopmentConfig,
-    'production': DefaultConfig
+    'production': ProductionConfig
 }

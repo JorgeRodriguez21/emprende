@@ -42,7 +42,7 @@ def config_app():
                 app.logger.debug(e)
             app.logger.debug('Shiny!')
     else:
-        app.config.from_object('application.config.config.DefaultConfig')
+        app.config.from_object(config.get('production'))
         app.debug = False
         heroku = Heroku(app)
         with app.app_context():
