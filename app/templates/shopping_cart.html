@@ -10,12 +10,8 @@
 <div id="app">
     <!-- Header -->
     <header class="container">
-        <h1>Shopping Cart</h1>
-        <ul class="breadcrumb">
-            <li>Home</li>
-            <li>Shopping Cart</li>
-        </ul>
-        <span class="count">{{ purchases | count }} items in the bag</span>
+        <h1>Carrito de Compras</h1>
+        <span class="count">{{ purchases | count }} productos en la bolsa</span>
     </header>
     <!-- End Header -->
     <!-- Product List -->
@@ -53,8 +49,8 @@
             </div>
         {% else %}
             <div class="empty-product">
-                <h3>There are no products in your cart.</h3>
-                <button>Shopping now</button>
+                <h3>No hay productos en tu carrito de compras</h3>
+                <button onclick=goToShopping()>Ir a productos</button>
             </div>
         {% endif %}
     </section>

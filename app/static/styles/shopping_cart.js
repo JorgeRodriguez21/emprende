@@ -128,3 +128,7 @@ function changeSelection() {
     $('.shipping').html('$' + value);
     calculateTotal();
 }
+
+function goToShopping() {
+    window.location.replace("/products");
+}
