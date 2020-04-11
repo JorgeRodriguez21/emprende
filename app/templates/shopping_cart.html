@@ -1,20 +1,11 @@
-<link rel="stylesheet" href="../static/styles/shopping_cart.css" type="text/css">
-<script src="../static/styles/jquery-3.4.1.min.js"></script>
-<script src="../static/styles/shopping_cart.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/static/styles/shopping_cart.css" type="text/css">
+<link rel="stylesheet" href="/static/styles/selector.css" type="text/css">
+<script src="/static/styles/jquery-3.4.1.min.js"></script>
+<script src="/static/styles/shopping_cart.js" type="text/javascript"></script>
 <script type="text/javascript">
-    function OpenProduct() {
-        let someJavaScriptVar = {{ purchases|sum(attribute='price') }};
-    }
-
     window.onload = function exampleFunction() {
-        document.getElementById("subtotal").textContent = "${{ purchases|sum(attribute='price') }}";
+        calculateSubtotal();
     };
-
-    function removeElement(id) {
-        $("#" + id).fadeOut("slow", function () {
-            $(this).remove();
-        });
-    }
 </script>
 <div id="app">
     <!-- Header -->
@@ -40,7 +31,7 @@
                                 </div>
                                 <div class="detail">
                                     <div class="name">{{ purchase.title }}</div>
-                                    <div class="price">${{ purchase.price }}</div>
+                                    <div class="price" id="{{ purchase.id }}">${{ purchase.price }}</div>
                                 </div>
                             </div>
 
@@ -71,18 +62,32 @@
 
     <!-- Summary -->
     {% if purchases | count > 0 %}
-        <section class="container" v-if="products.length > 0">
-
+        <section class="container">
+            <div>
+                <div style="margin: 2%">
+                    <select id="locationSelector" onchange="changeSelection()" class="theme-green" style="width:230px;">
+                        <option selected disabled hidden>Ciudad de env&iacute;o...</option>
+                        <option value="Quito">Quito</option>
+                        <option value="Otra Provincia">Otra ciudad</option>
+                    </select>
+                </div>
+                <div style="margin: 2%; height: 60px">
+                    <textarea id="address" style="height: 60px; font-size: 18px" class="quantity"
+                              placeholder="Ingrese la dirección..."></textarea>
+                </div>
+            </div>
+        </section>
+        <section class="container">
             <div class="summary">
                 <ul>
-                    <li>Subtotal <span id="subtotal">10</span></li>
-                    <li>Env&iacute;o <span>10</span></li>
-                    <li class="total">Total <span>10</span></li>
+                    <li>Subtotal <span id="subtotal" class="subtotal">10</span></li>
+                    <li>Env&iacute;o <span id="shipping" class="shipping">$0.00</span></li>
+                    <li>Total <span id="total" class="total">10</span></li>
                 </ul>
             </div>
 
             <div class="checkout">
-                <button type="button">Check Out</button>
+                <button type="button" onclick=confirmPurchase()>Confirmar compra</button>
             </div>
         </section>
     {% endif %}

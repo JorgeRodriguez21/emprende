@@ -14,7 +14,7 @@ class UserService:
         user_repository = UserRepository()
         user: User = user_repository.find_user_by_email(param_email)
         if user is None:
-            return False
+            return False, None
         else:
             return user.verify_password(param_password), user.id
 

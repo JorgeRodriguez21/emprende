@@ -22,7 +22,7 @@ def config_app():
             app.logger.debug('development')
             CORS(app)
             app.debug = app.config['DEBUG']
-            app.logger.debug("before delete database")
+            # app.logger.debug("before delete database")
             # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
             #     app.logger.debug('Deleting database.')
             #     drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -35,6 +35,7 @@ def config_app():
                 from app.models.Product import Product
                 from app.models.User import User
                 from app.models.purchase import Purchase
+                from app.models.order import Order
                 db.create_all()
             except BaseException as e:
                 app.logger.debug(e)
@@ -54,7 +55,8 @@ def config_app():
         recover_user_blueprint
     from app.controllers.product_controller import register_product_blueprint, find_product_blueprint, \
         find_product_by_id_blueprint, products_blueprint
-    from app.controllers.purchase_controller import purchase_blueprint, purchase_list_blueprint
+    from app.controllers.purchase_controller import purchase_blueprint, purchase_list_blueprint, \
+        purchase_delete_blueprint, purchase_confirm_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(create_user_blueprint)
@@ -66,5 +68,7 @@ def config_app():
     app.register_blueprint(products_blueprint)
     app.register_blueprint(purchase_blueprint)
     app.register_blueprint(purchase_list_blueprint)
+    app.register_blueprint(purchase_delete_blueprint)
+    app.register_blueprint(purchase_confirm_blueprint)
 
     return app

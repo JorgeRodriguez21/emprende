@@ -149,7 +149,7 @@
         }
 
         function showSuccessMessage() {
-            let toast = '<div class="toast toast-success">Se agregaron ' + units + ' al carrito de compras</div>';
+            let toast = '<div class="toast toast-success">Se agregaron ' + units + ' ' + title + ' al carrito de compras</div>';
             $("body").append(toast);
             setTimeout(function () {
                 $(".toast").addClass("toast-transition");
@@ -196,15 +196,11 @@
                 totalPrice,
                 title
             }),
-            // expect JSON data in return (e.g. Flask jsonify)
-            dataType: "json",
-            // handle response
-            success: function (response) {
+            success: function (data, status, xhttp) {
                 showSuccessMessage();
             },
-            error: function (err) {
-                showErrorMessage();
-                console.log(err);
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMessage(XMLHttpRequest.responseText);
             }
         });
     }

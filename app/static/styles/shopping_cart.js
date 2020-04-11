@@ -1,111 +1,130 @@
-new Vue({
-    el: "#app",
-    data: {
-        products: [
-            {
-                image: "https://via.placeholder.com/200x150",
-                name: "PRODUCT ITEM NUMBER 1",
-                description: "Description for product item number 1",
-                price: 5.99,
-                quantity: 2
-            },
-            {
-                image: "https://via.placeholder.com/200x150",
-                name: "PRODUCT ITEM NUMBER 2",
-                description: "Description for product item number 1",
-                price: 9.99,
-                quantity: 1
-            }
-        ],
-        tax: 5,
-        promotions: [
-            {
-                code: "SUMMER",
-                discount: "50%"
-            },
-            {
-                code: "AUTUMN",
-                discount: "40%"
-            },
-            {
-                code: "WINTER",
-                discount: "30%"
-            }
-        ],
-        promoCode: "",
-        discount: 0
-    },
-    computed: {
-        itemCount: function () {
-            var count = 0;
-
-            for (var i = 0; i < this.products.length; i++) {
-                count += parseInt(this.products[i].quantity) || 0;
-            }
-
-            return count;
-        },
-        subTotal: function () {
-            var subTotal = 0;
-
-            for (var i = 0; i < this.products.length; i++) {
-                subTotal += this.products[i].quantity * this.products[i].price;
-            }
-
-            return subTotal;
-        },
-        discountPrice: function () {
-            return this.subTotal * this.discount / 100;
-        },
-        totalPrice: function () {
-            return this.subTotal - this.discountPrice + this.tax;
-        }
-    },
-    filters: {
-        currencyFormatted: function (value) {
-            return Number(value).toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD"
+function removeElement(idValue) {
+    $.ajax({
+        type: "PUT",
+        url: "/delete",
+        // set content type header to use Flask response.get_json()
+        contentType: "application/json",
+        // convert data/object to JSON to send
+        data: JSON.stringify({
+            id: idValue
+        }),
+        success: function (data, status, xhttp) {
+            $("#" + idValue).fadeOut("slow", function () {
+                $(this).remove();
             });
+            setTimeout(function () {
+                location.reload()
+            }, 500);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMessage(XMLHttpRequest.responseText);
         }
-    },
-    methods: {
-        updateQuantity: function (index, event) {
-            var product = this.products[index];
-            var value = event.target.value;
-            var valueInt = parseInt(value);
+    });
 
-            // Minimum quantity is 1, maximum quantity is 100, can left blank to input easily
-            if (value === "") {
-                product.quantity = value;
-            } else if (valueInt > 0 && valueInt < 100) {
-                product.quantity = valueInt;
-            }
+}
 
-            this.$set(this.products, index, product);
-        },
-        checkQuantity: function (index, event) {
-            // Update quantity to 1 if it is empty
-            if (event.target.value === "") {
-                var product = this.products[index];
-                product.quantity = 1;
-                this.$set(this.products, index, product);
-            }
-        },
-        removeItem: function (index) {
-            this.products.splice(index, 1);
-        },
-        checkPromoCode: function () {
-            for (var i = 0; i < this.promotions.length; i++) {
-                if (this.promoCode === this.promotions[i].code) {
-                    this.discount = parseFloat(
-                        this.promotions[i].discount.replace("%", "")
-                    );
-                    return;
-                }
-            }
+function showSuccessMessage() {
+    let toast = '<div class="toast toast-success">Su compra fue confirmada correctamente, se le envi&oacute; un email con el detalle de la misma.</div>';
+    $("body").append(toast);
+    setTimeout(function () {
+        $(".toast").addClass("toast-transition");
+    }, 100);
+    setTimeout(function () {
+        $(".toast").remove();
+    }, 10000);
+    $(".lightbox-blanket").toggle();
+}
 
-            alert("Sorry, the Promotional code you entered is not valid!");
-        }
+function showErrorMessage(message) {
+    let toast;
+    if (message) {
+        toast = "<div class=\"toast toast-error\">" + message + "</div>";
+    } else {
+        toast = '<div class="toast toast-error">Hubo un error al confirmar la compra</div>';
     }
-});
+    $("#app").append(toast);
+    setTimeout(function () {
+        $(".toast").addClass("toast-transition");
+    }, 100);
+    setTimeout(function () {
+        $(".toast").remove();
+    }, 3500);
+    console.log(message);
+}
+
+function confirmPurchase() {
+    function getIds() {
+        let ids = [];
+        $('.price').each(function () {
+            let id = $(this).attr('id');
+            ids.push(id)
+        });
+        return ids;
+    }
+
+    let address = $("#address")[0].value;
+
+    if (getSelectedLocation() === undefined || address === '' || address === undefined || getIds().length === 0) {
+        showErrorMessage("Debe seleccionar una ciudad de entrega y agregar una dirección válida")
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: "/confirm",
+            // set content type header to use Flask response.get_json()
+            contentType: "application/json",
+            // convert data/object to JSON to send
+            data: JSON.stringify({
+                ids: getIds(),
+                address,
+                city: getSelectedLocation(),
+                totalPrice: $('.total').html().substring(1)
+            }),
+            success: function (data, status, xhttp) {
+                showSuccessMessage();
+                setTimeout(function () {
+                    location.reload()
+                }, 10000);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMessage(XMLHttpRequest.responseText);
+                setTimeout(function () {
+                    location.reload()
+                }, 3500);
+            }
+        });
+    }
+
+}
+
+function calculateSubtotal() {
+    let sum = 0;
+    $('.price').each(function () {
+        let counter = $(this).html().substring(1);
+        let id = $(this).attr('id');
+        sum += parseFloat(counter);
+    });
+    $('.subtotal').html('$' + sum.toFixed(2));
+    calculateTotal()
+}
+
+function calculateTotal() {
+    let subtotal = parseFloat($('.subtotal').html().substring(1));
+    let shipping = parseFloat($('.shipping').html().substring(1));
+    let total = subtotal + shipping;
+    $('.total').html('$' + total.toFixed(2));
+}
+
+function getSelectedLocation() {
+    let locationSelector = $("#locationSelector");
+    return locationSelector.val();
+}
+
+function changeSelection() {
+    let shippingValue = '3';
+    if (getSelectedLocation() !== 'Quito') {
+        shippingValue = '5';
+    }
+    let value = parseFloat(shippingValue).toFixed(2);
+    $('.shipping').html('$' + value);
+    calculateTotal();
+}

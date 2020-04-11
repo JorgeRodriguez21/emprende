@@ -1,6 +1,7 @@
 from sqlalchemy.dialects.postgresql import JSONB
 
 from app import db
+from app.enums.purchase_status import PurchaseStatus
 
 
 class Purchase(db.Model):
@@ -11,7 +12,7 @@ class Purchase(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id', ondelete="cascade"))
     units = db.Column(db.Numeric)
     price = db.Column(db.Numeric)
-    status = db.Column(db.String(50))
-    date = db.Column(db.DateTime)
+    status = db.Column(db.Enum(PurchaseStatus))
+    date = db.Column(db.TIMESTAMP(True))
     features = db.Column(JSONB)
-    purchase_code = db.Column(db.String(10))
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id', ondelete="cascade"))
