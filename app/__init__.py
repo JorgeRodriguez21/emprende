@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_heroku import Heroku
-from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy_utils import database_exists, create_database, drop_database
 
 from application.controllers.purchase_controller import purchase_delete_blueprint, purchase_confirm_blueprint
 from application.database.database import db
@@ -23,10 +23,10 @@ def config_app():
             app.logger.debug('development')
             CORS(app)
             app.debug = app.config['DEBUG']
-            # app.logger.debug("before delete database")
-            # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-            #     app.logger.debug('Deleting database.')
-            #     drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
+            app.logger.debug("before delete database")
+            if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+                app.logger.debug('Deleting database.')
+                drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
             if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
                 app.logger.debug('Creating database.')
                 create_database(app.config['SQLALCHEMY_DATABASE_URI'])
