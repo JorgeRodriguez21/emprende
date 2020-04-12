@@ -63,6 +63,7 @@ def register_blueprints(app):
     from application.controllers.product_controller import products_blueprint
     from application.controllers.purchase_controller import purchase_blueprint
     from application.controllers.purchase_controller import purchase_list_blueprint
+    from application.controllers.aws_controller import sign_s3_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(create_user_blueprint)
@@ -76,6 +77,7 @@ def register_blueprints(app):
     app.register_blueprint(purchase_list_blueprint)
     app.register_blueprint(purchase_delete_blueprint)
     app.register_blueprint(purchase_confirm_blueprint)
+    app.register_blueprint(sign_s3_blueprint)
 
 
 def create_tables():

@@ -34,3 +34,7 @@ class UserRepository:
             db.session.commit()
         else:
             raise ValidationError('Este email ya está registrado')
+
+    @classmethod
+    def get_last_user_id(cls):
+        return User.query(db.func.max(User.id)).first()

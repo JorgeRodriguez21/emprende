@@ -22,3 +22,8 @@ class UserService:
     def recover_user(cls, param_email):
         user_repository = UserRepository()
         return user_repository.update_user_password(param_email)
+
+    @classmethod
+    def get_last_user_id(cls):
+        user_repository = UserRepository()
+        return user_repository.get_last_user_id()

@@ -20,9 +20,10 @@ def register_product():
         code = request.form['product_code']
         colors = request.form['product_colors']
         sizes = request.form['product_sizes']
+        avatar_url = request.form["avatar-url"]
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, None, code,
+            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url, code,
                                              colors, sizes)
             flash('Producto almacenado correctamente')
             return render_template('create_product.html')
