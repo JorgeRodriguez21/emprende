@@ -45,9 +45,9 @@ def sign_s3():
     app.logger.error(s3_bucket)
     app.logger.error(file_name)
     app.logger.error(file_name_to_save)
-    app.logger.error('https://%s.s3.amazonaws.com/%s' % (s3_bucket, file_name))
+    app.logger.error('https://%s.s3.amazonaws.com/%s' % (s3_bucket, file_name_to_save))
 
     return json.dumps({
         'data': pre_signed_post,
-        'url': 'https://%s.s3.amazonaws.com/%s' % (s3_bucket, file_name)
+        'url': 'https://%s.s3.amazonaws.com/%s' % (s3_bucket, file_name_to_save)
     })
