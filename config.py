@@ -26,7 +26,7 @@ class DevelopmentConfig(DefaultConfig):
 
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@localhost:5432/mybase'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@db:5432/mybase'
 
 
 class ProductionConfig(DefaultConfig):
