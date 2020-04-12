@@ -10,7 +10,6 @@ function selectFile(id) {
 function getSignedRequest(file, id) {
     let xhr = new XMLHttpRequest();
     let url = '';
-    console.log(id);
     if (!id) {
         url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type + "&id=" + 0;
     } else {

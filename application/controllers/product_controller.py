@@ -58,9 +58,10 @@ def product_by_id(product_id):
         code = request.form['product_code']
         colors = request.form['product_colors']
         sizes = request.form['product_sizes']
+        avatar_url = request.form["avatar-url"]
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, None,
+            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url,
                                              code, colors, sizes, product_id)
             flash('Producto almacenado correctamente')
             return redirect("/find_products")
