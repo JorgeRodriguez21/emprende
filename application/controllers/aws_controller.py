@@ -14,21 +14,22 @@ def sign_s3():
     from run import app
     s3_bucket = os.environ.get('S3_BUCKET')
 
-    file_name = request.args.get('file_name')
     file_type = request.args.get('file_type')
+    id_received = request.args.get('id')
 
     s3 = client('s3')
-
-    new_id = 1
-
-    product_service = ProductService()
-    try:
-        row = product_service.find_last_id()
-        if row is not None:
-            if row[0] is not None:
-                new_id = row[0] + 1
-    except Exception as error:
-        app.logger.error(error)
+    new_id = 0
+    if int(id_received) == 0:
+        try:
+            product_service = ProductService()
+            row = product_service.find_last_id()
+            if row is not None:
+                if row[0] is not None:
+                    new_id = row[0] + 1
+        except Exception as error:
+            app.logger.error(error)
+    else:
+        new_id = int(id_received)
 
     file_name_to_save = 'image_' + str(new_id)
 
@@ -42,13 +43,6 @@ def sign_s3():
         ],
         ExpiresIn=3600
     )
-
-    from run import app
-    app.logger.error('variables')
-    app.logger.error(s3_bucket)
-    app.logger.error(file_name)
-    app.logger.error(file_name_to_save)
-    app.logger.error('https://%s.s3.amazonaws.com/%s' % (s3_bucket, file_name_to_save))
 
     return json.dumps({
         'data': pre_signed_post,

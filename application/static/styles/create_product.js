@@ -1,15 +1,22 @@
-function selectFile() {
+function selectFile(id) {
     let files = document.getElementById("file_input").files;
     let file = files[0];
     if (!file) {
         return alert("No se ha seleccionado ningún archivo")
     }
-    getSignedRequest(file);
+    getSignedRequest(file, id);
 }
 
-function getSignedRequest(file) {
+function getSignedRequest(file, id) {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/sign_s3?file_name=" + file.name + "&file_type=" + file.type);
+    let url = '';
+    console.log(id);
+    if (!id) {
+        url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type + "&id=" + 0;
+    } else {
+        url = "/sign_s3?file_name=" + file.name + "&file_type=" + file.type + "&id=" + id;
+    }
+    xhr.open("GET", url);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {

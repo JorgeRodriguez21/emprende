@@ -24,11 +24,12 @@
         <label for="sizes">Tallas:</label>
         <input type="text" id="sizes" name="product_sizes"/>
         <label for='product_picture'>Subir imagen:</label>
-        <input type="file" id="file_input" onchange=selectFile()>
+        <input type="file" id="file_input" onchange=selectFile(0)>
         <p id="status">Por favor seleccione una imagen (png, jpg)</p>
-        <img class="centered-and-cropped" id="preview" src='https://s3-img.pixpa.com/local/800/dummy-image.jpg'  alt="Imagen del producto"
-             height='500' width="100%"/>
-        <input type="hidden" id="avatar-url" name="avatar-url" value="/static/default.png">
+        <img class="centered-and-cropped" alt="Imagen del Producto"
+             src='https://s3-img.pixpa.com/local/800/dummy-image.jpg'
+             height='500' width="100%" id='product_picture'/>
+        <input type="hidden" id="avatar-url" name="avatar-url" value="https://s3-img.pixpa.com/local/800/dummy-image.jpg">
     </fieldset>
     <button type="submit">Guardar Producto</button>
 </form>
