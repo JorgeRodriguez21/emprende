@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
     password_hash = db.Column(db.String(128))
+    isAdmin = db.Column(db.Boolean, default=False)
     products = db.relationship("Product",
                                secondary="purchase",
                                backref=db.backref("user"))
