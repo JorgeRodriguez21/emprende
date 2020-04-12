@@ -36,6 +36,8 @@ function uploadFile(file, s3Data, url) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 || xhr.status === 204) {
+                console.log('Esta es la url');
+                console.log(url);
                 document.getElementById("preview").src = url;
                 document.getElementById("avatar-url").value = url;
             } else {
