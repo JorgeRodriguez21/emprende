@@ -37,3 +37,8 @@ class ProductService:
     def find_product_by_id(cls, product_id):
         product_repository = ProductRepository()
         return product_repository.find_by_id(product_id)
+
+    @classmethod
+    def find_last_id(cls):
+        product_repository = ProductRepository()
+        return product_repository.get_last_product_id()

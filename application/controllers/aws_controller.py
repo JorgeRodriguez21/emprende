@@ -4,7 +4,7 @@ import os
 from boto3 import client
 from flask import Blueprint, request
 
-from application.services.user_service import UserService
+from application.services.product_service import ProductService
 
 sign_s3_blueprint = Blueprint('/sign_s3/', __name__)
 
@@ -18,8 +18,14 @@ def sign_s3():
 
     s3 = client('s3')
 
-    user_service = UserService()
-    new_id = user_service.get_last_user_id() + 1
+    new_id = 1
+
+    product_service = ProductService()
+    try:
+        new_id = product_service.find_last_id() + 1
+    except Exception as error:
+        from run import app
+        app.logger.error(error)
 
     file_name_to_save = 'image_'+str(new_id)
 

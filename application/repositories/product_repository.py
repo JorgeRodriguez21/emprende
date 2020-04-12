@@ -53,3 +53,7 @@ class ProductRepository:
     @classmethod
     def find_all(cls):
         return Product.query.order_by(Product.name).all()
+
+    @classmethod
+    def get_last_product_id(cls):
+        return db.session.query(db.func.max(Product.id)).one()
