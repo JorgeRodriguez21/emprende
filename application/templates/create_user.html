@@ -1,13 +1,14 @@
 <link rel="stylesheet" href="../static/styles/create_user.css" type="text/css">
-<div class="confirm">
-    <i class='close'>×</i>
-    <h1><i class="fa fa-check-circle fa-3x"></i>Boom! Profile Created</h1>
-</div>
+<link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script src="../static/styles/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        $("#menu").load("../static/menu/menu.html");
+    });
+</script>
+<div id="menu" class="menu" autofocus></div>
 <form action="/register" method="POST">
-    <h1>
-        Create Usuario/a
-        <br>
-    </h1>
+    <h1>Crear Usuario/a<br></h1>
 
     <div class="float-label">
         <input placeholder="Nombre" type="text" name="name" id="f-name"/>
@@ -27,6 +28,7 @@
     </div>
 
     <button class="btn" type="submit">Crear Usuaria/o</button>
+
     <button class="btn" id="clear" type="reset" value="Reset">Limpiar Campos</button>
 
     {% with messages = get_flashed_messages(with_categories=true) %}

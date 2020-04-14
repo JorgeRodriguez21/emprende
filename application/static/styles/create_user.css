@@ -82,61 +82,6 @@ body {
     color: #fff;
 }
 
-.confirm {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    color: #2ecc71;
-    background-color: #fff;
-    z-index: 100;
-    text-align: center;
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -webkit-transform: scale(0, 0);
-    transform: scale(0, 0);
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-    opacity: 0;
-    -moz-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-}
-
-.confirm.show {
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-    opacity: 1;
-}
-
-.confirm .close {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    color: rgba(0, 0, 0, 0.2);
-    font-size: 60px;
-    display: inline-block;
-    padding: 20px;
-    cursor: pointer;
-}
-
-.confirm .close:hover {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.confirm h1 {
-    margin: 0 auto;
-    margin-top: 35vh;
-    display: inline-block;
-    font-size: 48px;
-    line-height: 1;
-}
-
-.confirm h1 .fa {
-    display: block;
-}
-
 form {
     max-width: 500px;
     margin: 0 auto;
@@ -164,30 +109,12 @@ form {
 }
 
 h1 {
-    font-weight: 300;
     font-size: 26px;
     line-height: 3;
     margin-bottom: 25px;
     text-align: center;
-}
-
-h1 .fa-camera-retro {
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    border: 2px solid #fff;
-    cursor: pointer;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    -moz-transition: background-color 0.3s ease;
-    -o-transition: background-color 0.3s ease;
-    -webkit-transition: background-color 0.3s ease;
-    transition: background-color 0.3s ease;
-}
-
-h1 .fa-camera-retro:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    color: #30a595;
+    font-weight: bold;
 }
 
 .btn {
@@ -196,9 +123,9 @@ h1 .fa-camera-retro:hover {
     width: 100%;
     display: block;
     padding: 15px;
-    background-color: #fff;
+    background-color: #B6587A;
     font-size: 18px;
-    color: #2ecc71;
+    color: #fff;
     cursor: pointer;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -210,14 +137,14 @@ h1 .fa-camera-retro:hover {
 }
 
 .btn:hover, .btn:focus {
-    color: #333;
+    color: #30a595;
     outline: none;
 }
 
 #clear {
     background: none;
-    color: #fff;
-    font-weight: 100;
+    color: #30a595;
+    font-weight: bold;
 }
 
 .float-label {
@@ -231,7 +158,8 @@ h1 .fa-camera-retro:hover {
     font-weight: 300;
 }
 
-.float-label input, .float-label select, .float-label textarea {
+
+.float-label .float-label, .float-label textarea {
     -webkit-appearance: none;
     outline: none;
     border: none;
@@ -243,9 +171,9 @@ h1 .fa-camera-retro:hover {
     border-radius: 0;
     font-family: 'Lato', sans-serif;
     font-size: 24px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(48, 165, 149, 0.21);
     background: transparent;
-    color: #fff;
+    color: #000;
     padding: 15px 20px 10px 10px;
 }
 
@@ -254,45 +182,12 @@ h1 .fa-camera-retro:hover {
     left: 10px;
     top: 18px;
     color: #fff;
+    font-weight: bold;
     pointer-events: none;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
-}
-
-.float-label label.active {
-    font-size: 14px;
-    font-weight: 400;
-    top: -1px;
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.float-label textarea {
-    height: 100px;
-    resize: none;
-}
-
-.float-label .fa {
-    position: absolute;
-    right: 5px;
-    bottom: 20px;
-    font-size: 12px;
-}
-
-.float-label .fa.eye {
-    right: 0;
-    bottom: 2px;
-    z-index: 10;
-    padding: 20px;
-    padding-right: 0;
-    font-size: 16px;
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.float-label .fa.eye.show {
-    color: rgba(255, 255, 255, 0.9);
 }
 
 @media (max-width: 320px) {
@@ -304,4 +199,27 @@ h1 .fa-camera-retro:hover {
     .row > div:after {
         display: none;
     }
+}
+
+.menu {
+    width: 100%;
+    margin-bottom: 2%
+}
+
+input {
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 100%;
+    transition: border .5s;
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #30a595;
+    box-shadow: none;
 }
