@@ -39,4 +39,3 @@ class PurchaseRepository:
                 purchase.order_id = order_id
                 purchase.date = datetime.now(timezone(timedelta(hours=-5), 'America/Guayaquil'))
                 db.session.commit()
-

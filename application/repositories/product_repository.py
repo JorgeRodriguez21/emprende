@@ -57,3 +57,38 @@ class ProductRepository:
     @classmethod
     def get_last_product_id(cls):
         return db.session.query(db.func.max(Product.id)).one()
+
+    @classmethod
+    def subtract_purchased_units(cls, values):
+        ids = cls.get_product_ids(values)
+        products = Product.query.filter(Product.id.in_(ids)).all()
+        for product_id, units in values:
+            found_product = next(product for product in products if product.id == product_id)
+            if found_product is None:
+                from run import app
+                app.logger.error("Producto con id " + str(product_id) + "no esta disponible")
+                raise ValidationError("El producto no está disponible")
+            else:
+                found_product.available_units = found_product.available_units - int(units)
+        db.session.commit()
+
+    @classmethod
+    def add_purchased_units(cls, values):
+        ids = cls.get_product_ids(values)
+        products = Product.query.filter(Product.id.in_(ids)).all()
+        for product_id, units in values:
+            found_product = next(product for product in products if product.id == product_id)
+            if found_product is None:
+                from run import app
+                app.logger.error("Producto con id " + str(product_id) + "no esta disponible")
+                raise ValidationError("El producto no está disponible")
+            else:
+                found_product.available_units = found_product.available_units + int(units)
+        db.session.commit()
+
+    @classmethod
+    def get_product_ids(cls, values):
+        ids = []
+        for product_id, units in values:
+            ids.append(product_id)
+        return ids
