@@ -9,9 +9,9 @@
 .theme-green {
     --radius: 2em;
     --baseFg: #000000;
-    --baseBg: #CAE00F;
+    --baseBg: #B6587A;
     --accentFg: #000000;
-    --accentBg: #CAE00F;
+    --accentBg: #B6587A;
 }
 
 .theme-construction {
@@ -26,7 +26,7 @@ select {
     font: 400 12px/1.3 sans-serif;
     -webkit-appearance: none;
     appearance: none;
-    color: var(--baseFg);
+    color: #FFFFFF;
     border: 1px solid var(--baseFg);
     line-height: 1;
     outline: 0;

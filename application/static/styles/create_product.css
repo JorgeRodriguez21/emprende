@@ -1,30 +1,21 @@
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    background: #f4f7f8;
-    color: rgb(56, 64, 71);
-    font-family: Nunito, sans-serif;
-}
-
 form {
-    background: rgb(232, 238, 239);
-    margin: 15px auto auto;
-    padding: 30px;
-    width: 40%;
-}
-
-h1 {
-    margin-bottom: 20px;
-    text-align: center;
+    width: 50%;
+    position: center;
+    margin: 5px auto 5px;
 }
 
 fieldset {
     border: none;
     margin-bottom: 60px;
+}
+
+h1 {
+    font-size: 26px;
+    line-height: 3;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #2C7602;
+    font-weight: bold;
 }
 
 legend {
@@ -43,6 +34,8 @@ legend {
 label {
     display: block;
     margin: 10px 0;
+    color: #2C7602;
+    font-weight: bold;
 }
 
 input[type="text"],
@@ -51,14 +44,33 @@ input[type="password"],
 input[type="number"],
 textarea,
 select {
-    background: rgba(0, 0, 0, 0.031);
-    border: none;
-    border-radius: 2px;
     color: rgb(0, 0, 0);
     margin-bottom: 20px;
-    padding: 20px;
     width: 100%;
-    font-size: medium;
+    text-align: center;
+    background: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 20px;
+    transition: border .5s;
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #30a595;
+    box-shadow: none;
+}
+
+select:focus {
+    border: 2px solid #30a595;
+    box-shadow: none;
+}
+
+textarea:focus {
+    border: 2px solid #30a595;
+    box-shadow: none;
 }
 
 select {
@@ -70,15 +82,28 @@ select {
     display: inline-block;
 }
 
-.centered-and-cropped { object-fit: contain }
+.centered-and-cropped {
+    object-fit: contain
+}
 
 button {
-    background-color: #4bc970;
-    border: none;
-    border-radius: 7px;
-    color: #fff;
-    font-size: 1.2em;
-    margin-top: 20px;
-    padding: 20px;
+    border: 2px solid transparent;
+    background: #B6587A;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 25px;
+    padding: 10px 0;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 3px;
+    box-shadow: none;
+    transition: 0.25s;
+    display: block;
     width: 100%;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #2C7602;
 }

@@ -5,14 +5,11 @@
 }
 
 body, html {
-    height: 100%;
     margin-left: 0.8%;
     margin-right: 0.4%;
     padding: 0;
     font-size: 100%;
-    background: #F5F5F5;
     font-family: 'Titillium Web', sans-serif;
-    position: center;
 }
 
 .navigation a {
@@ -78,8 +75,8 @@ ul.product_list {
 
 .product_item {
     display: inline-block;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: #f6eeee;
+    border: 1px solid #f6eeee;
     padding: 10px;
     position: relative;
 }
@@ -236,7 +233,7 @@ ul.product_list {
     color: #222;
     width: 0;
     height: 0;
-    border-top: 60px solid #CAE00D;
+    border-top: 60px solid #B6587A;
     border-right: 60px solid transparent;
 }
 

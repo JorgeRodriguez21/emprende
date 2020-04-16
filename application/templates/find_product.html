@@ -2,6 +2,12 @@
 <link rel="stylesheet" href="../static/styles/find_product.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <script src="../static/styles/find_product.js"></script>
+<link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script>
+    $(function(){
+        $("#menu").load("../static/menu/menu.html");
+    });
+</script>
 <script type="text/javascript">
     function DoNav(id) {
         document.location.href = '/product/' + id
@@ -25,6 +31,7 @@
         }
     }
 </script>
+<div id="menu" autofocus style="margin-bottom: 10%"></div>
 <section>
     <h1>Inventario de Productos</h1>
     <div class="group">
@@ -39,10 +46,11 @@
             <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Descripci&oacute;n</th>
                 <th>Precio Unitario</th>
                 <th>Precio al por mayor</th>
                 <th>Unidades disponibles</th>
+                <th>Tallas</th>
+                <th>Colores</th>
             </tr>
             </thead>
         </table>
@@ -53,10 +61,11 @@
             {% for product in products %}
                 <tr onclick="DoNav('{{ product.id }}');">
                     <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
                     <td>{{ product.unit_price }}</td>
                     <td>{{ product.sale_price }}</td>
                     <td>{{ product.available_units }}</td>
+                    <td>{{ product.sizes }}</td>
+                    <td>{{ product.colors }}</td>
                 </tr>
             {% endfor %}
             </tbody>

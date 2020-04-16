@@ -1,27 +1,32 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
-h1{
+h1 {
     font-size: 30px;
-    color: #fff;
+    color: #2C7602;
     text-transform: uppercase;
-    font-weight: 300;
     text-align: center;
     margin-bottom: 15px;
+    font-weight: bold;
 }
-table{
-    width:100%;
+
+table {
+    width: 100%;
     table-layout: fixed;
 }
-.tbl-header{
-    background-color: rgba(255,255,255,0.3);
+
+.tbl-header {
+    background-color: #B6587A;
 }
-.tbl-content{
-    height:300px;
-    overflow-x:auto;
+
+.tbl-content {
+    height: 300px;
+    overflow-x: auto;
     margin-top: 0px;
-    border: 1px solid rgba(255,255,255,0.3);
+    background: #EAB9CB;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
-th{
+
+th {
     padding: 20px 15px;
     text-align: left;
     font-weight: 500;
@@ -29,27 +34,25 @@ th{
     color: #fff;
     text-transform: uppercase;
 }
-td{
+
+td {
     padding: 15px;
     text-align: left;
-    vertical-align:middle;
+    vertical-align: middle;
     font-weight: 300;
-    font-size: 12px;
-    color: #fff;
-    border-bottom: solid 1px rgba(255,255,255,0.1);
+    font-size: 16px;
+    color: #2C7602;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
 }
 
-tr:hover td {color: aqua;}
-
-body{
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
-    font-family: 'Roboto', sans-serif;
+tr:hover td {
+    background: #864f5e;
+    color: #C4F3CE;
 }
-section{
+
+section {
     margin: 50px;
 }
-
 
 /* follow me template */
 .made-with-love {
@@ -61,6 +64,7 @@ section{
     font-family: arial;
     color: #fff;
 }
+
 .made-with-love i {
     font-style: normal;
     color: #F50057;
@@ -68,10 +72,12 @@ section{
     position: relative;
     top: 2px;
 }
+
 .made-with-love a {
     color: #fff;
     text-decoration: none;
 }
+
 .made-with-love a:hover {
     text-decoration: underline;
 }
@@ -79,107 +85,29 @@ section{
 ::-webkit-scrollbar {
     width: 6px;
 }
+
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-/*=============================INPUT LABEL STYLE=====================================*/
-
-* { box-sizing:border-box; }
-
-/* form starting stylings ------------------------------- */
-.group 			  {
-    position:relative;
-    margin-bottom:45px;
-}
-input 				{
-    font-size:18px;
-    padding:10px 10px 10px 5px;
-    display:block;
-    width:300px;
-    border:none;
-    border-bottom:1px solid #757575;
-}
-input:focus 		{ outline:none; }
-
-/* LABEL ======================================= */
-label 				 {
-    color:#999;
-    font-size:18px;
-    font-weight:normal;
-    position:absolute;
-    pointer-events:none;
-    left:5px;
-    top:10px;
-    transition:0.2s ease all;
-    -moz-transition:0.2s ease all;
-    -webkit-transition:0.2s ease all;
+input {
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 30%;
+    transition: border .5s;
 }
 
-/* active state */
-input:focus ~ label, input:valid ~ label 		{
-    top:-20px;
-    font-size:14px;
-    color:#5264AE;
+input:focus {
+    border: 2px solid #30a595;
+    box-shadow: none;
+    outline: none;
 }
-
-/* BOTTOM BARS ================================= */
-.bar 	{ position:relative; display:block; width:300px; }
-.bar:before, .bar:after 	{
-    content:'';
-    height:2px;
-    width:0;
-    bottom:1px;
-    position:absolute;
-    background:#5264AE;
-    transition:0.2s ease all;
-    -moz-transition:0.2s ease all;
-    -webkit-transition:0.2s ease all;
-}
-.bar:before {
-    left:50%;
-}
-.bar:after {
-    right:50%;
-}
-
-/* active state */
-input:focus ~ .bar:before, input:focus ~ .bar:after {
-    width:50%;
-}
-
-/* HIGHLIGHTER ================================== */
-.highlight {
-    position:absolute;
-    height:60%;
-    width:100px;
-    top:25%;
-    left:0;
-    pointer-events:none;
-    opacity:0.5;
-}
-
-/* active state */
-input:focus ~ .highlight {
-    -webkit-animation:inputHighlighter 0.3s ease;
-    -moz-animation:inputHighlighter 0.3s ease;
-    animation:inputHighlighter 0.3s ease;
-}
-
-/* ANIMATIONS ================ */
-@-webkit-keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-@-moz-keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-@keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-
