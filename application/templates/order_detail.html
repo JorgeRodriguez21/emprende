@@ -15,23 +15,23 @@
 <div id="app">
     <!-- Header -->
     <header class="container">
-        <h1>Carrito de Compras</h1>
-        <span class="count">{{ purchases | count }} productos en la bolsa</span>
+        <h1>Resumen de la Orden {{ order.code }}</h1>
+        <span class="count">{{ order.purchases | count }} productos en la bolsa</span>
     </header>
     <!-- End Header -->
     <!-- Product List -->
     <section id="section" class="container">
-        {% if purchases | count > 0 %}
+        {% if order.purchases | count > 0 %}
             <div>
                 <ul class="products">
-                    {% for purchase in purchases %}
+                    {% for purchase in order.purchases %}
                         <li id="{{ purchase.id }}" class="row">
                             <div class="col left">
                                 <div class="thumbnail">
-                                    <img class="centered-and-cropped" src="{{ purchase.image}}" alt="product.name"/>
+                                    <img src="{{ purchase.features['image']}}" alt="imagen del producto"/>
                                 </div>
                                 <div class="detail">
-                                    <div class="name">{{ purchase.title }}</div>
+                                    <div class="name">{{ purchase.features['title'] }}</div>
                                     <div class="price" id="{{ purchase.id }}">${{ purchase.price }}</div>
                                 </div>
                             </div>
@@ -39,13 +39,6 @@
                             <div class="col right">
                                 <div class="quantity">
                                     <input type="number" class="quantity" value="{{ purchase.units }}" disabled/>
-                                </div>
-
-                                <div class="remove">
-                                    <svg onclick="removeElement('{{ purchase.id }}')" version="1.1" class="close"
-                                         xmlns="//www.w3.org/2000/svg"
-                                         xmlns:xlink="//www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60"
-                                         enable-background="new 0 0 60 60" xml:space="preserve"><polygon points="38.936,23.561 36.814,21.439 30.562,27.691 24.311,21.439 22.189,23.561 28.441,29.812 22.189,36.064 24.311,38.186 30.562,31.934 36.814,38.186 38.936,36.064 32.684,29.812"></polygon></svg>
                                 </div>
                             </div>
                         </li>
@@ -55,28 +48,21 @@
         {% else %}
             <div class="empty-product">
                 <h3>No hay productos en tu carrito de compras</h3>
-                <button  style="margin-top: 2%" onclick=goToShopping()>Ir a productos</button>
+                <button style="margin-top: 2%" onclick=goToShopping()>Ir a productos</button>
             </div>
         {% endif %}
     </section>
     <!-- End Product List -->
 
     <!-- Summary -->
-    {% if purchases | count > 0 %}
+    {% if order.purchases | count > 0 %}
         <section class="container">
-            <div>
-                <div style="margin: 2%">
-                    <select id="locationSelector" onchange="changeSelection()" class="theme-green" style="width:230px;">
-                        <option selected disabled hidden>Ciudad de env&iacute;o...</option>
-                        <option value="Quito">Quito</option>
-                        <option value="Otra Provincia">Otra ciudad</option>
-                    </select>
-                </div>
-                <div style="margin: 2%; height: 60px">
+            <div style="margin: 2%; height: 60px">
                     <textarea id="address" class="address"
-                              placeholder="Ingrese la dirección..."></textarea>
-                </div>
+                              placeholder="Ingrese la dirección..."
+                              disabled>{{ order.city }} - {{ order.address }}</textarea>
             </div>
+        </div>
         </section>
         <section class="container">
             <div class="summary">
@@ -88,9 +74,10 @@
             </div>
 
             <div class="checkout">
-                <button type="button" onclick=confirmPurchase()>Confirmar compra</button>
+                <button type="button" onclick=confirmOrder('{{ order.id }}')>Confirmar compra</button>
+                <button type="button" onclick=cancelOrder('{{ order.id }}')>Cancelar compra</button>
             </div>
         </section>
     {% endif %}
-    <!-- End Summary -->
+<!-- End Summary -->
 </div>

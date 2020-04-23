@@ -1,401 +1,437 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 body {
-  margin: 20px 0;
-  padding: 0;
-  font-family: arial, sans-serif;
-  overflow: scroll;
+    margin: 20px 0;
+    padding: 0;
+    font-family: arial, sans-serif;
+    overflow: scroll;
 }
 
 img {
-  max-width: 100%;
-  vertical-align: middle;
-  border-radius: 4px;
+    max-width: 60%;
+    max-height: 50%;
+    vertical-align: middle;
+    border-radius: 4px;
+    align-content: center;
+}
+
+.centered-and-cropped {
+    object-fit: contain
+}
+
+h1 {
+    color: #2C7602;
 }
 
 a {
-  text-decoration: none;
-  color: #333333;
+    text-decoration: none;
+    color: #333333;
 }
 
 a:hover {
-  color: #f58551;
+    color: #f58551;
 }
 
 button {
-  background-color: #16cc9b;
-  border: 2px solid #16cc9b;
-  color: #ffffff;
-  transition: all 0.25s linear;
-  cursor: pointer;
+    background: #B6587A;
+    color: #ffffff;
+    border: 2px solid #B6587A;
+    transition: all 0.25s linear;
+    cursor: pointer;
 }
 
 button::after {
-  position: relative;
-  right: 0;
-  content: " \276f";
-  transition: all 0.15s linear;
+    position: relative;
+    right: 0;
+    content: " \276f";
+    transition: all 0.15s linear;
 }
 
 button:hover {
-  background-color: #f58551;
-  border-color: #f58551;
+    background-color: #2C7602;
+    border-color: #2C7602;
 }
 
 button:hover::after {
-  right: -5px;
+    right: -5px;
 }
 
 button:focus {
-  outline: none;
+    outline: none;
 }
 
 ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
 input {
-  transition: all 0.25s linear;
+    transition: all 0.25s linear;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
 }
 
 input {
-  outline: none;
+    outline: none;
 }
 
 .container {
-  width: 90%;
-  margin: 0 auto;
-  overflow: auto;
+    width: 90%;
+    margin: 0 auto;
+    overflow: auto;
+    color: #2C7602;;
 }
 
 /* --- HEADER --- */
 header.container {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 header .breadcrumb {
-  color: #7d7d7d;
+    color: #7d7d7d;
 }
 
 header .breadcrumb li {
-  float: left;
-  padding: 0 6px;
-  height: 20px;
-  line-height: 20px;
+    float: left;
+    padding: 0 6px;
+    height: 20px;
+    line-height: 20px;
 }
 
 header .breadcrumb li:first-child {
-  padding-left: 2px;
+    padding-left: 2px;
 }
 
 header .breadcrumb li:not(:last-child)::after {
-  content: " \276f";
-  padding-left: 8px;
+    content: " \276f";
+    padding-left: 8px;
 }
 
 header .count {
-  float: right;
-  color: #333333;
-  height: 20px;
-  line-height: 20px;
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    color: #2C7602;;
 }
 
 /* --- PRODUCT LIST --- */
 .products {
-  border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .products > li {
-  padding: 1rem 0;
-  border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .row {
-  position: relative;
-  overflow: auto;
-  width: 100%;
+    position: relative;
+    overflow: auto;
+    width: 100%;
 }
 
 .row.removing {
-  -webkit-animation: fadeOut 500ms;
-  -moz-animation: fadeOut 500ms;
-  animation: fadeOut 500ms;
+    -webkit-animation: fadeOut 500ms;
+    -moz-animation: fadeOut 500ms;
+    animation: fadeOut 500ms;
 }
 
 .col,
 .quantity,
 .remove {
-  float: left;
+    float: left;
 }
 
 .col.left {
-  width: 70%;
+    width: 70%;
 }
 
 .col.right {
-  width: 30%;
-  position: absolute;
-  right: 0;
-  top: calc(50% - 30px);
+    width: 30%;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 30px);
 }
 
 .detail {
-  padding: 0 0.5rem;
-  line-height: 2.2rem;
+    padding: 0 0.5rem;
+    line-height: 2.2rem;
 }
 
 .detail .name {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .detail .description {
-  color: #7d7d7d;
-  font-size: 1rem;
+    color: #7d7d7d;
+    font-size: 1rem;
 }
 
 .detail .price {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .quantity,
 .remove {
-  width: 50%;
-  text-align: center;
+    width: 50%;
+    text-align: center;
 }
 
 .remove svg {
-  width: 60px;
-  height: 60px;
+    width: 60px;
+    height: 60px;
 }
 
 .quantity > input {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  position: relative;
-  left: calc(50% - 30px);
-  background: #fff;
-  border: 2px solid #ddd;
-  color: #7f7f7f;
-  text-align: center;
-  font: 600 1.5rem Helvetica, Arial, sans-serif;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: calc(50% - 30px);
+    background: #fff;
+    border: 2px solid #ddd;
+    color: #7f7f7f;
+    text-align: center;
+    font: 600 1.5rem Helvetica, Arial, sans-serif;
 }
 
 .quantity > input:hover,
 .quantity > input:focus {
-  border-color: #f58551;
+    border-color: #f58551;
 }
 
 .close {
-  fill: #7d7d7d;
-  transition: color 150ms linear, background-color 150ms linear,
-  fill 150ms linear, 150ms opacity linear;
-  cursor: pointer;
+    fill: #7d7d7d;
+    transition: color 150ms linear, background-color 150ms linear,
+    fill 150ms linear, 150ms opacity linear;
+    cursor: pointer;
 }
 
 .close:hover {
-  fill: #f58551;
+    fill: #f58551;
 }
 
 /* --- SUMMARY --- */
 .promotion,
 .summary,
 .checkout {
-  float: left;
-  width: 100%;
-  margin-top: 1.5rem;
+    float: left;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+
+.address {
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 100%;
+    transition: border .5s;
+    outline: none;
+    height: 60px;
+    font-size: 18px
+}
+
+.address:focus {
+    border: 2px solid #2C7602;
+    box-shadow: none;
 }
 
 .promotion > label {
-  float: left;
-  width: 100%;
-  margin-bottom: 1rem;
+    float: left;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .promotion > input {
-  float: left;
-  width: 80%;
-  font-size: 1rem;
-  padding: 0.5rem 0 0.5rem 1.8rem;
-  border: 2px solid #16cc9b;
-  border-radius: 2rem 0 0 2rem;
+    float: left;
+    width: 80%;
+    font-size: 1rem;
+    padding: 0.5rem 0 0.5rem 1.8rem;
+    border: 2px solid #16cc9b;
+    border-radius: 2rem 0 0 2rem;
 }
 
 .promotion:hover > input {
-  border-color: #f58551;
+    border-color: #f58551;
 }
 
 .promotion > button {
-  float: left;
-  width: 20%;
-  height: 2.4rem;
-  border-radius: 0 2rem 2rem 0;
+    float: left;
+    width: 20%;
+    height: 2.4rem;
+    border-radius: 0 2rem 2rem 0;
 }
 
 .promotion:hover > button {
-  border-color: #f58551;
-  background-color: #f58551;
+    border-color: #f58551;
+    background-color: #f58551;
 }
 
 .promotion > button::after {
-  content: "\276f";
-  font-size: 1rem;
+    content: "\276f";
+    font-size: 1rem;
 }
 
 .summary {
-  font-size: 1.2rem;
-  text-align: right;
+    font-size: 1.2rem;
+    text-align: right;
 }
 
 .summary ul li {
-  padding: 0.5rem 0;
+    padding: 0.5rem 0;
 }
 
 .summary ul li span {
-  display: inline-block;
-  width: 30%;
+    display: inline-block;
+    width: 30%;
 }
 
 .summary ul li.total {
-  font-weight: bold;
+    font-weight: bold;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 22px;
 }
 
 .checkout {
-  text-align: right;
+    text-align: right;
 }
 
 .checkout > button {
-  font-size: 1.2rem;
-  padding: 0.8rem 2.8rem;
-  border-radius: 1.5rem;
+    font-size: 1.2rem;
+    padding: 0.8rem 2.8rem;
+    border-radius: 1.5rem;
 }
 
 .empty-product {
-  text-align: center;
+    text-align: center;
 }
 
 .empty-product > button {
-  font-size: 1.3rem;
-  padding: 10px 30px;
-  border-radius: 5px;
+    font-size: 1.3rem;
+    padding: 10px 30px;
+    border-radius: 5px;
 }
 
 /* --- SMALL SCREEN --- */
 @media all and (max-width: 599px) {
-  .thumbnail img {
-    display: none;
-  }
+    .thumbnail img {
+        display: none;
+    }
 
-  .quantity > input {
-    width: 40px;
-    height: 40px;
-    left: calc(50% - 20px);
-  }
+    .quantity > input {
+        width: 40px;
+        height: 40px;
+        left: calc(50% - 20px);
+    }
 
-  .quantity > textarea {
-    width: 40%;
-    height: 60px;
-    left: calc(50% - 20px);
-  }
+    .quantity > textarea {
+        width: 40%;
+        height: 60px;
+        left: calc(50% - 20px);
+    }
 
-  .remove svg {
-    width: 40px;
-    height: 40px;
-  }
+    .remove svg {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 /* --- MEDIUM & LARGE SCREEN --- */
 @media all and (min-width: 600px) {
-  html {
-    font-size: 14px;
-  }
+    html {
+        font-size: 14px;
+    }
 
-  .container {
-    width: 75%;
-    max-width: 960px;
-  }
+    .container {
+        width: 75%;
+        max-width: 960px;
+    }
 
-  .thumbnail,
-  .detail {
-    float: left;
-  }
+    .thumbnail,
+    .detail {
+        float: left;
+    }
 
-  .thumbnail {
-    width: 35%;
-  }
+    .thumbnail {
+        width: 35%;
+    }
 
-  .detail {
-    width: 65%;
-  }
+    .detail {
+        width: 65%;
+    }
 
-  .promotion,
-  .summary {
-    width: 50%;
-  }
+    .promotion,
+    .summary {
+        width: 50%;
+    }
 
-  .checkout {
-    width: 100%;
-  }
+    .checkout {
+        width: 100%;
+    }
 
-  .checkout,
-  .summary {
-    text-align: right;
-  }
+    .checkout,
+    .summary {
+        text-align: right;
+    }
 }
 
 /* --- LARGE SCREEN --- */
 @media all and (min-width: 992px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 /* --- toast --- */
 
 .toast {
-  position: fixed;
-  top: -50px;
-  left: calc(50vw - 50px);
-  z-index: 25;
-  padding: 5px 10px;
-  border-radius: 15px;
-  height: 40px;
-  font-size: 20px;
+    position: fixed;
+    top: -50px;
+    left: calc(50vw - 50px);
+    z-index: 25;
+    padding: 5px 10px;
+    border-radius: 15px;
+    height: 40px;
+    font-size: 20px;
 }
 
 .toast-success {
-  background-color: green;
-  color: white;
-  font-size: 9pt;
+    background-color: green;
+    color: white;
+    font-size: 9pt;
 }
 
 .toast-error {
-  background-color: red;
-  color: white;
-  font-size: 9pt;
+    background-color: red;
+    color: white;
+    font-size: 9pt;
 }
 
 .toast-transition {
-  top: calc(50px);
-  transition: top 1s;
+    top: calc(50px);
+    transition: top 1s;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }

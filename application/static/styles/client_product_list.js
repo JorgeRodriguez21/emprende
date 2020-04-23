@@ -2,9 +2,11 @@ let maxValue = undefined;
 let idValue = undefined;
 let totalPrice = undefined;
 let title = undefined;
+let image_name=undefined
 
-function OpenProduct(id, colors, sizes) {
+function OpenProduct(id, colors, sizes, image_name_param) {
     idValue = id;
+    image_name = image_name_param
     //Load image
     let image = $('.product_image[item-data="' + id + '"] img');
     let lbi = $('.lightbox-blanket .product-image img');
@@ -186,7 +188,8 @@ function AddToCart() {
             size: getSelectedSize(),
             units: units,
             totalPrice,
-            title
+            title,
+            image: image_name
         }),
         success: function (data, status, xhttp) {
             showSuccessMessage();

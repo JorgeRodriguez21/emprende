@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="/static/styles/find_product.css" type="text/css">
+<script src="../static/styles/jquery-3.4.1.min.js"></script>
+<script src="/static/styles/find_product.js"></script>
+<link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script>
+    $(function () {
+        $("#menu").load("../static/menu/menu.html");
+    });
+</script>
+<div id="menu" autofocus style="margin-bottom: 10%"></div>
+<section>
+    <h1>Inventario de Productos</h1>
+    <br/>
+
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+            <tr>
+                <th>C&oacute;digo</th>
+                <th>Precio Total</th>
+                <th>Ciudad</th>
+                <th>Direcci&oacute;n</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table id="content-table" cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+            {% for order in orders %}
+                <tr onclick="goToOrderDetail('{{ order.id }}');">
+                    <td>{{ order.code }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.city }}</td>
+                    <td>{{ order.address }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>

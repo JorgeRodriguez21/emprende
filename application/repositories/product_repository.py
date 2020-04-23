@@ -73,7 +73,7 @@ class ProductRepository:
         db.session.commit()
 
     @classmethod
-    def add_purchased_units(cls, values):
+    def add_cancelled_units(cls, values):
         ids = cls.get_product_ids(values)
         products = Product.query.filter(Product.id.in_(ids)).all()
         for product_id, units in values:

@@ -193,7 +193,7 @@ ul.product_list {
     overflow-y: scroll;
     top: 0;
     width: 100vw;
-    z-index: 20;
+    z-index: 2001;
 }
 
 .pop-up-container {
@@ -218,6 +218,7 @@ ul.product_list {
     margin: 20px auto;
     width: auto;
     position: relative;
+    background: #f6eeee;
 }
 
 .pop-up-wrapper {
@@ -230,7 +231,7 @@ ul.product_list {
     position: absolute;
     left: 10px;
     top: 10px;
-    color: #222;
+    color: #FFFFFF;
     width: 0;
     height: 0;
     border-top: 60px solid #B6587A;
@@ -281,6 +282,10 @@ ul.product_list {
     .product-info, .product-image {
         width: 100%;
     }
+}
+
+.add-to-cart{
+    color: #2C7602;;
 }
 
 
@@ -662,6 +667,7 @@ ul.product_list {
     left: 0;
     font-size: 12px;
     text-transform: uppercase;
+    color: #2C7602;;
 }
 
 .product-checkout-actions {
@@ -671,7 +677,7 @@ ul.product_list {
 
 .product-checkout-total, .product-checkout-total-amount {
     font-size: 20px;
-    color: #C17A41;
+    color: #B6587A;
 }
 
 .product-checkout-total * {
@@ -685,13 +691,13 @@ ul.product_list {
     position: fixed;
     top: -50px;
     left: calc(50vw - 50px);
-    z-index: 25;
+    z-index: 2002;
     padding: 5px 10px;
     border-radius: 15px;
 }
 
 .toast-success {
-    background-color: green;
+    background-color: #2C7602;
     color: white;
     font-size: 9pt;
 }

@@ -21,3 +21,12 @@ $(window).on("load resize ", function () {
     const scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
     $('.tbl-header').css({'padding-right': scrollWidth});
 }).resize();
+
+
+function goToOrderDetail(id) {
+    document.location.href = '/order/' + id
+}
+
+function DoNav(id) {
+    document.location.href = '/product/' + id
+}

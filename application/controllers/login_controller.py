@@ -11,7 +11,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return redirect("/register_product")
+        return redirect("/products")
 
 
 @login_blueprint.route('/login', methods=['POST'])
@@ -20,7 +20,10 @@ def login():
     response = user_service.login_user(request.form['email'], request.form['password'])
     if response[0]:
         session['logged_in'] = True
-        session['user_id'] = response[1]
+        user = response[1]
+        session['user_id'] = user.id
+        session['user_email'] = user.email
+        session['is_admin'] = user.isAdmin
     else:
         flash('Email o contraseña inválidos')
     return home()

@@ -19,10 +19,10 @@
         {% for product in products %}
             <li class="product_item">
                 <div class="product_image" item-data={{ product.id }}>
-                    <a href="#"><img src="https://bit.ly/1myplK1" alt=""></a>
+                    <a href="#"><img src="{{ product.image_name }}" alt=""></a>
                     <div class="product_buttons">
                         <button class="add_to_cart"
-                                onclick="OpenProduct('{{ product.id }}','{{ product.colors }}', '{{ product.sizes }}');">
+                                onclick="OpenProduct('{{ product.id }}','{{ product.colors }}', '{{ product.sizes }}', '{{ product.image_name }}');">
                             <i
                                     class="fa fa-shopping-cart"></i></button>
                         <br>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="product-bottom">
                         <div class="product-checkout">
-                            Total Price
+                            Precio Total
                             <div class="product-checkout-total">
                                 <i class="fa fa-usd"></i>
                                 <div class="product-checkout-total-amount">
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                         <div class="product-checkout-actions">
-                            <a class="add-to-cart" href="#" onclick="AddToCart();">Add to Cart</a>
+                            <a class="add-to-cart" href="#" onclick="AddToCart();">Agregar al carrito</a>
 
                         </div>
                     </div>

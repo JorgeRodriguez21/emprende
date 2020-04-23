@@ -1,7 +1,6 @@
-from flask import Blueprint, request, flash, render_template
+from flask import Blueprint, request, flash, render_template, redirect
 from marshmallow import ValidationError
 
-from application.controllers.login_controller import home
 from application.services.email_service import EmailService
 from application.services.user_service import UserService
 
@@ -21,10 +20,11 @@ def create_user():
         user_service = UserService()
         user_service.create_user(request.form['name'], request.form['last_name'], request.form['email'],
                                  request.form['password'])
-        return home()
+        flash('Usuario creado correctamente')
+        return redirect('/')
     except ValidationError:
-        flash('Email o contraseña inválidos')
-        return show_signup_page()
+        error = 'Usuario ya existente o email ya registrado'
+        return render_template('create_user.html', error=error)
 
 
 @recover_user_blueprint.route('/recover', methods=["GET", "POST"])
@@ -39,6 +39,7 @@ def recover_user():
             password = result[1]
             email_service = EmailService()
             email_service.send_email(email, password)
-        return home()
+            flash('Se le envió un email con su nueva clave de acceso')
+        return redirect('/')
     elif request.method == 'GET':
         return render_template('recover_user.html')

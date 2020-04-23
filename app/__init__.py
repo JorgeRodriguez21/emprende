@@ -23,10 +23,10 @@ def config_app():
             app.logger.debug('development')
             CORS(app)
             app.debug = app.config['DEBUG']
-            app.logger.debug("before delete database")
-            if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-                app.logger.debug('Deleting database.')
-                drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
+            # app.logger.debug("before delete database")
+            # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+            #     app.logger.debug('Deleting database.')
+            #     drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
             if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
                 app.logger.debug('Creating database.')
                 create_database(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -64,6 +64,8 @@ def register_blueprints(app):
     from application.controllers.purchase_controller import purchase_blueprint
     from application.controllers.purchase_controller import purchase_list_blueprint
     from application.controllers.aws_controller import sign_s3_blueprint
+    from application.controllers.order_controller import orders_blueprint, order_detail_blueprint, \
+        order_confirmation_blueprint, order_cancellation_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(create_user_blueprint)
@@ -78,6 +80,10 @@ def register_blueprints(app):
     app.register_blueprint(purchase_delete_blueprint)
     app.register_blueprint(purchase_confirm_blueprint)
     app.register_blueprint(sign_s3_blueprint)
+    app.register_blueprint(orders_blueprint)
+    app.register_blueprint(order_detail_blueprint)
+    app.register_blueprint(order_confirmation_blueprint)
+    app.register_blueprint(order_cancellation_blueprint)
 
 
 def create_tables():

@@ -4,12 +4,14 @@ import os
 from boto3 import client
 from flask import Blueprint, request
 
+from application.middleware.is_user_logged import check_is_admin
 from application.services.product_service import ProductService
 
 sign_s3_blueprint = Blueprint('/sign_s3/', __name__)
 
 
 @sign_s3_blueprint.route('/sign_s3/')
+@check_is_admin
 def sign_s3():
     from run import app
     s3_bucket = os.environ.get('S3_BUCKET')

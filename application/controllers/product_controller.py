@@ -1,6 +1,7 @@
-from flask import Blueprint, request, flash, render_template, redirect
+from flask import Blueprint, request, flash, render_template, redirect, session
 from marshmallow import ValidationError
 
+from application.middleware.is_user_logged import check_is_admin
 from application.services.product_service import ProductService
 
 register_product_blueprint = Blueprint('/register_product', __name__)
@@ -10,6 +11,7 @@ products_blueprint = Blueprint('/products', __name__)
 
 
 @register_product_blueprint.route('/register_product', methods=["GET", "POST"])
+@check_is_admin
 def register_product():
     if request.method == 'POST':
         name = request.form['product_name']
@@ -37,6 +39,7 @@ def register_product():
 
 
 @find_product_blueprint.route('/find_products', methods=["GET"])
+@check_is_admin
 def register_product():
     return render_product_list()
 
@@ -48,6 +51,7 @@ def render_product_list():
 
 
 @find_product_by_id_blueprint.route('/product/<product_id>', methods=["GET", "POST"])
+@check_is_admin
 def product_by_id(product_id):
     if request.method == 'POST':
         name = request.form['product_name']

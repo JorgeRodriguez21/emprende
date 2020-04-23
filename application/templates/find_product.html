@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="../static/styles/find_product.css" type="text/css">
+<link rel="stylesheet" href="/static/styles/find_product.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <script src="../static/styles/find_product.js"></script>
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
@@ -7,29 +7,6 @@
     $(function(){
         $("#menu").load("../static/menu/menu.html");
     });
-</script>
-<script type="text/javascript">
-    function DoNav(id) {
-        document.location.href = '/product/' + id
-    }
-
-    function filterByName() {
-        let input, filter, table, tr, td, i;
-        input = document.getElementById("inputName");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("content-table");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
 </script>
 <div id="menu" autofocus style="margin-bottom: 10%"></div>
 <section>

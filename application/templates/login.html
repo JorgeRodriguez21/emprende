@@ -24,16 +24,16 @@
                 <input type="submit" value="Iniciar Sesi&oacute;n" class="btn btn-primary btn-large btn-block">
                 <a class="login-link" href="/sign_up">No estás registrada/o?</a>
                 <a class="login-link" href="/recover">Olvidaste tu contraseña?</a>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
             </div>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class=flashes>
-                        {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
         </div>
     </div>
 </form>

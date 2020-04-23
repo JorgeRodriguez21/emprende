@@ -23,15 +23,16 @@ function removeElement(idValue) {
 
 }
 
-function showSuccessMessage() {
-    let toast = '<div class="toast toast-success">Su compra fue confirmada correctamente, se le envi&oacute; un email con el detalle de la misma.</div>';
+function showSuccessMessage(message) {
+    let toast = '<div class="toast toast-success">' + message + '</div>';
     $("body").append(toast);
     setTimeout(function () {
         $(".toast").addClass("toast-transition");
     }, 100);
     setTimeout(function () {
         $(".toast").remove();
-    }, 10000);
+        location.reload();
+    }, 3500);
     $(".lightbox-blanket").toggle();
 }
 
@@ -48,8 +49,8 @@ function showErrorMessage(message) {
     }, 100);
     setTimeout(function () {
         $(".toast").remove();
+        location.reload();
     }, 3500);
-    console.log(message);
 }
 
 function confirmPurchase() {
@@ -61,7 +62,6 @@ function confirmPurchase() {
         });
         return ids;
     }
-
     let address = $("#address")[0].value;
 
     if (getSelectedLocation() === undefined || address === '' || address === undefined || getIds().length === 0) {
@@ -80,20 +80,67 @@ function confirmPurchase() {
                 totalPrice: $('.total').html().substring(1)
             }),
             success: function (data, status, xhttp) {
-                showSuccessMessage();
-                setTimeout(function () {
-                    location.reload()
-                }, 10000);
+                let message = 'Su compra fue confirmada correctamente, se le envi&oacute; un email con el detalle de la misma.'
+                showSuccessMessage(message);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 showErrorMessage(XMLHttpRequest.responseText);
-                setTimeout(function () {
-                    location.reload()
-                }, 3500);
             }
         });
     }
 
+}
+
+function confirmOrder(id) {
+    $.ajax({
+        type: "PUT",
+        url: "/order/confirmation",
+        // set content type header to use Flask response.get_json()
+        contentType: "application/json",
+        data: JSON.stringify({
+            order: id,
+        }),
+        // convert data/object to JSON to send
+        success: function (data, status, xhttp) {
+            let message = 'Orden confirmada.'
+            showSuccessMessage(message);
+            setTimeout(function () {
+                window.location.replace('/orders')
+            }, 1000);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMessage(XMLHttpRequest.responseText);
+            setTimeout(function () {
+                window.location.replace('/orders')
+            }, 1000);
+        }
+    });
+}
+
+function cancelOrder(id) {
+    $.ajax({
+        type: "PUT",
+        url: "/order/cancellation",
+        // set content type header to use Flask response.get_json()
+        contentType: "application/json",
+        data: JSON.stringify({
+            order: id,
+        }),
+        // convert data/object to JSON to send
+        success: function (data, status, xhttp) {
+            let message = 'Orden cancelada.'
+            showSuccessMessage(message);
+            setTimeout(function () {
+                window.location.replace('/orders')
+            }, 1000);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            showErrorMessage(XMLHttpRequest.responseText);
+            setTimeout(function () {
+                window.location.replace('/orders')
+            }, 1000);
+        }
+    });
 }
 
 function calculateSubtotal() {
