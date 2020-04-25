@@ -18,6 +18,7 @@ class DefaultConfig:
     MAIL_USE_TLS = False
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_SUPPRESS_SEND = False
+    SEND_FILE_MAX_AGE_DEFAULT = 0
 
 
 class DevelopmentConfig(DefaultConfig):
@@ -34,8 +35,8 @@ class ProductionConfig(DefaultConfig):
     @classmethod
     def init_app(cls, app):
         pass
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
 config = {
