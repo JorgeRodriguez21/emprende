@@ -3,24 +3,12 @@
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
 <script src="/static/styles/jquery-3.4.1.min.js"></script>
 <script src="/static/styles/shopping_cart.js" type="text/javascript"></script>
-<script src="/static/styles/menu.js" type="application/javascript"></script>
 <script type="text/javascript">
-    document.onreadystatechange = function () {
-        if (document.readyState === "complete") {
-            calculateSubtotal();
-        } else {
-            window.onload = function () {
-                defineVisibility();
-            };
-        }
-    }
+    window.onload = function () {
+        calculateSubtotal()
+    };
 </script>
-<script>
-    $(function () {
-        $("#menu").load("../static/menu/menu.html");
-    });
-</script>
-<div id="menu" class="menu" autofocus style="margin-bottom: 2%"></div>
+{% include 'menu.html' %}
 <div id="app">
     <!-- Header -->
     <header class="container">

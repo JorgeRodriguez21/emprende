@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script src="/static/styles/menu.js" type="application/javascript"></script>
+<body autofocus>
+<div id="container">
+    <ul id="menu">
+        <img class="logo" src="/static/styles/emprende.png">
+        {% if session['logged_in'] and session['is_admin']%}
+            <li id="products"><a>Productos</a>
+                <ul>
+                    <li onclick="navigateToAddProduct()"><a>Ingresar Producto</a></li>
+                    <li onclick="navigateToInventory()"><a>Inventario</a></li>
+                </ul>
+            </li>
+            <li id="orders"><a>Órdenes</a>
+                <ul>
+                    <li onclick="navigateToOrders()"><a>Ver pendientes</a></li>
+                </ul>
+            </li>
+        {% endif %}
+        {% if session['logged_in'] %}
+            <li id="manageSession" style="float: right" onclick="isUserLogged()"><a id="btnSession">Cerrar Sesion</a>
+            </li>
+            <li id="shoppingCart" style="float: right" onclick="navigateToShoppingCart()"><a>Carrito de compra</a></li>
+        {% else %}
+            <li id="manageSession" style="float: right" onclick="isUserLogged()"><a id="btnSession">Iniciar Sesion</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+</body>
+</html>
