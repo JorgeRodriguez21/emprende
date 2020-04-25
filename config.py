@@ -19,6 +19,7 @@ class DefaultConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_SUPPRESS_SEND = False
     SEND_FILE_MAX_AGE_DEFAULT = 0
+    SECRET_KEY = 'the random string'
 
 
 class DevelopmentConfig(DefaultConfig):
@@ -37,6 +38,7 @@ class ProductionConfig(DefaultConfig):
         pass
 
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 
 config = {
