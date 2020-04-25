@@ -8,11 +8,13 @@ body {
     padding: 30px;
     font-family: "Helvetica Neue", helvetica, arial, serif;
     background: #f6eeee;
+
 }
 
 #container {
     position: relative;
     width: 100%;
+    z-index: 2000;
 }
 
 #container:after {

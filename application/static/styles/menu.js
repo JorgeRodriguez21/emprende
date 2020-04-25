@@ -6,6 +6,10 @@ function navigateToInventory() {
     window.location.replace("/find_products");
 }
 
+function navigateToProducts() {
+    window.location.replace("/");
+}
+
 function navigateToOrders() {
     window.location.replace("/orders");
 }
