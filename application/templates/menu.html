@@ -20,11 +20,11 @@
             </li>
         {% endif %}
         {% if session['logged_in'] %}
-            <li id="manageSession" style="float: right" onclick="isUserLogged()"><a id="btnSession">Cerrar Sesion</a>
+            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a id="btnSession">Cerrar Sesion</a>
             </li>
             <li id="shoppingCart" style="float: right" onclick="navigateToShoppingCart()"><a>Carrito de compra</a></li>
         {% else %}
-            <li id="manageSession" style="float: right" onclick="isUserLogged()"><a id="btnSession">Iniciar Sesion</a>
+            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a id="btnSession">Iniciar Sesion</a>
             </li>
         {% endif %}
     </ul>

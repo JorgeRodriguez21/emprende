@@ -14,7 +14,8 @@ function navigateToShoppingCart() {
     window.location.replace("/my_cart");
 }
 
-function isUserLogged() {
+function isUserLogged(message) {
+    console.log(message)
     $.ajax({
         type: "GET",
         url: "/manage_session",
