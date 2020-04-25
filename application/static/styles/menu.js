@@ -20,11 +20,15 @@ function isUserLogged() {
         url: "/manage_session",
         dataType: 'json',
         success: function (data, status, xhttp) {
-            if (data) {
-                window.location.replace("/");
-            } else {
-                window.location.replace("/login");
-            }
+            let millisecondsToWait = 500;
+            setTimeout(function() {
+                if (data) {
+                    window.location.replace("/");
+                } else {
+                    window.location.replace("/login");
+                }
+            }, millisecondsToWait);
+
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             window.location.replace("/products");
