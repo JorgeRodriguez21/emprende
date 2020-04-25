@@ -3,6 +3,12 @@
 <link rel="stylesheet" href="/static/styles/toast_message.css" type="text/css">
 <script rel="stylesheet" href="/static/styles/toast_messages.js" type="text/javascript"></script>>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
+<script src="/static/styles/menu.js" type="application/javascript"></script>
+<script type="text/javascript">
+    window.onload = async function init() {
+        await defineVisibility();
+    };
+</script>
 <script>
     $(function () {
         $("#menu").load("../static/menu/menu.html");

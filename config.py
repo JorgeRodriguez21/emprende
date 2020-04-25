@@ -12,6 +12,7 @@ class DefaultConfig:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_USERNAME = os.environ['EMAIL_USER']
     MAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
+    CONTACT_PHONE = os.environ['CONTACT_PHONE']
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
@@ -33,9 +34,6 @@ class ProductionConfig(DefaultConfig):
     @classmethod
     def init_app(cls, app):
         pass
-
-    DEBUG = True
-    TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 

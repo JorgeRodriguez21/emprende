@@ -52,17 +52,13 @@ def config_app():
 
 
 def register_blueprints(app):
-    from application.controllers.login_controller import login_blueprint
-    from application.controllers.login_controller import home_blueprint
-    from application.controllers.user_controller import create_user_blueprint
-    from application.controllers.user_controller import register_user_blueprint
-    from application.controllers.user_controller import recover_user_blueprint
-    from application.controllers.product_controller import register_product_blueprint
-    from application.controllers.product_controller import find_product_blueprint
-    from application.controllers.product_controller import find_product_by_id_blueprint
-    from application.controllers.product_controller import products_blueprint
-    from application.controllers.purchase_controller import purchase_blueprint
-    from application.controllers.purchase_controller import purchase_list_blueprint
+    from application.controllers.login_controller import login_blueprint, home_blueprint, \
+        roles_blueprint, manage_session_blueprint
+    from application.controllers.user_controller import create_user_blueprint, register_user_blueprint, \
+        recover_user_blueprint
+    from application.controllers.product_controller import register_product_blueprint, find_product_blueprint, \
+        find_product_by_id_blueprint, products_blueprint
+    from application.controllers.purchase_controller import purchase_blueprint, purchase_list_blueprint
     from application.controllers.aws_controller import sign_s3_blueprint
     from application.controllers.order_controller import orders_blueprint, order_detail_blueprint, \
         order_confirmation_blueprint, order_cancellation_blueprint
@@ -84,6 +80,8 @@ def register_blueprints(app):
     app.register_blueprint(order_detail_blueprint)
     app.register_blueprint(order_confirmation_blueprint)
     app.register_blueprint(order_cancellation_blueprint)
+    app.register_blueprint(roles_blueprint)
+    app.register_blueprint(manage_session_blueprint)
 
 
 def create_tables():

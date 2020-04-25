@@ -79,7 +79,7 @@ def product_by_id(product_id):
         return render_template('edit_product.html', product=product)
 
 
-@products_blueprint.route('/products/', methods=["GET"])
+@products_blueprint.route('/products', methods=["GET"])
 def get_all_products():
     product_service = ProductService()
     products = product_service.find_all_products()

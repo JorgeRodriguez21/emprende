@@ -6,7 +6,7 @@ def check_logged(func):
         if not ('logged_in' in session and session['logged_in']):
             if request.method == 'POST':
                 return 'Debes iniciar sesion para realizar esta accion', 500
-            return redirect("/")
+            return redirect("/login")
         return func(*args, **kwargs)
 
     return validation
@@ -17,7 +17,7 @@ def check_is_admin(func):
         if not ('logged_in' in session and session['logged_in']):
             if request.method == 'POST':
                 return 'Debes iniciar sesion para realizar esta accion', 500
-            return redirect("/")
+            return redirect("/login")
         if not session.get('is_admin'):
             abort(401, "No estás autorizado/a a ver este contenido")
         return func(*args, **kwargs)

@@ -150,8 +150,33 @@ function calculateSubtotal() {
         let id = $(this).attr('id');
         sum += parseFloat(counter);
     });
+    console.log("entra")
     $('.subtotal').html('$' + sum.toFixed(2));
-    calculateTotal()
+    calculateTotal();
+}
+
+function calculateSubtotalForOrders(city) {
+    setShippingValue(city)
+    let sum = 0;
+    $('.price').each(function () {
+        let counter = $(this).html().substring(1);
+        let id = $(this).attr('id');
+        sum += parseFloat(counter);
+    });
+    console.log("entra3")
+    $('.subtotal').html('$' + sum.toFixed(2));
+    calculateTotal();
+}
+
+function setShippingValue(city) {
+    console.log('entra2')
+    let value = '5'
+    if(city === "Quito"){
+        value = '3';
+    }
+    let total = parseFloat(value).toFixed(2);
+    $('.shipping').html('$' + total);
+    calculateTotal();
 }
 
 function calculateTotal() {

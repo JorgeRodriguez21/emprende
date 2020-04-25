@@ -3,10 +3,19 @@
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
 <script src="/static/styles/jquery-3.4.1.min.js"></script>
 <script src="/static/styles/shopping_cart.js" type="text/javascript"></script>
+<script src="/static/styles/menu.js" type="application/javascript"></script>
 <script type="text/javascript">
-    window.onload = function exampleFunction() {
-        calculateSubtotal();
-    };
+    document.onreadystatechange = function () {
+        if (document.readyState === "complete") {
+            calculateSubtotalForOrders('{{ order.city }}');
+        } else {
+            window.onload = function () {
+                defineVisibility();
+            };
+        }
+    }
+</script>
+<script>
     $(function () {
         $("#menu").load("../static/menu/menu.html");
     });

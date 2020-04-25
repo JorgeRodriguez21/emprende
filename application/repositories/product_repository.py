@@ -84,6 +84,7 @@ class ProductRepository:
                 raise ValidationError("El producto no está disponible")
             else:
                 found_product.available_units = found_product.available_units + int(units)
+
         db.session.commit()
 
     @classmethod

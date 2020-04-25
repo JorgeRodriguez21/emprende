@@ -21,7 +21,7 @@ def create_user():
         user_service.create_user(request.form['name'], request.form['last_name'], request.form['email'],
                                  request.form['password'])
         flash('Usuario creado correctamente')
-        return redirect('/')
+        return redirect('/login')
     except ValidationError:
         error = 'Usuario ya existente o email ya registrado'
         return render_template('create_user.html', error=error)
@@ -40,6 +40,6 @@ def recover_user():
             email_service = EmailService()
             email_service.send_email(email, password)
             flash('Se le envió un email con su nueva clave de acceso')
-        return redirect('/')
+        return redirect('/login')
     elif request.method == 'GET':
         return render_template('recover_user.html')

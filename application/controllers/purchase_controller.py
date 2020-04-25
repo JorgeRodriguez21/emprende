@@ -84,6 +84,7 @@ def delete_product_from_cart():
 @purchase_confirm_blueprint.route('/confirm', methods=['PUT'])
 @check_logged
 def confirm_purchase():
+    from run import app
     try:
         data = request.get_json()
         ids = data['ids']
@@ -93,9 +94,8 @@ def confirm_purchase():
         purchases = purchase_service.confirm_purchase(ids, order.id)
         email_service = EmailService()
         email_service.send_confirmation_email(session['user_email'], order.code, purchases, order.total_price,
-                                              '2323232')
+                                              app.config['CONTACT_PHONE'])
         return 'OK', 201
     except Exception as error:
-        from run import app
         app.logger.error(error)
         return 'Error confirmando la compra', 500

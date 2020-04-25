@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script src="/static/styles/menu.js" type="application/javascript"></script>
+<script type="text/javascript">
+    window.onload = async function init() {
+        await defineVisibility();
+    };
+</script>
 <body>
 <div id="container">
     <ul id="menu">
-        <li><a href="#">About Me</a>
+        <img class="logo" src="/static/styles/emprende.png">
+
+        <li id="products" hidden><a>Productos</a>
             <ul>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Maecenas lacinia sem</a></li>
-                <li><a href="#">Suspendisse fringilla</a></li>
+                <li onclick="navigateToAddProduct()"><a>Ingresar Producto</a></li>
+                <li onclick="navigateToInventory()"><a>Inventario</a></li>
             </ul>
         </li>
-        <li><a href="#">Portfolio</a>
+        <li id="orders" hidden><a>Órdenes</a>
             <ul>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Maecenas dignissim fermentum luctus</a></li>
-                <li><a href="#">Suspendisse fringilla</a></li>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Maecenas lacinia sem</a></li>
-                <li><a href="#">Suspendisse fringilla</a></li>
+                <li onclick="navigateToOrders()"><a>Ver pendientes</a></li>
             </ul>
         </li>
-        <li><a href="#">Clients</a>
-            <ul>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Maecenas lacinia sem</a></li>
-                <li><a href="#">Suspendisse fringilla</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Contact Me</a>
-            <ul>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Maecenas dignissim fermentum luctus</a></li>
-                <li><a href="#">Suspendisse fringilla</a></li>
-            </ul>
-        </li>
-        <li style="float: right"><a href="#">Iniciar Sesion</a></li>
-        <li style="float: right"><a href="#">Carrito de compra</a></li>
+
+        <li id="manageSession" style="float: right" onclick="isUserLogged()"><a id="btnSession">Iniciar Sesion</a></li>
+        <li id="shoppingCart" style="float: right" onclick="navigateToShoppingCart()"><a>Carrito de compra</a></li>
     </ul>
 </div>
 </body>

@@ -7,6 +7,12 @@
 <script src="../static/styles/client_product_list.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script src="/static/styles/menu.js" type="application/javascript"></script>
+<script type="text/javascript">
+    window.onload = async function init() {
+        await defineVisibility();
+    };
+</script>
 <script>
     $(function () {
         $("#menu").load("../static/menu/menu.html");
@@ -67,7 +73,7 @@
         {% endfor %}
     </ul>
 </div>
-<div class="lightbox-blanket">
+<div class="lightbox-blanket" style="display: none">
     <div class="pop-up-container">
         <div class="pop-up-container-vertical">
             <div class="pop-up-wrapper">

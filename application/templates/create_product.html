@@ -2,6 +2,12 @@
 <script src="/static/styles/create_product.js"></script>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<script src="/static/styles/menu.js" type="application/javascript"></script>
+<script type="text/javascript">
+    window.onload = async function init() {
+        await defineVisibility();
+    };
+</script>
 <script>
     $(function () {
         $("#menu").load("../static/menu/menu.html");

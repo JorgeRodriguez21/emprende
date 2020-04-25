@@ -22,6 +22,11 @@ body {
     height: 0;
 }
 
+.logo {
+    height: 6%;
+    width: 6%;
+}
+
 #menu {
     position: relative;
     float: left;
