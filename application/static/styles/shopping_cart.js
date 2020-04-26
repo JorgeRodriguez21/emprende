@@ -163,13 +163,11 @@ function calculateSubtotalForOrders(city) {
         let id = $(this).attr('id');
         sum += parseFloat(counter);
     });
-    console.log("entra3")
     $('.subtotal').html('$' + sum.toFixed(2));
     calculateTotal();
 }
 
 function setShippingValue(city) {
-    console.log('entra2')
     let value = '5'
     if(city === "Quito"){
         value = '3';
