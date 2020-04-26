@@ -8,7 +8,7 @@ class DefaultConfig:
         pass
 
     DEBUG = False
-    TESTING = False
+    TESTING = True
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_USERNAME = os.environ['EMAIL_USER']
     MAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
@@ -29,7 +29,6 @@ class DevelopmentConfig(DefaultConfig):
         pass
 
     DEBUG = True
-    TESTING = True
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mysecretpassword@db:5432/mybase'
 
 
@@ -40,8 +39,6 @@ class ProductionConfig(DefaultConfig):
 
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SECRET_KEY = os.environ['SECRET_KEY']
-    DEBUG = True
-    TESTING = True
 
 
 config = {
