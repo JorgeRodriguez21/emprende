@@ -13,11 +13,12 @@ class DefaultConfig:
     MAIL_USERNAME = os.environ['EMAIL_USER']
     MAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
     CONTACT_PHONE = os.environ['CONTACT_PHONE']
-    MAIL_PORT = 465
-    MAIL_USE_SSL = True
-    MAIL_USE_TLS = False
+    MAIL_PORT = 587
+    MAIL_USE_SSL = False
+    MAIL_USE_TLS = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     MAIL_SUPPRESS_SEND = False
+    MAIL_DEBUG = True
     SEND_FILE_MAX_AGE_DEFAULT = 0
     SECRET_KEY = 'the random string'
 
