@@ -40,6 +40,8 @@ class ProductionConfig(DefaultConfig):
 
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SECRET_KEY = os.environ['SECRET_KEY']
+    DEBUG = True
+    TESTING = True
 
 
 config = {
