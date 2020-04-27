@@ -25,8 +25,8 @@ def register_product():
         avatar_url = request.form["avatar-url"]
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url, code,
-                                             colors, sizes)
+            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url,
+                                             code, colors, sizes)
             flash('Producto almacenado correctamente')
             return render_template('create_product.html')
         except ValidationError as error:

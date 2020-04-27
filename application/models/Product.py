@@ -17,7 +17,7 @@ class Product(db.Model):
                             backref=db.backref("product"))
 
     def __init__(self, name, description, available_units, unit_price, sale_price,
-                 image_name, colors, code, sizes):
+                 image_name, code, colors, sizes):
         super().__init__()
         self.name = name
         self.description = description
