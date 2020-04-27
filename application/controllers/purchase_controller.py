@@ -39,6 +39,8 @@ def add_product_to_cart():
 def get_active_purchases():
     try:
         purchase_service = PurchaseService()
+        if session['user_id'] is None:
+            raise Exception("No ha iniciado sesión")
         purchases = purchase_service.get_active_purchases_for_active_user(session['user_id'])
         dtos = map(map_to_purchase_dto, purchases)
         dto_list = list(dtos)
@@ -50,7 +52,7 @@ def get_active_purchases():
     except Exception as error:
         from run import app
         app.logger.debug(error)
-        raise ValidationError("Error loading purchases")
+        raise ValidationError("Error cargando las compras")
 
 
 def map_to_purchase_dto(purchase: Purchase):

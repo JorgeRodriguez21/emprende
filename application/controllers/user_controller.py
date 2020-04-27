@@ -1,3 +1,4 @@
+from email_validator import EmailNotValidError
 from flask import Blueprint, request, flash, render_template, redirect
 from marshmallow import ValidationError
 
@@ -25,6 +26,11 @@ def create_user():
     except ValidationError:
         error = 'Usuario ya existente o email ya registrado'
         return render_template('create_user.html', error=error)
+    except EmailNotValidError as error:
+        from run import app
+        app.logger.error(error)
+        message = 'Email no válido'
+        return render_template('create_user.html', error=message)
 
 
 @recover_user_blueprint.route('/recover', methods=["GET", "POST"])

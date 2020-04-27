@@ -2,7 +2,6 @@ import bcrypt
 import random
 import string
 from flask_login import UserMixin
-from validate_email import validate_email
 
 from application.database.database import db
 
@@ -36,7 +35,3 @@ class User(db.Model, UserMixin):
 
     def verify_password(self, password):
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
-
-
-def is_valid_email(email):
-    return validate_email(email, verify=True)
