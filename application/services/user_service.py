@@ -9,7 +9,7 @@ class UserService:
     @classmethod
     def create_user(cls, param_name, param_last_name, param_email, param_password, phone):
         user_repository = UserRepository()
-        email = validate_email(param_email)
+        email = cls.validate_email(param_email)
         user_repository.create_user(param_name, param_last_name, email, param_password, phone)
 
     @classmethod
