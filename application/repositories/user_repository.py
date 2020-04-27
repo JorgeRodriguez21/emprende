@@ -22,12 +22,13 @@ class UserRepository:
             return True, new_password
 
     @classmethod
-    def create_user(cls, param_name, param_last_name, param_email, param_password):
+    def create_user(cls, param_name, param_last_name, param_email, param_password, phone):
         existent_user = cls.find_user_by_email(param_email)
         if existent_user is None:
             user = User()
             user.password = param_password
             user.email = param_email
+            user.phone = phone
             user.name = param_name
             user.last_name = param_last_name
             db.session.add(user)

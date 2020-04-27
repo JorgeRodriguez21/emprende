@@ -9,5 +9,6 @@ class Order(db.Model):
     city = db.Column(db.String(50))
     address = db.Column(db.String(300))
     status = db.Column(db.Enum(OrderStatus))
+    user_info = db.Column(db.String(300))
     purchases = db.relationship("Purchase",
                                 backref=db.backref("order", lazy='joined'))

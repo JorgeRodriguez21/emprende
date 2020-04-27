@@ -19,7 +19,7 @@ def create_user():
     try:
         user_service = UserService()
         user_service.create_user(request.form['name'], request.form['last_name'], request.form['email'],
-                                 request.form['password'])
+                                 request.form['password'], request.form['phone'])
         flash('Usuario creado correctamente')
         return redirect('/login')
     except ValidationError:

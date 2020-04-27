@@ -97,6 +97,10 @@ ul.product_list {
     transition: all .35s ease-in-out;
 }
 
+.centered-and-cropped {
+    object-fit: contain
+}
+
 .product_image img:hover {
     -o-transform: scale(1.2, 1.2);
     -moz-transform: scale(1.2, 1.2);

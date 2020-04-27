@@ -38,6 +38,12 @@ class OrderRepository:
         return Order.query.filter_by(id=order_id).options(joinedload(Order.purchases, innerjoin=True)).first()
 
     @classmethod
+    def save_user_info(cls, order_id, user_info):
+        order = cls.find_order_by_id(order_id)
+        order.user_info = user_info
+        db.session.commit()
+
+    @classmethod
     def confirm_order(cls, order_id):
         order = cls.find_order_by_id(order_id)
         order.status = OrderStatus.CONFIRMED

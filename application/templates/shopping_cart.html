@@ -52,6 +52,13 @@
         {% else %}
             <div class="empty-product">
                 <h3>No hay productos en tu carrito de compras</h3>
+                {% if summary %}
+                    <br/>
+                    <h3>Resumen de su &uacute;ltima compra:</h3>
+                    <br/>
+                    <h4>{{ summary }}
+                    </h4>
+                {% endif %}
                 <button style="margin-top: 2%" onclick=goToShopping()>Ir a productos</button>
             </div>
         {% endif %}

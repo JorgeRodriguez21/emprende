@@ -25,3 +25,13 @@ class PurchaseService:
         id_units = purchase_repository.confirm_purchase(purchase_ids, order_id)
         product_repository.subtract_purchased_units(id_units)
         return purchase_repository.find_purchases_by_ids(purchase_ids)
+
+    @classmethod
+    def get_last_summary(cls, user_id):
+        purchase_repository = PurchaseRepository()
+        return purchase_repository.get_last_order_summary(user_id)
+
+    @classmethod
+    def update_summary(cls, ids, summary):
+        purchase_repository = PurchaseRepository()
+        return purchase_repository.update_summary(ids, summary)

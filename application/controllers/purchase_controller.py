@@ -45,7 +45,8 @@ def get_active_purchases():
         response = []
         for dto in dto_list:
             response.append(dto.__dict__)
-        return render_template('shopping_cart.html', purchases=response)
+        summary = purchase_service.get_last_summary(session['user_id'])
+        return render_template('shopping_cart.html', purchases=response, summary=summary)
     except Exception as error:
         from run import app
         app.logger.debug(error)
@@ -92,10 +93,30 @@ def confirm_purchase():
         order = order_service.save_order(ids[0], data['address'], data['city'], data['totalPrice'])
         purchase_service = PurchaseService()
         purchases = purchase_service.confirm_purchase(ids, order.id)
+        summary = create_summary(purchases, order.code, order.total_price, app.config['CONTACT_PHONE'])
+        user_info = get_user_name(purchases[0].user) + " " + purchases[0].user.phone
+        order_service.save_user_info(order.id, user_info)
+        purchase_service.update_summary(ids, summary)
         email_service = EmailService()
-        email_service.send_confirmation_email(session['user_email'], order.code, purchases, order.total_price,
-                                              app.config['CONTACT_PHONE'])
+        email_service.send_confirmation_email(session['user_email'], summary)
         return 'OK', 201
     except Exception as error:
         app.logger.error(error)
         return 'Error confirmando la compra', 500
+
+
+def get_user_name(user):
+    return user.name + " " + user.last_name
+
+
+def create_summary(purchases, code, price, phone):
+    product_details = ''
+    for purchase in purchases:
+        product_details = product_details + ' \n ' + purchase.features['title'] + ' : ' + str(
+            purchase.units) + ' unidad(es).'
+    return "Hola" + " " + get_user_name(purchases[
+                                            0].user) + "\n" + "El código de su compra es: " + code + " . Los productos que usted adquirió son los siguientes: " + \
+           product_details + "\n" + "El precio total es de $" + str(
+        price) + ". Por favor comunicarse por whatsapp con el número " + phone + \
+           " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 6 horas o su pedido será cancelado. \n" \
+           "Gracias por confiar en nosotros."

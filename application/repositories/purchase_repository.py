@@ -1,5 +1,8 @@
 from datetime import datetime, timezone, timedelta
 
+from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
+
 from application.database.database import db
 from application.enums.purchase_status import PurchaseStatus
 from application.models.purchase import Purchase
@@ -44,5 +47,17 @@ class PurchaseRepository:
         return id_units
 
     @classmethod
+    def update_summary(cls, ids, summary):
+        purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
+        if len(purchases) > 0:
+            for purchase in purchases:
+                purchase.summary = summary
+        db.session.commit()
+
+    @classmethod
     def find_purchases_by_ids(cls, ids):
-        return Purchase.query.filter(Purchase.id.in_(ids)).all()
+        return Purchase.query.filter(Purchase.id.in_(ids)).options(joinedload(Purchase.user, innerjoin=True)).all()
+
+    @classmethod
+    def get_last_order_summary(cls, user_id):
+        return Purchase.query.filter_by(user_id=user_id).order_by(desc(Purchase.id)).first().summary

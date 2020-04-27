@@ -55,9 +55,8 @@
     {% if order.purchases | count > 0 %}
         <section class="container">
             <div style="margin: 2%; height: 60px">
-                    <textarea id="address" class="address"
-                              placeholder="Ingrese la dirección..."
-                              disabled>{{ order.city }} - {{ order.address }}</textarea>
+                <textarea id="address" class="address"
+                          disabled>Usuario: {{ order.user_info }} - Direcci&oacute;n: {{ order.city }} - {{ order.address }}</textarea>
             </div>
         </section>
         <section class="container">
@@ -70,10 +69,12 @@
             </div>
 
             <div class="checkout">
-                <button type="button" onclick=confirmOrder('{{ order.id }}') style="margin-top: 2%">Confirmar compra</button>
-                <button type="button" onclick=cancelOrder('{{ order.id }}') style="margin-top: 2%">Cancelar compra</button>
+                <button type="button" onclick=confirmOrder('{{ order.id }}') style="margin-top: 2%">Confirmar compra
+                </button>
+                <button type="button" onclick=cancelOrder('{{ order.id }}') style="margin-top: 2%">Cancelar compra
+                </button>
             </div>
         </section>
     {% endif %}
-<!-- End Summary -->
+    <!-- End Summary -->
 </div>

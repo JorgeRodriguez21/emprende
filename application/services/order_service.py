@@ -29,3 +29,8 @@ class OrderService:
         id_units = order_repository.cancel_order(order_id)
         product_repository = ProductRepository()
         product_repository.add_cancelled_units(id_units)
+
+    @classmethod
+    def save_user_info(cls, order_id, user_info):
+        order_repository = OrderRepository()
+        order_repository.save_user_info(order_id, user_info)
