@@ -1,3 +1,5 @@
+from collections import Counter
+
 from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -60,9 +62,10 @@ class ProductRepository:
 
     @classmethod
     def subtract_purchased_units(cls, values):
-        ids = cls.get_product_ids(values)
+        values_without_duplicates = cls.get_product_ids_whit_unified_values(values)
+        ids = cls.get_product_ids(values_without_duplicates)
         products = Product.query.filter(Product.id.in_(ids)).all()
-        for product_id, units in values:
+        for product_id, units in values_without_duplicates:
             found_product = next(product for product in products if product.id == product_id)
             if found_product is None:
                 from run import app
@@ -74,9 +77,10 @@ class ProductRepository:
 
     @classmethod
     def add_cancelled_units(cls, values):
-        ids = cls.get_product_ids(values)
+        values_without_duplicates = cls.get_product_ids_whit_unified_values(values)
+        ids = cls.get_product_ids(values_without_duplicates)
         products = Product.query.filter(Product.id.in_(ids)).all()
-        for product_id, units in values:
+        for product_id, units in values_without_duplicates:
             found_product = next(product for product in products if product.id == product_id)
             if found_product is None:
                 from run import app
@@ -93,3 +97,32 @@ class ProductRepository:
         for product_id, units in values:
             ids.append(product_id)
         return ids
+
+    @classmethod
+    def get_product_ids_whit_unified_values(cls, values):
+        count = Counter()
+        for i in values:
+            count[i[0]] += i[1]
+        result = []
+        for i in count:
+            result.append((i, count[i]))
+
+        return result
+
+    @classmethod
+    def check_products_availability(cls, values):
+        values_without_duplicates = cls.get_product_ids_whit_unified_values(values)
+        ids = cls.get_product_ids(values_without_duplicates)
+        products = Product.query.filter(Product.id.in_(ids)).all()
+        for product_id, units in values_without_duplicates:
+            found_product = next(product for product in products if product.id == product_id)
+            if found_product is None:
+                from run import app
+                app.logger.error("Producto con id " + str(product_id) + "no esta disponible")
+                raise ValidationError("El producto no está disponible")
+            else:
+                remaining_units = found_product.available_units - int(units)
+                if remaining_units < 0:
+                    raise ValidationError(
+                        "El producto " + found_product.name + " no tiene disponibilidad. Por favor eliminelo de su carrito "
+                                                              "y mire las unidades disponibles en la pantalla de productos")

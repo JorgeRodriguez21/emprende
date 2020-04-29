@@ -47,6 +47,14 @@ class PurchaseRepository:
         return id_units
 
     @classmethod
+    def get_purchased_units_by_id(cls, ids):
+        id_units = []
+        purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
+        for purchase in purchases:
+            id_units.append((purchase.product_id, purchase.units))
+        return id_units
+
+    @classmethod
     def update_summary(cls, ids, summary):
         purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
         if len(purchases) > 0:

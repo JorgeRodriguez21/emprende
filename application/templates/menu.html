@@ -6,14 +6,16 @@
 <div id="container">
     <ul id="menu">
         <img class="logo" src="/static/styles/emprende.png">
-        {% if session['logged_in'] and session['is_admin']%}
-            <li id="products"><a>Productos</a>
-                <ul>
+        <li id="products"><a>Productos</a>
+            <ul>
+                {% if session['logged_in'] and session['is_admin'] %}
                     <li onclick="navigateToAddProduct()"><a>Ingresar Producto</a></li>
                     <li onclick="navigateToInventory()"><a>Inventario</a></li>
-                    <li onclick="navigateToProducts()"><a>Ir a productos</a></li>
-                </ul>
-            </li>
+                {% endif %}
+                <li onclick="navigateToProducts()"><a>Ir a productos</a></li>
+            </ul>
+        </li>
+        {% if session['logged_in'] and session['is_admin'] %}
             <li id="orders"><a>Órdenes</a>
                 <ul>
                     <li onclick="navigateToOrders()"><a>Ver pendientes</a></li>
@@ -21,11 +23,13 @@
             </li>
         {% endif %}
         {% if session['logged_in'] %}
-            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a id="btnSession">Cerrar Sesion</a>
+            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a
+                    id="btnSession">Cerrar Sesion</a>
             </li>
             <li id="shoppingCart" style="float: right" onclick="navigateToShoppingCart()"><a>Carrito de compra</a></li>
         {% else %}
-            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a id="btnSession">Iniciar Sesion</a>
+            <li id="manageSession" style="float: right" onclick="isUserLogged('{{ session['logged_in'] }}')"><a
+                    id="btnSession">Iniciar Sesion</a>
             </li>
         {% endif %}
     </ul>

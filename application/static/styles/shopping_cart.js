@@ -50,7 +50,7 @@ function showErrorMessage(message) {
     setTimeout(function () {
         $(".toast").remove();
         location.reload();
-    }, 3500);
+    }, 10000);
 }
 
 function confirmPurchase() {

@@ -1,4 +1,5 @@
 # https://codepen.io/robinhuy/pen/qjLxRq
+import json
 
 from flask import Blueprint, request, session, render_template
 from marshmallow import ValidationError
@@ -91,9 +92,10 @@ def confirm_purchase():
     try:
         data = request.get_json()
         ids = data['ids']
+        purchase_service = PurchaseService()
+        purchase_service.check_products_availability(ids)
         order_service = OrderService()
         order = order_service.save_order(ids[0], data['address'], data['city'], data['totalPrice'])
-        purchase_service = PurchaseService()
         purchases = purchase_service.confirm_purchase(ids, order.id)
         summary = create_summary(purchases, order.code, order.total_price, app.config['CONTACT_PHONE'])
         user_info = get_user_name(purchases[0].user) + " " + purchases[0].user.phone
@@ -102,6 +104,9 @@ def confirm_purchase():
         email_service = EmailService()
         email_service.send_confirmation_email(session['user_email'], summary)
         return 'OK', 201
+    except ValidationError as error:
+        app.logger.error(error)
+        return error.messages[0], 500
     except Exception as error:
         app.logger.error(error)
         return 'Error confirmando la compra', 500

@@ -27,6 +27,13 @@ class PurchaseService:
         return purchase_repository.find_purchases_by_ids(purchase_ids)
 
     @classmethod
+    def check_products_availability(cls, ids):
+        purchase_repository = PurchaseRepository()
+        product_repository = ProductRepository()
+        id_units = purchase_repository.get_purchased_units_by_id(ids)
+        product_repository.check_products_availability(id_units)
+
+    @classmethod
     def get_last_summary(cls, user_id):
         purchase_repository = PurchaseRepository()
         return purchase_repository.get_last_order_summary(user_id)
