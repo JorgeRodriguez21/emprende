@@ -22,6 +22,7 @@ def config_app():
         with app.app_context():
             app.logger.debug('development')
             CORS(app)
+
             app.debug = app.config['DEBUG']
             # app.logger.debug("before delete database")
             # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
@@ -89,4 +90,5 @@ def create_tables():
     from application.models.Product import Product
     from application.models.order import Order
     from application.models.purchase import Purchase
+    from application.models.ProductOptions import ProductOptions
     db.create_all()

@@ -2,6 +2,7 @@
 <script src="/static/styles/create_product.js"></script>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 {% include 'menu.html' %}
 <form action="/register_product" method="post">
     <h1 content=”text/html;>Ingresar la informaci&oacute;n del Producto</h1>
@@ -10,9 +11,6 @@
         <input type="text" id="name" name="product_name">
         <label for="description">Description:</label>
         <textarea id="description" name="product_description"></textarea>
-        <label for="available">Unidades Disponibles:</label>
-        <input type="number" step="1" pattern="\d+" min="0" max="60000" value="0" id="available"
-               name="product_available">
         <label for="unit_price">Precio Unitario:</label>
         <input type="number" min="0.00" max="10000.00" step="0.01" id="unit_price" value="0.00"
                name="product_unit_price"/>
@@ -21,10 +19,29 @@
                name="product_sale_price"/>
         <label for="code">Código:</label>
         <input type="text" id="code" name="product_code"/>
-        <label for="colors">Colores:</label>
-        <input type="text" id="colors" name="product_colors"/>
-        <label for="sizes">Tallas:</label>
-        <input type="text" id="sizes" name="product_sizes"/>
+        <div id="container">
+            <div id="add_container" class="row">
+                <label class="block2">Agregar talla y color disponible</label>
+                <div class="block2">
+                    <i class="fa fa-plus-circle fa-3x" ></i>
+                </div>
+            </div>
+            <div id="options_container" class="row">
+                <div id="available_units_container" class="block">
+                    <label for="available">Unidades Disponibles:</label>
+                    <input type="number" step="1" pattern="\d+" min="0" max="60000" value="0" id="available"
+                           name="product_available">
+                </div>
+                <div id="color_container" class="block">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="product_color"/>
+                </div>
+                <div id="size_container" class="block">
+                    <label for="size">Talla:</label>
+                    <input type="text" id="size" name="product_size"/>
+                </div>
+            </div>
+        </div>
         <label for='product_picture'>Subir imagen:</label>
         <input type="file" id="file_input" onchange=selectFile(0)>
         <p id="status">Por favor seleccione una imagen (png, jpg)</p>
