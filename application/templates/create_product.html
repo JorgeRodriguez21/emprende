@@ -19,26 +19,11 @@
                name="product_sale_price"/>
         <label for="code">Código:</label>
         <input type="text" id="code" name="product_code"/>
-        <div id="container">
+        <div id="product-detail-container">
             <div id="add_container" class="row">
                 <label class="block2">Agregar talla y color disponible</label>
                 <div class="block2">
-                    <i class="fa fa-plus-circle fa-3x" ></i>
-                </div>
-            </div>
-            <div id="options_container" class="row">
-                <div id="available_units_container" class="block">
-                    <label for="available">Unidades Disponibles:</label>
-                    <input type="number" step="1" pattern="\d+" min="0" max="60000" value="0" id="available"
-                           name="product_available">
-                </div>
-                <div id="color_container" class="block">
-                    <label for="color">Color:</label>
-                    <input type="text" id="color" name="product_color"/>
-                </div>
-                <div id="size_container" class="block">
-                    <label for="size">Talla:</label>
-                    <input type="text" id="size" name="product_size"/>
+                    <i onclick="addProductOptions()" class="fa fa-plus-circle fa-3x" ></i>
                 </div>
             </div>
         </div>
