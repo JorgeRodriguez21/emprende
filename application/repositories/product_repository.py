@@ -5,38 +5,47 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from application.database.database import db
 from application.models.Product import Product
+from application.models.ProductOptions import ProductOptions
+from application.repositories.product_options_repository import ProductOptionsRepository
 
 
 class ProductRepository:
 
     @classmethod
-    def save(cls, name, description, available_units, unit_price, sale_price,
-             image_name, code, colors, sizes):
+    def save(cls, name, description, unit_price, sale_price,
+             image_name, code, options):
+        from run import app
         try:
-            product = Product(name, description, available_units, unit_price, sale_price,
-                              image_name, code, colors, sizes)
+            product = Product(name, description, unit_price, sale_price,
+                              image_name, code)
+            product_options = []
+            for option in options:
+                product_option = ProductOptions(int(option['units']), option['color'], option['size'])
+                product_options.append(product_option)
+            product.options = product_options
             db.session.add(product)
             db.session.commit()
         except SQLAlchemyError as error:
-            from run import app
             app.logger.error('Error de base de datos en productos')
             app.logger.error(error)
             raise ValidationError('Error guardando el producto, por favor intente nuevamente')
 
     @classmethod
-    def update(cls, name, description, available_units, unit_price, sale_price,
-               image_name, product_id, code, colors, sizes):
+    def update(cls, name, description, unit_price, sale_price,
+               image_name, product_id, code, options):
         try:
             product = cls.find_by_id(product_id)
             product.name = name
             product.description = description
-            product.available_units = available_units
             product.unit_price = unit_price
             product.sale_price = sale_price
             product.image_name = image_name
             product.code = code
-            product.colors = colors
-            product.sizes = sizes
+            product_options = []
+            for option in options:
+                product_option = ProductOptions(int(option['units']), option['color'], option['size'])
+                product_options.append(product_option)
+            product.options = product_options
             db.session.commit()
         except SQLAlchemyError as error:
             from run import app

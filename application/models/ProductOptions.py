@@ -6,7 +6,7 @@ class ProductOptions(db.Model):
     available_units = db.Column(db.Integer)
     color = db.Column(db.String(128))
     size = db.Column(db.String(128))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id', ondelete="cascade"))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id', ondelete="cascade", onupdate="cascade"))
 
     def __init__(self, available_units, color, size):
         super().__init__()

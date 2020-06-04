@@ -2,18 +2,37 @@
 <script src="../static/styles/create_product.js"></script>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<!-- jQuery validation is not included in the script above, so needs to be explicitly included -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap HTML framework -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<!-- Materialize CSS framework -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 {% include 'menu.html' %}
-<form action="/product/{{ product.id }}" method="post">
+<script type="text/javascript">
+    window.onload = function () {
+        setInitialIndexForOptions("{{product.options|length}}")
+    };
+</script>
+<form id="product_form" action="/product/{{ product.id }}" method="post">
     <h1 content=”text/html;>Ingresar la informaci&oacute;n del Producto</h1>
     <fieldset>
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="product_name" value="{{ product.name }}">
         <label for="description">Description:</label>
         <textarea id="description" name="product_description"> {{ product.description }} </textarea>
-        <label for="available">Unidades Disponibles:</label>
-        <input type="number" step="1" pattern="\d+" min="0" max="60000" value="{{ product.available_units }}"
-               id="available"
-               name="product_available">
         <label for="unit_price">Precio Unitario:</label>
         <input type="number" min="0.00" max="10000.00" step="0.01" id="unit_price" value="{{ product.unit_price }}"
                name="product_unit_price"/>
@@ -22,18 +41,43 @@
                name="product_sale_price"/>
         <label for="code">Código:</label>
         <input type="text" id="code" name="product_code" value="{{ product.code }}"/>
-        <label for="colors">Colores:</label>
-        <input type="text" id="colors" name="product_colors" value="{{ product.colors }}"/>
-        <label for="sizes">Tallas:</label>
-        <input type="text" id="sizes" name="product_sizes" value="{{ product.sizes }}"/>
+        <div id="product-detail-container">
+            <div id="add_container" class="row">
+                <label class="block2">Agregar talla y color disponible</label>
+                <div class="block3">
+                    <i onclick="addProductOptions()" class="fa fa-plus-circle fa-3x"></i>
+                </div>
+                <div class="block3">
+                    <i onclick="removeProductOptions()" class="fa fa-minus-circle fa-3x"></i>
+                </div>
+            </div>
+            {% for option in product.options %}
+                <div id="options_container{{ loop.index }}" class="row">
+                    <div id="available_units_container{{ loop.index }}" class="block">
+                        <label for="available{{ loop.index }}">Unidades Disponibles:</label>
+                        <input type="number" step="1" pattern="\\d+" min="0" max="60000"
+                               id="available{{ loop.index }}" name="product_available"
+                               value="{{ option.available_units | int }}"></div>
+                    <div id="color_container{{ loop.index }}" class="block">
+                        <label for="color{{ loop.index }}">Color:</label>
+                        <input type="text" id="color{{ loop.index }}" name="product_color" value="{{ option.color }}"/>
+                    </div>
+                    <div id="size_container{{ loop.index }}" class="block">
+                        <label for="size{{ loop.index }}">Talla:</label>
+                        <input type="text" id="size{{ loop.index }}" name="product_size" value="{{ option.size }}"/>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <label for='product_picture'>Subir imagen:</label>
         <input type="file" id="file_input" onchange=selectFile('{{ product.id }}')>
         <p id="status">Por favor seleccione una imagen (png, jpg)</p>
         <img class="centered-and-cropped" src='{{ product.image_name }}' id="preview" alt="Imagen del producto"
              height='500' width="100%"/>
         <input type="hidden" id="avatar-url" name="avatar-url" value="{{ product.image_name }}">
+        <input type="hidden" id="product_details" name="product_details"/>
         <br/>
         <br/>
     </fieldset>
-    <button type="submit">Guardar Producto</button>
+    <button id="submit" type="button" onclick="submitToServer()">Guardar Producto</button>
 </form>

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, flash, render_template, redirect, session
 from marshmallow import ValidationError
-
+import json
 from application.middleware.is_user_logged import check_is_admin
 from application.services.product_service import ProductService
 
@@ -13,34 +13,31 @@ products_blueprint = Blueprint('/products', __name__)
 @register_product_blueprint.route('/register_product', methods=["GET", "POST"])
 @check_is_admin
 def register_product():
+    from run import app
     if request.method == 'POST':
         name = request.form['product_name']
         description = request.form['product_description']
-        available_units = request.form['product_available']
         unit_price = request.form['product_unit_price']
         sale_price = request.form['product_sale_price']
         code = request.form['product_code']
-        colors = request.form['product_colors']
-        sizes = request.form['product_sizes']
         avatar_url = request.form["avatar-url"]
+        dict_product_details = json.loads(request.form["product_details"])
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url,
-                                             code, colors, sizes)
-            flash('Producto almacenado correctamente')
-            return render_template('create_product.html')
+            product_service.register_product(name, description, unit_price, sale_price, avatar_url,
+                                             code, dict_product_details)
+            return 'OK', 200
         except ValidationError as error:
-            flash(error.data)
             from run import app
             app.logger.error(error)
-            return render_template('create_product.html')
+            return error.messages, 500
     else:
         return render_template('create_product.html')
 
 
 @find_product_blueprint.route('/find_products', methods=["GET"])
 @check_is_admin
-def register_product():
+def find_products():
     return render_product_list()
 
 
@@ -56,23 +53,20 @@ def product_by_id(product_id):
     if request.method == 'POST':
         name = request.form['product_name']
         description = request.form['product_description']
-        available_units = request.form['product_available']
         unit_price = request.form['product_unit_price']
         sale_price = request.form['product_sale_price']
         code = request.form['product_code']
-        colors = request.form['product_colors']
-        sizes = request.form['product_sizes']
         avatar_url = request.form["avatar-url"]
+        dict_product_details = json.loads(request.form["product_details"])
         product_service = ProductService()
         try:
-            product_service.register_product(name, description, available_units, unit_price, sale_price, avatar_url,
-                                             code, colors, sizes, product_id)
-            flash('Producto almacenado correctamente')
-            return redirect("/find_products")
+            product_service.register_product(name, description, unit_price, sale_price, avatar_url,
+                                             code, dict_product_details, product_id)
+            return 'OK', 200
         except ValidationError as error:
-            flash(error.data)
             from run import app
             app.logger.error(error)
+            return error.messages, 500
     else:
         product_service = ProductService()
         product = product_service.find_product_by_id(product_id)

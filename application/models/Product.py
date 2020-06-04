@@ -15,15 +15,12 @@ class Product(db.Model):
     options = db.relationship("ProductOptions",
                                 backref=db.backref("product", lazy='joined'))
 
-    def __init__(self, name, description, available_units, unit_price, sale_price,
-                 image_name, code, colors, sizes):
+    def __init__(self, name, description, unit_price, sale_price,
+                 image_name, code):
         super().__init__()
         self.name = name
         self.description = description
-        self.available_units = available_units
         self.unit_price = unit_price
         self.sale_price = sale_price,
         self.image_name = image_name
-        self.colors = colors
         self.code = code
-        self.sizes = sizes

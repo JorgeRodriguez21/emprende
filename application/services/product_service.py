@@ -1,27 +1,29 @@
 from marshmallow import ValidationError
 
+from application.repositories.product_options_repository import ProductOptionsRepository
 from application.repositories.product_repository import ProductRepository
 
 
 class ProductService:
 
     @classmethod
-    def register_product(cls, name, description, available_units, unit_price, sale_price, image_name, code, colors,
-                         sizes, product_id=None):
+    def register_product(cls, name, description, unit_price, sale_price, image_name, code, options,
+                         product_id=None):
         try:
-            converted_available_units = int(available_units)
             converted_unit_price = float(unit_price)
             converted_sale_price = float(sale_price)
         except ValueError:
             raise ValidationError('Valor no válido, los valores numericos son incorrectos')
         product_repository = ProductRepository()
         if product_id is not None:
-            product_repository.update(name, description, available_units, unit_price, sale_price, image_name,
-                                      product_id, code, colors, sizes)
+            product_options_repository = ProductOptionsRepository()
+            product_options_repository.delete_all_elements_by_parent_id(product_id)
+            product_repository.update(name, description, converted_unit_price, converted_sale_price, image_name,
+                                      product_id, code, options)
         else:
-            product_repository.save(name, description, converted_available_units, converted_unit_price,
+            product_repository.save(name, description, converted_unit_price,
                                     converted_sale_price,
-                                    image_name, code, colors, sizes)
+                                    image_name, code, options)
 
     @classmethod
     def find_products_by_name(cls, name):
