@@ -6,21 +6,23 @@
 <link rel="stylesheet" href="../static/styles/menu.css" type="text/css">
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
 <script src="../static/styles/client_product_list.js" type="text/javascript"></script>
-
 {% include 'menu.html' %}
 <body>
 <div class="product_grid">
     <ul class="product_list list">
         {% for product in products %}
+
             <li class="product_item">
                 <div class="product_image" item-data={{ product.id }}>
                     <a href="#"><img class="centered-and-cropped" src="{{ product.image_name }}" alt=""></a>
                     <div class="product_buttons">
                         <button class="add_to_cart"
                                 onclick="OpenProduct('{{ product.id }}','{{ product.colors }}', '{{ product.sizes }}', '{{ product.image_name }}');">
+                            <input style="display: none" name="articleid" type="hidden"
+                                   value='{{ product.json_array|tojson }}'/>
                             <i
                                     class="fa fa-shopping-cart"></i></button>
-                        <br>
+                        <br>'
                         <br>
                     </div>
                 </div>
@@ -44,9 +46,7 @@
                     </div>
                     <div class="product_available_price" item-data={{ product.id }}>
                         <a>
-                            <span class="available_units"
-                                  item-data={{ product.id }}>{{ product.available_units }}</span>
-                            <span class="available_units">Unidades disponibles</span>
+                            <span class="available_units">Unidades disponibles en el detalle del producto</span>
                         </a>
                     </div>
                     <div class="product_desc" item-data={{ product.id }}>
@@ -57,7 +57,7 @@
                         <br>
                         <br>
                     </div>
-                </div>
+                    </p>
             </li>
         {% endfor %}
     </ul>
@@ -94,6 +94,17 @@
                             various collaborations with top-notch companies. Another one to add to the win column is his
                             work with Italian manufacturer Chateau d’Ax.
                         </div>
+                        <br>
+                        <div class="colors">
+                            <select id="colorSelector" class="theme-green" style="width:230px;"
+                                    onchange="updateSizesColor()">
+                            </select>
+                        </div>
+                        <div class="sizes" style="margin-bottom: 5%">
+                            <select id="sizeSelector" class="theme-green" style="width:230px;"
+                                    onchange="updateAvailableUnits()">
+                            </select>
+                        </div>
                         <div class="product-available">
 
                         </div>
@@ -109,15 +120,6 @@
                             </div>
                             <div class="product-quantity-add">
                                 <i class="fa fa-chevron-right"></i>
-                            </div>
-                            <br>
-                            <div class="colors">
-                                <select id="colorSelector" class="theme-green" style="width:230px;">
-                                </select>
-                            </div>
-                            <div class="sizes">
-                                <select id="sizeSelector" class="theme-green" style="width:230px;">
-                                </select>
                             </div>
                         </div>
                     </div>

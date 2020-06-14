@@ -13,7 +13,7 @@ class Product(db.Model):
                             secondary="purchase",
                             backref=db.backref("product"))
     options = db.relationship("ProductOptions",
-                                backref=db.backref("product", lazy='joined'))
+                              backref=db.backref("product", lazy='joined'))
 
     def __init__(self, name, description, unit_price, sale_price,
                  image_name, code):

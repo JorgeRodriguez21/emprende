@@ -2,9 +2,27 @@ let maxValue = undefined;
 let idValue = undefined;
 let totalPrice = undefined;
 let title = undefined;
-let image_name=undefined
+let image_name = undefined
+let options_array = undefined
+let available_units = undefined
 
-function OpenProduct(id, colors, sizes, image_name_param) {
+function getColorsArray(options_array) {
+    let colors = options_array.map(option => {
+        return option.color
+    });
+    colors = colors.slice().sort((first, second) => {
+        return first > second;
+    }).reduce(function (first, second) {
+        if (first.slice(-1)[0] !== second) first.push(second);
+        return first;
+    }, []);
+    return colors;
+}
+
+function OpenProduct(id, image_name_param) {
+    const options = $('.add_to_cart input[name=articleid]').val();
+    options_array = JSON.parse(JSON.parse(options));
+    let colors = getColorsArray(options_array);
     idValue = id;
     image_name = image_name_param
     //Load image
@@ -47,15 +65,11 @@ function OpenProduct(id, colors, sizes, image_name_param) {
     let dialogDescription = $('.lightbox-blanket .product-description');
     $(dialogDescription).html(description);
     //Load available units
-    let available_units = $('.product_available_price[item-data="' + id + '"] span[item-data="' + id + '"]').text();
-    maxValue = parseInt(available_units);
-    let dialogAvailableUnits = $('.lightbox-blanket .product-available');
-    $(dialogAvailableUnits).html(available_units + ' Unidades disponibles');
 
     $(".lightbox-blanket").toggle();
 
-    createSizesSelector(sizes);
     createColorSelector(colors);
+    createSizesSelector(undefined);
 
     $("#product-quantity-input").val("0");
     CalcPrice(0);
@@ -97,33 +111,40 @@ $(document).on("click", ".product-quantity-add", function (e) {
 });
 
 $(document).on("blur", "#product-quantity-input", function (e) {
-    var value = $("#product-quantity-input").val();
+    let value = $("#product-quantity-input").val();
     CalcPrice(value);
 });
 
 function createColorSelector(values) {
-    let valueArray = values.split(",");
     let colorSelector = $("#colorSelector");
     colorSelector.html("");
-    if (valueArray.length > 0) {
+    if (values.length > 0) {
         colorSelector.append("<option selected disabled hidden>Seleccione un color ...</option>");
     }
 
-    valueArray.forEach(value =>
+    values.forEach(value =>
         colorSelector.append("<option value=\"" + value + "\">" + value + "</option>")
     )
 }
 
-function createSizesSelector(values) {
-    let valueArray = values.split(",");
+function createSizesSelector(selectedColor) {
+    const sizesAvailableForSelectedColor = options_array.map(option => {
+        if (selectedColor === option.color && option.available_units > 0) {
+            return option.size
+        }
+    }).filter(size => !!size);
     let sizeSelector = $("#sizeSelector");
+
     sizeSelector.html("");
-    if (valueArray.length > 0) {
+    if (sizesAvailableForSelectedColor.length > 0) {
         sizeSelector.append("<option selected disabled hidden>Seleccione la talla ...</option>");
+        sizesAvailableForSelectedColor.forEach(value =>
+            sizeSelector.append("<option value=\"" + value + "\">" + value + "</option>"))
+    } else {
+        sizeSelector.append("<option selected disabled hidden>Seleccione otro color</option>");
     }
-    valueArray.forEach(value =>
-        sizeSelector.append("<option value=\"" + value + "\">" + value + "</option>")
-    )
+
+    updateAvailableUnits();
 }
 
 function getSelectedColor() {
@@ -131,14 +152,37 @@ function getSelectedColor() {
     return colorSelector.val();
 }
 
+function updateSizesColor() {
+    createSizesSelector(getSelectedColor());
+}
+
 function getSelectedSize() {
     let sizeSelector = $("#sizeSelector");
     return sizeSelector.val();
 }
 
+function updateAvailableUnits() {
+    if (!getSelectedColor() || !getSelectedSize()) {
+        available_units = 0;
+        maxValue = parseInt(available_units);
+        let dialogAvailableUnits = $('.lightbox-blanket .product-available');
+        $(dialogAvailableUnits).html('Debe seleccionar color y talla para saber el n&uacute;mero de unidades disponibles');
+    } else {
+        let available_units = options_array.find(option => {
+            if (option.color === getSelectedColor() && option.size === getSelectedSize()) {
+                return option;
+            }
+        }).available_units;
+        maxValue = parseInt(available_units);
+        let dialogAvailableUnits = $('.lightbox-blanket .product-available');
+        $(dialogAvailableUnits).html("<b>" + available_units + "</b> Unidades disponibles");
+    }
+}
+
 function AddToCart() {
     let units = $("#product-quantity-input").val();
     if (units === '0') {
+        showErrorMessage("No puede agregar 0 unidades al carrito");
         return;
     }
 
@@ -171,10 +215,13 @@ function AddToCart() {
         console.log(message);
     }
 
-    if (getSelectedColor() == null || getSelectedSize() == null) {
+    if (!getSelectedColor() || !getSelectedSize()) {
         showErrorMessage("Debe seleccionar una talla y un color para el producto");
         return;
     }
+
+    console.log(options_array);
+    console.log(getOptionSelectedId());
 
     $.ajax({
         type: "POST",
@@ -184,8 +231,7 @@ function AddToCart() {
         // convert data/object to JSON to send
         data: JSON.stringify({
             id: idValue,
-            color: getSelectedColor(),
-            size: getSelectedSize(),
+            option_selected: getOptionSelectedId(),
             units: units,
             totalPrice,
             title,
@@ -199,3 +245,14 @@ function AddToCart() {
         }
     });
 }
+
+function getOptionSelectedId() {
+    return options_array.find(option => {
+        if (option.size === getSelectedSize() && option.color === getSelectedColor()) {
+            return option
+        }
+    }).id
+}
+
+
+//https://stackoverflow.com/questions/19728666/drop-down-box-dependent-on-the-option-selected-in-another-drop-down-box

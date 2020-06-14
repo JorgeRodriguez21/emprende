@@ -77,4 +77,8 @@ def product_by_id(product_id):
 def get_all_products():
     product_service = ProductService()
     products = product_service.find_all_products()
+    for product in products:
+        json_array = [option.as_dict() for option in product.options]
+
+        product.json_array = json.dumps(json_array)
     return render_template('/client_product_list.html', products=products)

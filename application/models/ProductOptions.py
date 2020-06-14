@@ -1,3 +1,4 @@
+import json
 from application.database.database import db
 
 
@@ -13,3 +14,11 @@ class ProductOptions(db.Model):
         self.available_units = available_units
         self.color = color
         self.size = size
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "available_units": self.available_units,
+            "color": self.color,
+            "size": self.size
+        }
