@@ -27,7 +27,7 @@ def add_product_to_cart():
             return 'Debes iniciar sesion para realizar esta accion', 500
         purchase_service.create_purchase(session.get('user_id'), data['id'],
                                          data['totalPrice'], data['units'], data['color'],
-                                         data['size'], data['title'], data['image'])
+                                         data['size'], data['title'], data['image'], data['option_selected'])
         return 'OK', 201
     except Exception as error:
         from run import app

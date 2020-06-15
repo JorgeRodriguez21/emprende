@@ -25,10 +25,12 @@
                         <li id="{{ purchase.id }}" class="row">
                             <div class="col left">
                                 <div class="thumbnail">
-                                    <img class="centered-and-cropped" src="{{ purchase.image }}" alt="product.name"/>
+                                    <img class="centered-and-cropped" src="{{ purchase.image }}" alt="Imagen del producto"/>
                                 </div>
                                 <div class="detail">
                                     <div class="name">{{ purchase.title }}</div>
+                                    <div class="name">{{ purchase.color }}</div>
+                                    <div class="name">{{ purchase.size }}</div>
                                     <div class="price" id="{{ purchase.id }}">${{ purchase.price }}</div>
                                 </div>
                             </div>

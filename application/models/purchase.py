@@ -18,3 +18,4 @@ class Purchase(db.Model):
     features = db.Column(JSONB)
     summary = db.Column(db.String(2000))
     order_id = db.Column(db.Integer, db.ForeignKey('order.id', ondelete="cascade"))
+    product_option_id = db.Column(db.Integer, db.ForeignKey('product_options.id', ondelete='cascade'))

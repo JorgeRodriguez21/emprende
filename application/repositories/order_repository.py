@@ -59,6 +59,6 @@ class OrderRepository:
         for purchase in order.purchases:
             purchase.status = PurchaseStatus.CANCELLED
             purchase.date = datetime.now(timezone(timedelta(hours=-5), 'America/Guayaquil'))
-            id_units.append((purchase.product_id, purchase.units))
+            id_units.append((purchase.product_option_id, purchase.units))
         db.session.commit()
         return id_units

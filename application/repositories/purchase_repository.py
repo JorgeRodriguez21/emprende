@@ -10,7 +10,7 @@ from application.models.purchase import Purchase
 
 class PurchaseRepository:
     @classmethod
-    def save_purchase(cls, user_id, product_id, price, units, color, size, title, image):
+    def save_purchase(cls, user_id, product_id, price, units, color, size, title, image, option_selected_id):
         purchase = Purchase()
         purchase.user_id = user_id
         purchase.product_id = product_id
@@ -19,6 +19,7 @@ class PurchaseRepository:
         purchase.status = PurchaseStatus.ACTIVE
         purchase.date = datetime.now(timezone(timedelta(hours=-5), 'America/Guayaquil'))
         purchase.features = {'color': color, 'size': size, 'title': title, 'image': image}
+        purchase.product_option_id = option_selected_id
         db.session.add(purchase)
         db.session.commit()
 
@@ -43,7 +44,7 @@ class PurchaseRepository:
                 purchase.order_id = order_id
                 purchase.date = datetime.now(timezone(timedelta(hours=-5), 'America/Guayaquil'))
                 db.session.commit()
-                id_units.append((purchase.product_id, purchase.units))
+                id_units.append((purchase.product_option_id, purchase.units))
         return id_units
 
     @classmethod
@@ -51,7 +52,7 @@ class PurchaseRepository:
         id_units = []
         purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
         for purchase in purchases:
-            id_units.append((purchase.product_id, purchase.units))
+            id_units.append((purchase.product_option_id, purchase.units))
         return id_units
 
     @classmethod

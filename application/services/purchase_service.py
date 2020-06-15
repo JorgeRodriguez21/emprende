@@ -4,9 +4,9 @@ from application.repositories.purchase_repository import PurchaseRepository
 
 class PurchaseService:
     @classmethod
-    def create_purchase(cls, user_id, product_id, price, units, color, size, title, image):
+    def create_purchase(cls, user_id, product_id, price, units, color, size, title, image, option_selected):
         purchase_repository = PurchaseRepository()
-        purchase_repository.save_purchase(user_id, product_id, price, units, color, size, title, image)
+        purchase_repository.save_purchase(user_id, product_id, price, units, color, size, title, image, option_selected)
 
     @classmethod
     def get_active_purchases_for_active_user(cls, user_id):

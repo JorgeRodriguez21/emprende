@@ -231,6 +231,8 @@ function AddToCart() {
         // convert data/object to JSON to send
         data: JSON.stringify({
             id: idValue,
+            color: getSelectedColor(),
+            size: getSelectedSize(),
             option_selected: getOptionSelectedId(),
             units: units,
             totalPrice,
@@ -253,6 +255,3 @@ function getOptionSelectedId() {
         }
     }).id
 }
-
-
-//https://stackoverflow.com/questions/19728666/drop-down-box-dependent-on-the-option-selected-in-another-drop-down-box
