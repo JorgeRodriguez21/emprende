@@ -10,17 +10,12 @@ function getColorsArray(options_array) {
     let colors = options_array.map(option => {
         return option.color
     });
-    colors = colors.slice().sort((first, second) => {
-        return first > second;
-    }).reduce(function (first, second) {
-        if (first.slice(-1)[0] !== second) first.push(second);
-        return first;
-    }, []);
-    return colors;
+    return [...[...new Set(colors)]].sort();
 }
 
 function OpenProduct(id, image_name_param) {
-    const options = $('.add_to_cart input[name=articleid]').val();
+    const elementName = "articleid"+id;
+    const options = $('.add_to_cart input[name="'+elementName+'"]').val();
     options_array = JSON.parse(JSON.parse(options));
     let colors = getColorsArray(options_array);
     idValue = id;
