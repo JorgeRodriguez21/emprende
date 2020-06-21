@@ -135,3 +135,33 @@ button {
 button:hover {
     background-color: #2C7602;
 }
+
+.toast {
+    position: fixed;
+    top: -50px;
+    left: calc(50vw - 50px);
+    z-index: 2002;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.toast-success {
+    background-color: #2C7602;
+    color: white;
+    font-size: 9pt;
+}
+
+.toast-error {
+    background-color: red;
+    color: white;
+    font-size: 9pt;
+}
+
+.toast-transition {
+    top: calc(50px);
+    transition: top 1s;
+}
+
+.hidden {
+    display: none;
+}

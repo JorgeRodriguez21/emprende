@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <link rel="stylesheet" href="../static/styles/create_product.css" type="text/css">
 <script src="../static/styles/create_product.js"></script>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
@@ -5,6 +7,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/styles/selector.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
 <!-- jQuery validation is not included in the script above, so needs to be explicitly included -->
@@ -23,11 +26,13 @@
 {% include 'menu.html' %}
 <script type="text/javascript">
     window.onload = function () {
-        setInitialIndexForOptions("{{product.options|length}}")
+        setInitialIndexForOptions("{{product.options|length}}", "{{ product.is_active }}")
     };
 </script>
+<body id="mine">
 <form id="product_form" action="/product/{{ product.id }}" method="post">
     <h1 content=”text/html;>Ingresar la informaci&oacute;n del Producto</h1>
+    <label id="alerts" class="hidden" style="color: red" >Hola</label>"
     <fieldset>
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="product_name" value="{{ product.name }}">
@@ -41,18 +46,24 @@
                name="product_sale_price"/>
         <label for="code">Código:</label>
         <input type="text" id="code" name="product_code" value="{{ product.code }}"/>
+        <label>Estado:</label>
+        <br>
+        <select id="status" class="theme-green" style="width:230px;">
+            <option selected disabled hidden>Estado del Producto</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
         <div id="product-detail-container">
             <div id="add_container" class="row">
                 <label class="block2">Agregar talla y color disponible</label>
                 <div class="block3">
                     <i onclick="addProductOptions()" class="fa fa-plus-circle fa-3x"></i>
                 </div>
-                <div class="block3">
-                    <i onclick="removeProductOptions()" class="fa fa-minus-circle fa-3x"></i>
-                </div>
             </div>
             {% for option in product.options %}
                 <div id="options_container{{ loop.index }}" class="row">
+                    <input id="id{{ loop.index }}" style="display: none" type="hidden"
+                           value='{{ option.id }}'/>
                     <div id="available_units_container{{ loop.index }}" class="block">
                         <label for="available{{ loop.index }}">Unidades Disponibles:</label>
                         <input type="number" step="1" pattern="\\d+" min="0" max="60000"
@@ -60,11 +71,13 @@
                                value="{{ option.available_units | int }}"></div>
                     <div id="color_container{{ loop.index }}" class="block">
                         <label for="color{{ loop.index }}">Color:</label>
-                        <input type="text" id="color{{ loop.index }}" name="product_color" value="{{ option.color }}"/>
+                        <input type="text" id="color{{ loop.index }}" name="product_color" value="{{ option.color }}"
+                               readonly/>
                     </div>
                     <div id="size_container{{ loop.index }}" class="block">
                         <label for="size{{ loop.index }}">Talla:</label>
-                        <input type="text" id="size{{ loop.index }}" name="product_size" value="{{ option.size }}"/>
+                        <input type="text" id="size{{ loop.index }}" name="product_size" value="{{ option.size }}"
+                               readonly/>
                     </div>
                 </div>
             {% endfor %}
@@ -76,8 +89,11 @@
              height='500' width="100%"/>
         <input type="hidden" id="avatar-url" name="avatar-url" value="{{ product.image_name }}">
         <input type="hidden" id="product_details" name="product_details"/>
+        <input type="hidden" id="product_status" name="product_status"/>
         <br/>
         <br/>
     </fieldset>
     <button id="submit" type="button" onclick="submitToServer()">Guardar Producto</button>
 </form>
+</body>
+</html>

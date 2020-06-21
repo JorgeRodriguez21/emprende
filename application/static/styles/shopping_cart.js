@@ -150,7 +150,6 @@ function calculateSubtotal() {
         let id = $(this).attr('id');
         sum += parseFloat(counter);
     });
-    console.log("entra")
     $('.subtotal').html('$' + sum.toFixed(2));
     calculateTotal();
 }
@@ -168,9 +167,11 @@ function calculateSubtotalForOrders(city) {
 }
 
 function setShippingValue(city) {
-    let value = '5'
+    let value = '5.60'
     if(city === "Quito"){
-        value = '3';
+        value = '3.15';
+    }else if(city=== "Cantones y Especiales"){
+        value = '6.60'
     }
     let total = parseFloat(value).toFixed(2);
     $('.shipping').html('$' + total);
@@ -190,9 +191,11 @@ function getSelectedLocation() {
 }
 
 function changeSelection() {
-    let shippingValue = '3';
-    if (getSelectedLocation() !== 'Quito') {
-        shippingValue = '5';
+    let shippingValue = '6.60';
+    if (getSelectedLocation() === 'Quito') {
+        shippingValue = '3.15';
+    }else if(getSelectedLocation() === 'Provincias'){
+        shippingValue = '5.60';
     }
     let value = parseFloat(shippingValue).toFixed(2);
     $('.shipping').html('$' + value);

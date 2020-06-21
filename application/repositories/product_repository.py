@@ -6,17 +6,18 @@ from sqlalchemy.exc import SQLAlchemyError
 from application.database.database import db
 from application.models.Product import Product
 from application.models.ProductOptions import ProductOptions
+from application.repositories.product_options_repository import ProductOptionsRepository
 
 
 class ProductRepository:
 
     @classmethod
     def save(cls, name, description, unit_price, sale_price,
-             image_name, code, options):
+             image_name, code, status, options):
         from run import app
         try:
             product = Product(name, description, unit_price, sale_price,
-                              image_name, code)
+                              image_name, code, status)
             product_options = []
             for option in options:
                 product_option = ProductOptions(int(option['units']), option['color'], option['size'])
@@ -31,7 +32,8 @@ class ProductRepository:
 
     @classmethod
     def update(cls, name, description, unit_price, sale_price,
-               image_name, product_id, code, options):
+               image_name, product_id, code, status, options):
+        product_option_repository = ProductOptionsRepository()
         try:
             product = cls.find_by_id(product_id)
             product.name = name
@@ -40,12 +42,14 @@ class ProductRepository:
             product.sale_price = sale_price
             product.image_name = image_name
             product.code = code
-            product_options = []
-            for option in options:
-                product_option = ProductOptions(int(option['units']), option['color'], option['size'])
-                product_options.append(product_option)
-            product.options = product_options
+            product.status = status
             db.session.commit()
+            for option in options:
+                option_id = int(option['id'])
+                if option_id > 0:
+                    product_option_repository.update_existent_option(option_id, int(option['units']), product_id)
+                else:
+                    product_option_repository.save(int(option['units']), option['color'], option['size'], product_id)
         except SQLAlchemyError as error:
             from run import app
             app.logger.error('Error de base de datos en productos')
@@ -59,6 +63,10 @@ class ProductRepository:
     @classmethod
     def find_by_id(cls, product_id):
         return Product.query.get(product_id)
+
+    @classmethod
+    def find_all_active(cls):
+        return Product.query.filter_by(is_active=True).order_by(Product.name).all()
 
     @classmethod
     def find_all(cls):

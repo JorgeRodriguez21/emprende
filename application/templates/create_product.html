@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <link rel="stylesheet" href="/static/styles/create_product.css" type="text/css">
 <script src="/static/styles/create_product.js"></script>
 <script src="../static/styles/jquery-3.4.1.min.js"></script>
@@ -5,18 +7,26 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/static/styles/selector.css" type="text/css">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 <!-- jQuery validation is not included in the script above, so needs to be explicitly included -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
 <!-- Bootstrap HTML framework -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 <!-- Materialize CSS framework -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<body>
 {% include 'menu.html' %}
 <form id="product_form" action="/register_product" method="post">
     <h1 content=”text/html;>Ingresar la informaci&oacute;n del Producto</h1>
+    <label id="alerts" class="hidden" style="color: red" >Hola</label>
     <fieldset>
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="product_name">
@@ -30,11 +40,21 @@
                name="product_sale_price"/>
         <label for="code">Código:</label>
         <input type="text" id="code" name="product_code"/>
+        <label>Estado:</label>
+        <br>
+        <select id="status" class="theme-green" style="width:230px;">
+            <option selected disabled hidden>Estado del Producto</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
         <div id="product-detail-container">
             <div id="add_container" class="row">
                 <label class="block2">Agregar talla y color disponible</label>
-                <div class="block2">
+                <div class="block3">
                     <i onclick="addProductOptions()" class="fa fa-plus-circle fa-3x"></i>
+                </div>
+                <div class="block3">
+                    <i onclick="removeProductOptions()" class="fa fa-minus-circle fa-3x"></i>
                 </div>
             </div>
         </div>
@@ -47,8 +67,9 @@
         <input type="hidden" id="avatar-url" name="avatar-url"
                value="https://s3-img.pixpa.com/local/800/dummy-image.jpg">
         <input type="hidden" id="product_details" name="product_details"/>
+        <input type="hidden" id="product_status" name="product_status"/>
     </fieldset>
     <button id="submit" type="button" onclick="submitToServer()">Guardar Producto</button>
 </form>
-
-<div id="form-response"></div>
+</body>
+</html>

@@ -21,11 +21,12 @@ def register_product():
         sale_price = request.form['product_sale_price']
         code = request.form['product_code']
         avatar_url = request.form["avatar-url"]
+        status = request.form["product_status"]
         dict_product_details = json.loads(request.form["product_details"])
         product_service = ProductService()
         try:
             product_service.register_product(name, description, unit_price, sale_price, avatar_url,
-                                             code, dict_product_details)
+                                             code, status, dict_product_details)
             return 'OK', 200
         except ValidationError as error:
             from run import app
@@ -76,7 +77,7 @@ def product_by_id(product_id):
 @products_blueprint.route('/products', methods=["GET"])
 def get_all_products():
     product_service = ProductService()
-    products = product_service.find_all_products()
+    products = product_service.find_all_active_products()
     for product in products:
         json_array = [option.as_dict() for option in product.options]
         product.json_array = json.dumps(json_array)

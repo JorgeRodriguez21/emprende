@@ -7,8 +7,9 @@ from application.repositories.product_repository import ProductRepository
 class ProductService:
 
     @classmethod
-    def register_product(cls, name, description, unit_price, sale_price, image_name, code, options,
+    def register_product(cls, name, description, unit_price, sale_price, image_name, code, status, options,
                          product_id=None):
+        boolean_status = True if status == 'Activo' else False
         try:
             converted_unit_price = float(unit_price)
             converted_sale_price = float(sale_price)
@@ -16,19 +17,22 @@ class ProductService:
             raise ValidationError('Valor no válido, los valores numericos son incorrectos')
         product_repository = ProductRepository()
         if product_id is not None:
-            product_options_repository = ProductOptionsRepository()
-            product_options_repository.delete_all_elements_by_parent_id(product_id)
             product_repository.update(name, description, converted_unit_price, converted_sale_price, image_name,
-                                      product_id, code, options)
+                                      product_id, code, boolean_status, options)
         else:
             product_repository.save(name, description, converted_unit_price,
                                     converted_sale_price,
-                                    image_name, code, options)
+                                    image_name, code, boolean_status, options)
 
     @classmethod
     def find_products_by_name(cls, name):
         product_repository = ProductRepository()
         return product_repository.find_by_name(name)
+
+    @classmethod
+    def find_all_active_products(cls):
+        product_repository = ProductRepository()
+        return product_repository.find_all_active()
 
     @classmethod
     def find_all_products(cls):

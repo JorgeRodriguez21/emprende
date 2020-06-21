@@ -9,6 +9,7 @@ class Product(db.Model):
     sale_price = db.Column(db.Numeric)
     image_name = db.Column(db.String(128))
     code = db.Column(db.String(128))
+    is_active = db.Column(db.Boolean, default=False, nullable=False)
     users = db.relationship("User",
                             secondary="purchase",
                             backref=db.backref("product"))
@@ -16,7 +17,7 @@ class Product(db.Model):
                               backref=db.backref("product", lazy='joined'))
 
     def __init__(self, name, description, unit_price, sale_price,
-                 image_name, code):
+                 image_name, code, status):
         super().__init__()
         self.name = name
         self.description = description
@@ -24,3 +25,4 @@ class Product(db.Model):
         self.sale_price = sale_price,
         self.image_name = image_name
         self.code = code
+        self.is_active = status

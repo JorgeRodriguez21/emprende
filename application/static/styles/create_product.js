@@ -1,8 +1,13 @@
 let product_detail_index = 0;
 
 
-function setInitialIndexForOptions(numberOfExistentElements) {
+function setInitialIndexForOptions(numberOfExistentElements, isActive) {
     product_detail_index = parseInt(numberOfExistentElements) + 1;
+    if(isActive === "True"){
+        $("#status").val("Activo")
+    }else{
+        $("#status").val("Inactivo")
+    }
 }
 
 function selectFile(id) {
@@ -92,7 +97,11 @@ function getProductOptionsValues() {
             const color = $(color_container).children('input').val()
             const sizeContainer = $(container).children('[id*="size_container"]')[0];
             const size = $(sizeContainer).children('input').val()
-            productOptions.push({units: units, color: color, size: size});
+            let optionId = $(container).children('[id*="id"]').val();
+            if (!optionId) {
+                optionId = -1;
+            }
+            productOptions.push({id: optionId, units: units, color: color, size: size});
         }
     )
     return JSON.stringify(productOptions);
@@ -100,6 +109,11 @@ function getProductOptionsValues() {
 
 function submitToServer() {
     let product_details_input = $("#product_details");
+    let product_status_selector = $("#status");
+    let product_status_input = $("#product_status");
+    if (!(product_status_selector.val() === undefined || product_status_selector.val() === "")) {
+        product_status_input.val(product_status_selector.val())
+    }
     product_details_input.val(getProductOptionsValues());
     const form = $('#product_form');
     const form_id = 'product_form';
@@ -136,7 +150,7 @@ function isFormDataEmpty(formData) {
     let areEmptyFields = false;
     // checks for all values in formData object if they are empty
     for (const [key, value] of formData.entries()) {
-        if (value === '' && value === []) {
+        if (value === '' || value === []) {
             console.log("key", key)
             console.log("value", value)
             areEmptyFields = true;
@@ -146,8 +160,6 @@ function isFormDataEmpty(formData) {
 }
 
 function modular_ajax(url, type, formData) {
-    let toast_error_msg;
-    let toast_category;
     // Most simple modular AJAX building block
     $.ajax({
         url: url,
@@ -157,48 +169,61 @@ function modular_ajax(url, type, formData) {
         contentType: false,
         beforeSend: function () {
             // show the preloader (progress bar)
-
         },
         complete: function () {
             // hide the preloader (progress bar)
-
         },
         success: function (data) {
+            console.log("Entra a success")
             showSuccessMessage();
         },
         error: function (xhr) {
+            console.log("entra a error")
             showErrorMessage();
         },
     }).done(function () {
-        showSuccessMessage();
     });
 };
 
 
 function showSuccessMessage() {
-    let toast = '<div class="toast toast-success">Producto almacenado correctamente</div>';
-    $("body").append(toast);
-    setTimeout(function () {
-        $(".toast").addClass("toast-transition");
-    }, 100);
-    setTimeout(function () {
-        $(".toast").remove();
-        window.location.replace("/register_product")
-    }, 3500);
-}
-
-function showErrorMessage(message) {
-    let toast;
-    if (message) {
-        toast = "<div class=\"toast toast-error\">" + message + "</div>";
-    } else {
-        toast = '<div class="toast toast-error">Hubo un error al almacenar el producto</div>';
-    }
+    window.scrollTo(0, 0);
+    const alertsLabel = $("#alerts")
+    alertsLabel.text("Producto almacenado correctamente");
+    alertsLabel.show();
+    let toast = "<div class=\"toast toast-success\">Producto almacenado correctamente</div>";
+    console.log(toast)
     $("#product_form").append(toast);
     setTimeout(function () {
         $(".toast").addClass("toast-transition");
     }, 100);
     setTimeout(function () {
+        alertsLabel.text("");
+        alertsLabel.hide();
+        $(".toast").remove();
+        window.location.replace("/find_products")
+    }, 3500);
+}
+
+function showErrorMessage(message) {
+    window.scrollTo(0, 0);
+    const alertsLabel = $("#alerts")
+    let toast;
+    if (message) {
+        toast = "<div class=\"toast toast-error\">" + message + "</div>";
+        alertsLabel.html(message);
+    } else {
+        toast = '<div class="toast toast-error">Hubo un error al almacenar el producto</div>';
+        alertsLabel.text("Hubo un error al almacenar el producto");
+    }
+    alertsLabel.show();
+    $("body").append(toast);
+    setTimeout(function () {
+        $(".toast").addClass("toast-transition");
+    }, 100);
+    setTimeout(function () {
+        alertsLabel.text("");
+        alertsLabel.hide();
         $(".toast").remove();
     }, 3500);
     console.log(message);

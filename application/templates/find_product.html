@@ -20,9 +20,7 @@
                 <th>Nombre</th>
                 <th>Precio Unitario</th>
                 <th>Precio al por mayor</th>
-                <th>Unidades disponibles</th>
-                <th>Tallas</th>
-                <th>Colores</th>
+                <th>Código</th>
             </tr>
             </thead>
         </table>
@@ -35,9 +33,7 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.unit_price }}</td>
                     <td>{{ product.sale_price }}</td>
-                    <td>{{ product.available_units }}</td>
-                    <td>{{ product.sizes }}</td>
-                    <td>{{ product.colors }}</td>
+                    <td>{{ product.code }}</td>
                 </tr>
             {% endfor %}
             </tbody>
