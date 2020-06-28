@@ -69,4 +69,8 @@ class PurchaseRepository:
 
     @classmethod
     def get_last_order_summary(cls, user_id):
-        return Purchase.query.filter_by(user_id=user_id).order_by(desc(Purchase.id)).first().summary
+        last_purchase = Purchase.query.filter_by(user_id=user_id).order_by(desc(Purchase.id)).first()
+        if last_purchase is not None:
+            return last_purchase.summary
+        else:
+            return "No hay productos actualmente en tu carrito de compras."
