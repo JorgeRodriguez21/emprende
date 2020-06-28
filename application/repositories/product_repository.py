@@ -14,7 +14,6 @@ class ProductRepository:
     @classmethod
     def save(cls, name, description, unit_price, sale_price,
              image_name, code, status, options):
-        from run import app
         try:
             product = Product(name, description, unit_price, sale_price,
                               image_name, code, status)

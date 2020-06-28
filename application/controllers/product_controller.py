@@ -22,11 +22,12 @@ def register_product():
         code = request.form['product_code']
         avatar_url = request.form["avatar-url"]
         status = request.form["product_status"]
+        product_id = request.form["prodcut_id"]
         dict_product_details = json.loads(request.form["product_details"])
         product_service = ProductService()
         try:
             product_service.register_product(name, description, unit_price, sale_price, avatar_url,
-                                             code, status, dict_product_details)
+                                             code, status, dict_product_details, product_id)
             return 'OK', 200
         except ValidationError as error:
             from run import app
@@ -58,11 +59,13 @@ def product_by_id(product_id):
         sale_price = request.form['product_sale_price']
         code = request.form['product_code']
         avatar_url = request.form["avatar-url"]
+        status = request.form["product_status"]
         dict_product_details = json.loads(request.form["product_details"])
+        product_id = request.form["product_id"]
         product_service = ProductService()
         try:
             product_service.register_product(name, description, unit_price, sale_price, avatar_url,
-                                             code, dict_product_details, product_id)
+                                             code, status, dict_product_details, product_id)
             return 'OK', 200
         except ValidationError as error:
             from run import app

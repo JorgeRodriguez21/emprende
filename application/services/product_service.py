@@ -8,7 +8,7 @@ class ProductService:
 
     @classmethod
     def register_product(cls, name, description, unit_price, sale_price, image_name, code, status, options,
-                         product_id=None):
+                         product_id):
         boolean_status = True if status == 'Activo' else False
         try:
             converted_unit_price = float(unit_price)
@@ -16,7 +16,7 @@ class ProductService:
         except ValueError:
             raise ValidationError('Valor no válido, los valores numericos son incorrectos')
         product_repository = ProductRepository()
-        if product_id is not None:
+        if int(product_id) > 0:
             product_repository.update(name, description, converted_unit_price, converted_sale_price, image_name,
                                       product_id, code, boolean_status, options)
         else:
