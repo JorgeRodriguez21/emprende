@@ -24,5 +24,4 @@ function showErrorMessage(message) {
     setTimeout(function () {
         $(".toast").remove();
     }, 3500);
-    console.log(message);
 }

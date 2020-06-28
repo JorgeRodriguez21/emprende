@@ -19,7 +19,6 @@ function navigateToShoppingCart() {
 }
 
 function isUserLogged(message) {
-    console.log(message)
     $.ajax({
         type: "GET",
         url: "/manage_session",

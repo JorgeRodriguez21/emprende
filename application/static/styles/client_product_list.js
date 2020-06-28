@@ -207,16 +207,12 @@ function AddToCart() {
         setTimeout(function () {
             $(".toast").remove();
         }, 3500);
-        console.log(message);
     }
 
     if (!getSelectedColor() || !getSelectedSize()) {
         showErrorMessage("Debe seleccionar una talla y un color para el producto");
         return;
     }
-
-    console.log(options_array);
-    console.log(getOptionSelectedId());
 
     $.ajax({
         type: "POST",

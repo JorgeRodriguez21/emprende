@@ -54,8 +54,6 @@ function uploadFile(file, s3Data, url) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 || xhr.status === 204) {
-                console.log('Esta es la url');
-                console.log(url);
                 document.getElementById("preview").src = url;
                 document.getElementById("avatar-url").value = url;
             } else {
@@ -129,9 +127,9 @@ function submitToServer() {
 function getProductFormData(form) {
     // creates a FormData object and adds chips text
     let formData = new FormData(document.getElementById(form));
-    for (let [key, value] of formData.entries()) {
-        console.log('formData', key, value);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //     console.log('formData', key, value);
+    // }
     return formData
 }
 
@@ -151,8 +149,8 @@ function isFormDataEmpty(formData) {
     // checks for all values in formData object if they are empty
     for (const [key, value] of formData.entries()) {
         if (value === '' || value === []) {
-            console.log("key", key)
-            console.log("value", value)
+            // console.log("key", key)
+            // console.log("value", value)
             areEmptyFields = true;
         }
     }
@@ -174,11 +172,9 @@ function modular_ajax(url, type, formData) {
             // hide the preloader (progress bar)
         },
         success: function (data) {
-            console.log("Entra a success")
             showSuccessMessage();
         },
         error: function (xhr) {
-            console.log("entra a error")
             showErrorMessage();
         },
     }).done(function () {
@@ -192,7 +188,6 @@ function showSuccessMessage() {
     alertsLabel.text("Producto almacenado correctamente");
     alertsLabel.show();
     let toast = "<div class=\"toast toast-success\">Producto almacenado correctamente</div>";
-    console.log(toast)
     $("#product_form").append(toast);
     setTimeout(function () {
         $(".toast").addClass("toast-transition");
@@ -226,7 +221,6 @@ function showErrorMessage(message) {
         alertsLabel.hide();
         $(".toast").remove();
     }, 3500);
-    console.log(message);
 }
 
 function removeProductOptions() {
@@ -234,7 +228,6 @@ function removeProductOptions() {
     if (indexToRemove < 0) {
         indexToRemove = 0;
     }
-    console.log(indexToRemove)
     $("#options_container" + indexToRemove).remove();
     product_detail_index = indexToRemove;
 }
