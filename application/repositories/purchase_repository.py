@@ -73,4 +73,4 @@ class PurchaseRepository:
         if last_purchase is not None:
             return last_purchase.summary
         else:
-            return "No hay productos actualmente en tu carrito de compras."
+            return "No hay registros"
