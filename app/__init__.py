@@ -22,7 +22,6 @@ def config_app():
         with app.app_context():
             app.logger.debug('development')
             CORS(app)
-
             app.debug = app.config['DEBUG']
             # app.logger.debug("before delete database")
             # if database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
