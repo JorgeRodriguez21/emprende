@@ -22,7 +22,7 @@ def register_product():
         code = request.form['product_code']
         avatar_url = request.form["avatar-url"]
         status = request.form["product_status"]
-        product_id = request.form["prodcut_id"]
+        product_id = request.form["product_id"]
         dict_product_details = json.loads(request.form["product_details"])
         product_service = ProductService()
         try:
