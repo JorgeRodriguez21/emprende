@@ -18,7 +18,7 @@
                     <div class="product_buttons">
                         <button class="add_to_cart"
                                 onclick="OpenProduct('{{ product.id }}', '{{ product.image_name }}')">
-                            <input style="display: none" name="articleid{{ loop.index }}" type="hidden"
+                            <input style="display: none" name="articleid{{ product.id }}" type="hidden"
                                    value='{{ product.json_array|tojson }}'/>
                             <i
                                     class="fa fa-shopping-cart"></i></button>

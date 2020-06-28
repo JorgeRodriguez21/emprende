@@ -17,7 +17,7 @@ function OpenProduct(id, image_name_param) {
     const elementName = "articleid"+id;
     const options = $('.add_to_cart input[name="'+elementName+'"]').val();
     console.log(options);
-    options_array = JSON.parse(options);
+    options_array = JSON.parse(JSON.parse(options));
     let colors = getColorsArray(options_array);
     idValue = id;
     image_name = image_name_param
