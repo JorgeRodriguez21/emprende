@@ -197,7 +197,7 @@ function showSuccessMessage() {
         alertsLabel.hide();
         $(".toast").remove();
         window.location.replace("/find_products")
-    }, 3500);
+    }, 1500);
 }
 
 function showErrorMessage(message) {
@@ -220,7 +220,7 @@ function showErrorMessage(message) {
         alertsLabel.text("");
         alertsLabel.hide();
         $(".toast").remove();
-    }, 3500);
+    }, 2500);
 }
 
 function removeProductOptions() {

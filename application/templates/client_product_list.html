@@ -17,12 +17,12 @@
                     <a href="#"><img class="centered-and-cropped" src="{{ product.image_name }}" alt=""></a>
                     <div class="product_buttons">
                         <button class="add_to_cart"
-                                onclick="OpenProduct('{{ product.id }}', '{{ product.image_name }}');">
+                                onclick="OpenProduct('{{ product.id }}', '{{ product.image_name }}')">
                             <input style="display: none" name="articleid{{ loop.index }}" type="hidden"
                                    value='{{ product.json_array|tojson }}'/>
                             <i
                                     class="fa fa-shopping-cart"></i></button>
-                        <br>'
+                        <br>
                         <br>
                     </div>
                 </div>

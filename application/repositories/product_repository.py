@@ -25,6 +25,7 @@ class ProductRepository:
             db.session.add(product)
             db.session.commit()
         except SQLAlchemyError as error:
+            from run import app
             app.logger.error('Error de base de datos en productos')
             app.logger.error(error)
             raise ValidationError('Error guardando el producto, por favor intente nuevamente')
@@ -41,7 +42,7 @@ class ProductRepository:
             product.sale_price = sale_price
             product.image_name = image_name
             product.code = code
-            product.status = status
+            product.is_active = status
             db.session.commit()
             for option in options:
                 option_id = int(option['id'])
