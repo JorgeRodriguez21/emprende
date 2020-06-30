@@ -45,6 +45,8 @@ class PurchaseRepository:
                 purchase.date = datetime.now(timezone(timedelta(hours=-5), 'America/Guayaquil'))
                 db.session.commit()
                 id_units.append((purchase.product_option_id, purchase.units))
+        from run import app
+        app.logger.error(id_units)
         return id_units
 
     @classmethod

@@ -121,9 +121,12 @@ def create_summary(purchases, code, price, phone):
     for purchase in purchases:
         product_details = product_details + ' \n ' + purchase.features['title'] + ' : ' + str(
             purchase.units) + ' unidad(es).'
-    return "Hola" + " " + get_user_name(purchases[
+    message = "Hola" + " " + get_user_name(purchases[
                                             0].user) + "\n" + "El código de su compra es: " + code + " . Los productos que usted adquirió son los siguientes: " + \
            product_details + "\n" + "El precio total es de $" + str(
         price) + ". Por favor comunicarse por whatsapp con el número " + phone + \
            " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 6 horas o su pedido será cancelado. \n" \
            "Gracias por confiar en nosotros."
+    from run import app
+    app.logger.error(message)
+    return message

@@ -6,7 +6,10 @@ class OrderService:
     @classmethod
     def save_order(cls, code_id, address, city, price):
         order_repository = OrderRepository()
-        return order_repository.save_order(code_id, address, city, price)
+        saved_order = order_repository.save_order(code_id, address, city, price)
+        from run import app
+        app.logger.error(saved_order)
+        return saved_order
 
     @classmethod
     def get_all_pending_orders(cls):

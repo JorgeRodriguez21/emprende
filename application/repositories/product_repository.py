@@ -90,6 +90,8 @@ class ProductRepository:
                 raise ValidationError("El producto no está disponible")
             else:
                 found_product_options.available_units = found_product_options.available_units - int(units)
+        from run import app
+        app.logger.error("Sale bien de aqui")
         db.session.commit()
 
     @classmethod
