@@ -64,7 +64,7 @@ function confirmPurchase() {
     }
     let address = $("#address")[0].value;
 
-    if (getSelectedLocation() === undefined || address === '' || address === undefined || getIds().length === 0) {
+    if (getSelectedLocation() === undefined || getSelectedLocation() === null || address === '' || address === undefined || getIds().length === 0) {
         showErrorMessage("Debe seleccionar una ciudad de entrega y agregar una dirección válida")
     } else {
         $.ajax({
