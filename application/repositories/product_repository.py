@@ -137,24 +137,29 @@ class ProductRepository:
 
     @classmethod
     def check_products_availability(cls, values):
-        values_without_duplicates = cls.get_product_options_ids_with_unified_values(values)
-        ids = cls.get_product_option_ids(values_without_duplicates)
-        product_options = ProductOptions.query.filter(ProductOptions.id.in_(ids)).all()
-        products = Product.query.filter(Product.id.in_(ids)).all()
-        for product_option_id, units in values_without_duplicates:
-            found_product_option = next(
-                product_option for product_option in product_options if product_option.id == product_option_id)
-            if found_product_option is None:
-                from run import app
-                app.logger.error("Producto con id " + str(product_option_id) + "no esta disponible")
-                raise ValidationError("El producto no está disponible")
-            else:
-                remaining_units = found_product_option.available_units - int(units)
-                if remaining_units < 0:
-                    found_product = next(
-                        (product for product in products if
-                         product.id == found_product_option.product_id), None)
-                    raise ValidationError(
-                        "El producto " + found_product.name + " en color " + found_product_option.color + " y en talla "
-                        + found_product_option.size + " no tiene disponibilidad. Por favor eliminelo de su carrito "
-                                                      "y mire las unidades disponibles en la pantalla de productos")
+        try:
+            values_without_duplicates = cls.get_product_options_ids_with_unified_values(values)
+            ids = cls.get_product_option_ids(values_without_duplicates)
+            product_options = ProductOptions.query.filter(ProductOptions.id.in_(ids)).all()
+            products = Product.query.filter(Product.id.in_(ids)).all()
+            for product_option_id, units in values_without_duplicates:
+                found_product_option = next(
+                    product_option for product_option in product_options if product_option.id == product_option_id)
+                if found_product_option is None:
+                    from run import app
+                    app.logger.error("Producto con id " + str(product_option_id) + "no esta disponible")
+                    raise ValidationError("El producto no está disponible")
+                else:
+                    remaining_units = found_product_option.available_units - int(units)
+                    if remaining_units < 0:
+                        found_product = next(
+                            (product for product in products if
+                             product.id == found_product_option.product_id), None)
+                        raise ValidationError(
+                            "El producto " + found_product.name + " en color " + found_product_option.color + " y en talla "
+                            + found_product_option.size + " no tiene disponibilidad. Por favor eliminelo de su carrito "
+                                                          "y mire las unidades disponibles en la pantalla de productos")
+        except Exception as error:
+            from run import app
+            app.logger.error(error)
+            return None

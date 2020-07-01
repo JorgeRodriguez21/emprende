@@ -5,11 +5,17 @@ from application.repositories.product_repository import ProductRepository
 class OrderService:
     @classmethod
     def save_order(cls, code_id, address, city, price):
-        order_repository = OrderRepository()
-        saved_order = order_repository.save_order(code_id, address, city, price)
-        from run import app
-        app.logger.error(saved_order)
-        return saved_order
+        try:
+            order_repository = OrderRepository()
+            saved_order = order_repository.save_order(code_id, address, city, price)
+            from run import app
+            app.logger.error('!!!!!!!!!!')
+            app.logger.error(saved_order)
+            return saved_order
+        except Exception as error:
+            from run import app
+            app.logger.error(error)
+            return None
 
     @classmethod
     def get_all_pending_orders(cls):

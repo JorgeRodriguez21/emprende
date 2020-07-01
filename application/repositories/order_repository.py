@@ -24,10 +24,15 @@ class OrderRepository:
 
     @classmethod
     def create_purchase_code(cls, purchase_id):
-        code_number = '00' + purchase_id if len(purchase_id) == 1 else '0' + purchase_id if len(
-            purchase_id) == 2 else len(purchase_id)
-        code = Codes.CODE.value + code_number
-        return code
+        from run import app
+        try:
+            code_number = '00' + purchase_id if len(purchase_id) == 1 else '0' + purchase_id if len(
+                purchase_id) == 2 else purchase_id
+            code = Codes.CODE.value + code_number
+            return code
+        except Exception as error:
+            app.logger.error(error)
+            return None
 
     @classmethod
     def find_all_pending_orders(cls):

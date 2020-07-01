@@ -51,11 +51,18 @@ class PurchaseRepository:
 
     @classmethod
     def get_purchased_units_by_id(cls, ids):
-        id_units = []
-        purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
-        for purchase in purchases:
-            id_units.append((purchase.product_option_id, purchase.units))
-        return id_units
+        try:
+            id_units = []
+            purchases = Purchase.query.filter(Purchase.id.in_(ids)).all()
+            for purchase in purchases:
+                id_units.append((purchase.product_option_id, purchase.units))
+            from run import app
+            app.logger.debug(id_units)
+            return id_units
+        except Exception as error:
+            from run import app
+            app.logger.error(error)
+            return None
 
     @classmethod
     def update_summary(cls, ids, summary):
