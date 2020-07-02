@@ -127,6 +127,4 @@ def create_summary(purchases, code, price, phone):
         price) + ". Por favor comunicarse por whatsapp con el número " + phone + \
            " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 6 horas o su pedido será cancelado. \n" \
            "Gracias por confiar en nosotros."
-    from run import app
-    app.logger.error(message)
     return message

@@ -214,6 +214,11 @@ function AddToCart() {
         return;
     }
 
+    if (units > maxValue) {
+        showErrorMessage("El numero de unidades seleccionado no está disponible");
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: "/add_to_cart",

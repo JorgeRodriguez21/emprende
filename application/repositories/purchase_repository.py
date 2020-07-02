@@ -57,6 +57,7 @@ class PurchaseRepository:
             for purchase in purchases:
                 id_units.append((purchase.product_option_id, purchase.units))
             from run import app
+            app.logger.debug("Id and units")
             app.logger.debug(id_units)
             return id_units
         except Exception as error:
