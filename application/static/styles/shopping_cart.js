@@ -32,6 +32,7 @@ function showSuccessMessage(message) {
     setTimeout(function () {
         $(".toast").remove();
         location.reload();
+        enable_checkout_button();
     }, 3500);
     $(".lightbox-blanket").toggle();
 }
@@ -50,10 +51,20 @@ function showErrorMessage(message) {
     setTimeout(function () {
         $(".toast").remove();
         location.reload();
+        enable_checkout_button();
     }, 10000);
 }
 
+function enable_checkout_button() {
+    $("#checkout_button").prop("disabled",false);
+}
+
+function disable_checkout_button() {
+    $("#checkout_button").prop("disabled",true);
+}
+
 function confirmPurchase() {
+    disable_checkout_button()
     function getIds() {
         let ids = [];
         $('.price').each(function () {

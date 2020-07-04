@@ -82,6 +82,7 @@ def get_all_products():
     product_service = ProductService()
     products = product_service.find_all_active_products()
     for product in products:
-        json_array = [option.as_dict() for option in product.options]
+        options_with_available_units = list(filter(lambda option : option.available_units > 0, product.options))
+        json_array = [option.as_dict() for option in options_with_available_units]
         product.json_array = json.dumps(json_array)
     return render_template('/client_product_list.html', products=products)

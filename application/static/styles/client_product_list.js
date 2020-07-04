@@ -5,6 +5,7 @@ let title = undefined;
 let image_name = undefined
 let options_array = undefined
 let available_units = undefined
+let units = undefined
 
 function getColorsArray(options_array) {
     let colors = options_array.map(option => {
@@ -14,60 +15,65 @@ function getColorsArray(options_array) {
 }
 
 function OpenProduct(id, image_name_param) {
+    units = 0;
     const elementName = "articleid"+id;
     const options = $('.add_to_cart input[name="'+elementName+'"]').val();
     options_array = JSON.parse(JSON.parse(options));
-    let colors = getColorsArray(options_array);
-    idValue = id;
-    image_name = image_name_param
-    //Load image
-    let image = $('.product_image[item-data="' + id + '"] img');
-    let lbi = $('.lightbox-blanket .product-image img');
-    $(lbi).attr("src", $(image).attr("src"));
-    //Load unit price
-    let unit_price = $('.product_unit_price[item-data="' + id + '"] span').text().substring(1).split('.');
-    let dollars = unit_price[0].match(/\d+/)[0];
-    let cents = unit_price[1] ? unit_price[1].match(/\d+/)[0] : undefined;
-    if (cents === undefined) {
-        cents = '00'
-    } else if (cents.length === 0) {
-        cents = '00'
-    } else if (cents.length === 1) {
-        cents = cents + '0'
+    if(options_array.length === 0){
+        showErrorMessage("Producto agotado")
+    }else{
+        let colors = getColorsArray(options_array);
+        idValue = id;
+        image_name = image_name_param
+        //Load image
+        let image = $('.product_image[item-data="' + id + '"] img');
+        let lbi = $('.lightbox-blanket .product-image img');
+        $(lbi).attr("src", $(image).attr("src"));
+        //Load unit price
+        let unit_price = $('.product_unit_price[item-data="' + id + '"] span').text().substring(1).split('.');
+        let dollars = unit_price[0].match(/\d+/)[0];
+        let cents = unit_price[1] ? unit_price[1].match(/\d+/)[0] : undefined;
+        if (cents === undefined) {
+            cents = '00'
+        } else if (cents.length === 0) {
+            cents = '00'
+        } else if (cents.length === 1) {
+            cents = cents + '0'
+        }
+        let dialogPrice = $('.lightbox-blanket .product-info .product-price');
+        $(dialogPrice).html("$" + dollars + "<span class='product-price-cents'>" + cents + "</span>");
+        //Load sale price
+        let sale_price = $('.product_sale_price[item-data="' + id + '"] span').text().substring(1).split('.');
+        let sale_dollars = sale_price[0].match(/\d+/)[0];
+        let sale_cents = sale_price[1] ? sale_price[1].match(/\d+/)[0] : undefined;
+        if (sale_cents === undefined) {
+            sale_cents = '00'
+        } else if (sale_cents.length === 0) {
+            sale_cents = '00'
+        } else if (sale_cents.length === 1) {
+            sale_cents = sale_cents + '0'
+        }
+        let dialogSalePrice = $('.lightbox-blanket .product-info .product-price-sale');
+        $(dialogSalePrice).html("$" + sale_dollars + "<span class='product-price-cents'>" + sale_cents + "</span>"
+            + "<span class='product-price' style='font-size:0.7em'>&nbsp; por docena</span>");
+        //Load title
+        title = $('.product_title[item-data="' + id + '"] h5').text();
+        let dialogTitle = $('.lightbox-blanket .product-title');
+        $(dialogTitle).html(title);
+        //Load description
+        let description = $('.product_desc[item-data="' + id + '"]').text();
+        let dialogDescription = $('.lightbox-blanket .product-description');
+        $(dialogDescription).html(description);
+        //Load available units
+
+        $(".lightbox-blanket").toggle();
+
+        createColorSelector(colors);
+        createSizesSelector(undefined);
+
+        $("#product-quantity-input").val("0");
+        CalcPrice(0);
     }
-    let dialogPrice = $('.lightbox-blanket .product-info .product-price');
-    $(dialogPrice).html("$" + dollars + "<span class='product-price-cents'>" + cents + "</span>");
-    //Load sale price
-    let sale_price = $('.product_sale_price[item-data="' + id + '"] span').text().substring(1).split('.');
-    let sale_dollars = sale_price[0].match(/\d+/)[0];
-    let sale_cents = sale_price[1] ? sale_price[1].match(/\d+/)[0] : undefined;
-    if (sale_cents === undefined) {
-        sale_cents = '00'
-    } else if (sale_cents.length === 0) {
-        sale_cents = '00'
-    } else if (sale_cents.length === 1) {
-        sale_cents = sale_cents + '0'
-    }
-    let dialogSalePrice = $('.lightbox-blanket .product-info .product-price-sale');
-    $(dialogSalePrice).html("$" + sale_dollars + "<span class='product-price-cents'>" + sale_cents + "</span>"
-        + "<span class='product-price' style='font-size:0.7em'>&nbsp; por docena</span>");
-    //Load title
-    title = $('.product_title[item-data="' + id + '"] h5').text();
-    let dialogTitle = $('.lightbox-blanket .product-title');
-    $(dialogTitle).html(title);
-    //Load description
-    let description = $('.product_desc[item-data="' + id + '"]').text();
-    let dialogDescription = $('.lightbox-blanket .product-description');
-    $(dialogDescription).html(description);
-    //Load available units
-
-    $(".lightbox-blanket").toggle();
-
-    createColorSelector(colors);
-    createSizesSelector(undefined);
-
-    $("#product-quantity-input").val("0");
-    CalcPrice(0);
 }
 
 function GoBack() {
@@ -174,39 +180,39 @@ function updateAvailableUnits() {
     }
 }
 
+function showSuccessMessage() {
+    let toast = '<div class="toast toast-success">Se agregaron ' + units + ' ' + title + ' al carrito de compras</div>';
+    $("body").append(toast);
+    setTimeout(function () {
+        $(".toast").addClass("toast-transition");
+    }, 100);
+    setTimeout(function () {
+        $(".toast").remove();
+    }, 3500);
+    $(".lightbox-blanket").toggle();
+}
+
+function showErrorMessage(message) {
+    let toast;
+    if (message) {
+        toast = "<div class=\"toast toast-error\">" + message + "</div>";
+    } else {
+        toast = '<div class="toast toast-error">Hubo un error al almacenar los productos</div>';
+    }
+    $("body").append(toast);
+    setTimeout(function () {
+        $(".toast").addClass("toast-transition");
+    }, 100);
+    setTimeout(function () {
+        $(".toast").remove();
+    }, 3500);
+}
+
 function AddToCart() {
-    let units = $("#product-quantity-input").val();
+    units = $("#product-quantity-input").val();
     if (units === '0') {
         showErrorMessage("No puede agregar 0 unidades al carrito");
         return;
-    }
-
-    function showSuccessMessage() {
-        let toast = '<div class="toast toast-success">Se agregaron ' + units + ' ' + title + ' al carrito de compras</div>';
-        $("body").append(toast);
-        setTimeout(function () {
-            $(".toast").addClass("toast-transition");
-        }, 100);
-        setTimeout(function () {
-            $(".toast").remove();
-        }, 3500);
-        $(".lightbox-blanket").toggle();
-    }
-
-    function showErrorMessage(message) {
-        let toast;
-        if (message) {
-            toast = "<div class=\"toast toast-error\">" + message + "</div>";
-        } else {
-            toast = '<div class="toast toast-error">Hubo un error al almacenar los productos</div>';
-        }
-        $("body").append(toast);
-        setTimeout(function () {
-            $(".toast").addClass("toast-transition");
-        }, 100);
-        setTimeout(function () {
-            $(".toast").remove();
-        }, 3500);
     }
 
     if (!getSelectedColor() || !getSelectedSize()) {
