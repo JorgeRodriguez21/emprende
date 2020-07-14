@@ -125,6 +125,6 @@ def create_summary(purchases, code, price, phone):
                                             0].user) + "\n" + "El código de su compra es: " + code + " . Los productos que usted adquirió son los siguientes: " + \
            product_details + "\n" + "El precio total es de $" + str(
         price) + ". Por favor comunicarse por whatsapp con el número " + phone + \
-           " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 6 horas o su pedido será cancelado. \n" \
+           " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 2 horas o su pedido será cancelado. \n" \
            "Gracias por confiar en nosotros."
     return message
