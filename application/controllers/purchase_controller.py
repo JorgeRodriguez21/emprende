@@ -9,12 +9,15 @@ from application.middleware.is_user_logged import check_logged
 from application.models.purchase import Purchase
 from application.services.email_service import EmailService
 from application.services.order_service import OrderService
+from application.services.product_service import ProductService
 from application.services.purchase_service import PurchaseService
 
 purchase_blueprint = Blueprint('/add_to_cart', __name__)
 purchase_list_blueprint = Blueprint('/my_cart', __name__)
 purchase_delete_blueprint = Blueprint('/delete', __name__)
 purchase_confirm_blueprint = Blueprint('/confirm', __name__)
+
+product_service = ProductService()
 
 
 @purchase_blueprint.route('/add_to_cart', methods=['POST'])
@@ -40,6 +43,7 @@ def add_product_to_cart():
 def get_active_purchases():
     try:
         purchase_service = PurchaseService()
+
         if session['user_id'] is None:
             raise Exception("No ha iniciado sesión")
         purchases = purchase_service.get_active_purchases_for_active_user(session['user_id'])
@@ -58,6 +62,7 @@ def get_active_purchases():
 
 def map_to_purchase_dto(purchase: Purchase):
     dto = PurchaseDto()
+    product = product_service.find_product_by_id(purchase.product_id)
     dto.id = purchase.id
     dto.user_id = purchase.user_id
     dto.product_id = purchase.product_id
@@ -68,6 +73,7 @@ def map_to_purchase_dto(purchase: Purchase):
     dto.color = purchase.features['color']
     dto.size = purchase.features['size']
     dto.image = purchase.features['image']
+    dto.sale_price = product.sale_price * purchase.units
     return dto
 
 
@@ -122,9 +128,9 @@ def create_summary(purchases, code, price, phone):
         product_details = product_details + ' \n ' + purchase.features['title'] + ' : ' + str(
             purchase.units) + ' unidad(es).'
     message = "Hola" + " " + get_user_name(purchases[
-                                            0].user) + "\n" + "El código de su compra es: " + code + " . Los productos que usted adquirió son los siguientes: " + \
-           product_details + "\n" + "El precio total es de $" + str(
+                                               0].user) + "\n" + "El código de su compra es: " + code + " . Los productos que usted adquirió son los siguientes: " + \
+              product_details + "\n" + "El precio total es de $" + str(
         price) + ". Por favor comunicarse por whatsapp con el número " + phone + \
-           " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 2 horas o su pedido será cancelado. \n" \
-           "Gracias por confiar en nosotros."
+              " para coordinar el pago y la entrega.\n El pago debe hacerse dentro de las próximas 2 horas o su pedido será cancelado. \n" \
+              "Gracias por confiar en nosotros."
     return message

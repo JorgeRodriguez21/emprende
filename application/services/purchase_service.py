@@ -9,7 +9,7 @@ class PurchaseService:
         product_repository = ProductRepository()
         product = product_repository.find_by_id(product_id)
         int_units = int(units)
-        final_price = (product.unit_price * int_units) if (0 < int(units) < 12) else (product.sale_price * int_units)
+        final_price = product.unit_price * int_units
         from run import app
         if float(price.strip('"')) != final_price:
             app.logger.debug("El precio difiere en back y front " + str(final_price) + " " + str(price))

@@ -48,3 +48,8 @@ class ProductService:
     def find_last_id(cls):
         product_repository = ProductRepository()
         return product_repository.get_last_product_id()
+
+    @classmethod
+    def find_all_products_by_ids(cls, product_ids):
+        product_repository = ProductRepository()
+        return product_repository.find_all_products_by_ids(product_ids)

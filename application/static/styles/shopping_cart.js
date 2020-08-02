@@ -1,3 +1,7 @@
+let totalPrice = undefined;
+let salePrice = undefined;
+
+
 function removeElement(idValue) {
     $.ajax({
         type: "PUT",
@@ -156,24 +160,73 @@ function cancelOrder(id) {
 
 function calculateSubtotal() {
     let sum = 0;
+    const totalUnits = calculateUnitsNumber();
+    $('.total_units').html(totalUnits + " unidades en total");
     $('.price').each(function () {
         let counter = $(this).html().substring(1);
         let id = $(this).attr('id');
         sum += parseFloat(counter);
     });
+    totalPrice = sum;
     $('.subtotal').html('$' + sum.toFixed(2));
+    if(totalUnits>=12) {
+        let saleSum = 0;
+        $('.price').each(function () {
+            let counter = $(this).attr("sale_price")
+            let id = $(this).attr('id');
+            console.log(counter)
+            saleSum += parseFloat(counter);
+        });
+        salePrice = saleSum;
+        const discount = totalPrice - salePrice;
+        $('#discount').html('$' + discount.toFixed(2));
+    }else {
+        salePrice = undefined;
+        $('#discount').html('$' + (0.00).toFixed(2));
+    }
     calculateTotal();
+}
+
+function calculateUnitsNumber() {
+    let sum = 0;
+    $('.quantity :input').each(function () {
+        console.log($(this))
+        let counter = $(this).val();
+        let id = $(this).attr('id');
+        sum += parseInt(counter);
+    });
+    return sum;
 }
 
 function calculateSubtotalForOrders(city) {
     setShippingValue(city)
+    const totalUnits = calculateUnitsNumber();
+    $('.total_units').html(totalUnits + " unidades en total");
     let sum = 0;
     $('.price').each(function () {
         let counter = $(this).html().substring(1);
         let id = $(this).attr('id');
         sum += parseFloat(counter);
     });
+    totalPrice = sum;
     $('.subtotal').html('$' + sum.toFixed(2));
+    console.log("!!!!!!!!!!!");
+    console.log(totalUnits);
+    if(totalUnits>=12) {
+        let saleSum = 0;
+        $('.price').each(function () {
+            let counter = $(this).attr("sale_price")
+            console.log(counter);
+            let id = $(this).attr('id');
+            saleSum += parseFloat(counter);
+        });
+        salePrice = saleSum;
+        const discount = totalPrice - salePrice;
+        $('#discount').html('$' + discount.toFixed(2));
+    }else {
+        salePrice = undefined;
+        $('#discount').html('$' + (0.00).toFixed(2));
+    }
     calculateTotal();
 }
 
@@ -192,7 +245,8 @@ function setShippingValue(city) {
 function calculateTotal() {
     let subtotal = parseFloat($('.subtotal').html().substring(1));
     let shipping = parseFloat($('.shipping').html().substring(1));
-    let total = subtotal + shipping;
+    let discount = parseFloat($('#discount').html().substring(1));
+    let total = subtotal + shipping - discount;
     $('.total').html('$' + total.toFixed(2));
 }
 

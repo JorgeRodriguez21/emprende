@@ -167,3 +167,7 @@ class ProductRepository:
                         "El producto " + found_product.name + " en color " + found_product_option.color + " y en talla "
                         + found_product_option.size + " no tiene disponibilidad. Por favor eliminelo de su carrito "
                                                       "y mire las unidades disponibles en la pantalla de productos")
+
+    @classmethod
+    def find_all_products_by_ids(cls, product_ids):
+        return Product.query.filter(Product.id.in_(product_ids)).all()

@@ -13,31 +13,35 @@
     <!-- Header -->
     <header class="container">
         <h1>Resumen de la Orden {{ order.code }}</h1>
-        <span class="count">{{ order.purchases | count }} productos en la bolsa</span>
+        <div class="details_container">
+            <span class="count">{{ purchases | count }} productos en el carrito, </span>
+            &nbsp;
+            <span class="total_units"></span>
+        </div>
     </header>
     <!-- End Header -->
     <!-- Product List -->
     <section id="section" class="container">
-        {% if order.purchases | count > 0 %}
+        {% if purchases | count > 0 %}
             <div>
                 <ul class="products">
-                    {% for purchase in order.purchases %}
+                    {% for purchase in purchases %}
                         <li id="{{ purchase.id }}" class="row">
                             <div class="col left">
                                 <div class="thumbnail">
-                                    <img src="{{ purchase.features['image']}}" alt="imagen del producto"/>
+                                    <img src="{{ purchase.image}}" alt="imagen del producto"/>
                                 </div>
                                 <div class="detail">
-                                    <div class="name">{{ purchase.features['title'] }}</div>
-                                    <div class="name">{{ purchase.features['color'] }}</div>
-                                    <div class="name">{{ purchase.features['size'] }}</div>
-                                    <div class="price" id="{{ purchase.id }}">${{ purchase.price }}</div>
+                                    <div class="name">{{ purchase.title }}</div>
+                                    <div class="name">{{ purchase.color }}</div>
+                                    <div class="name">{{ purchase.size }}</div>
+                                    <div class="price" id="{{ purchase.id }}" sale_price="{{ purchase.sale_price }}">${{ purchase.price }}</div>
                                 </div>
                             </div>
 
                             <div class="col right">
                                 <div class="quantity">
-                                    <input type="number" class="quantity" value="{{ purchase.units }}" disabled/>
+                                    <input type="number" id="qt_{{ purchase.id }}" class="quantity" value="{{ purchase.units }}" disabled/>
                                 </div>
                             </div>
                         </li>
@@ -66,6 +70,7 @@
                 <ul>
                     <li>Subtotal <span id="subtotal" class="subtotal">10</span></li>
                     <li>Env&iacute;o <span id="shipping" class="shipping">$0.00</span></li>
+                    <li>Descuento por 12 unidades o m&aacute;s <span id="discount" class="discount" style="color: red">10</span></li>
                     <li>Total <span id="total" class="total">10</span></li>
                 </ul>
             </div>

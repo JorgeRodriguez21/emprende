@@ -87,8 +87,7 @@ function GetMax() {
 //Calculate new total when the quantity changes.
 function CalcPrice(units) {
     let unit_price = $('.product_unit_price[item-data="' + idValue + '"] span').attr('price-data');
-    let sale_price = $('.product_sale_price[item-data="' + idValue + '"] span').attr('price-data');
-    totalPrice = units >= 12 ? parseFloat((sale_price * units)).toFixed(2) : parseFloat((unit_price * units)).toFixed(2);
+    totalPrice = parseFloat((unit_price * units)).toFixed(2);
     $(".product-checkout-total-amount").text(totalPrice);
 }
 

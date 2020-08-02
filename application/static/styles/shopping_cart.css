@@ -98,6 +98,7 @@ input {
 /* --- HEADER --- */
 header.container {
     margin-bottom: 1.5rem;
+    margin-top: 2%;
 }
 
 header .breadcrumb {
@@ -120,13 +121,18 @@ header .breadcrumb li:not(:last-child)::after {
     padding-left: 8px;
 }
 
-header .count {
-    float: right;
+header .count .total_units {
     height: 20px;
     line-height: 20px;
-    color: #2C7602;;
+    color: #2C7602;
 }
 
+header .details_container {
+    float: right;
+    align-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+}
 /* --- PRODUCT LIST --- */
 .products {
     border-top: 1px solid #ddd;
